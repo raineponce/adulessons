@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAGE_TITLE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',    // blue-600
+            secondary: '#374151'   // gray-700
+          }
+        }
+      }
+    }
+  </script>
+</head>
+  
+<body class="bg-gray-50">
+  <div id="nav"></div>
+  
+  <main class="container mx-auto px-4 py-8">
+    <!-- PAGE CONTENT HERE -->
+  </main>
+  
+  <div id="footer"></div>
+  
+  <script src="/js/config.js"></script>
+  <script src="/js/components.js"></script>
+  <script>
+    loadComponent('nav', '/components/nav.html');
+    loadComponent('footer', '/components/footer.html');
+  </script>
+</body>
+</html>
