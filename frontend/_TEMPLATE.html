@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAGE_TITLE</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#2563eb',    // blue-600
-            secondary: '#374151'   // gray-700
-          }
-        }
-      }
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title</title>
+    
+    <!-- Google Fonts or other font imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    
+    <!-- Global styles -->
+    <link rel="stylesheet" href="./css/global.css">
+    
+    <!-- Page-specific internal styles -->
+    <style>
+        /* Page-specific CSS goes here */
+        /* This allows for both global styling and page-specific overrides */
+    </style>
 </head>
-  
-<body class="bg-gray-50">
-  <div id="nav"></div>
-  
-  <main class="container mx-auto px-4 py-8">
-    <!-- PAGE CONTENT HERE -->
-  </main>
-  
-  <div id="footer"></div>
-  
-  <script src="/js/config.js"></script>
-  <script src="/js/components.js"></script>
-  <script>
-    loadComponent('nav', '/components/nav.html');
-    loadComponent('footer', '/components/footer.html');
-  </script>
+<body>
+    <!-- Navigation component will be inserted here -->
+    <!-- <nav-component /> -->
+    
+    <main>
+        <!-- Page content goes here -->
+        <!-- AI will fill this section based on the design -->
+    </main>
+    
+    <!-- Footer component will be inserted here -->
+    <!-- <footer-component /> -->
 </body>
 </html>
