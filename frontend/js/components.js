@@ -1,31 +1,39 @@
 // Load HTML components
-async function loadComponent(elementId, componentPath) {
-  try {
-    const response = await fetch(componentPath);
-    if (!response.ok) {
-      throw new Error(`Failed to load ${componentPath}`);
+async function loadComponent(componentPath, elementId) {
+    try {
+        const response = await fetch(componentPath);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${componentPath}: ${response.statusText}`);
+        }
+        const html = await response.text();
+        document.getElementById(elementId).innerHTML = html;
+    } catch (error) {
+        console.error(`Error loading component (${elementId}):`, error);
     }
-    const html = await response.text();
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.innerHTML = html;
-    }
-  } catch (error) {
-    console.error('Error loading component:', error);
-  }
 }
 
-// Utility: Get URL parameters
-function getUrlParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(param);
+// Check if user is logged in
+function isUserLoggedIn() {
+    // Option A: Check localStorage
+    return localStorage.getItem('authToken') !== null;
+
+    // Option B: Check sessionStorage
+    // return sessionStorage.getItem('user') !== null;
+
+    // Option C: Check a global variable set by your backend
+    // return window.user !== null;
+
+    // Option D: Check a cookie
+    // return document.cookie.includes('authToken=');
 }
 
-// Utility: Format date
-function formatDate(date) {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // Load appropriate nav based on login state
+    const navPath = isUserLoggedIn()
+      // will change link after ':' to nav-loggedin.html later
+      ? '/components/nav-loggedin.html'
+        : '/components/nav-loggedin.html';
+
+    loadComponent(navPath, 'navbar');
+    loadComponent('/components/footer.html', 'footer');
+});
