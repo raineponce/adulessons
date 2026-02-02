@@ -1,1 +1,234 @@
 <!-- Will put reusable nav component here for logged out users later -->
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    nav {
+        background-color: #FFFFFF;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        width: 100%;
+    }
+
+    .nav-logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #5A5A5A;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-logo-text {
+        font-family: "Fredoka", sans-serif;
+    }
+
+    .nav-logo-accent {
+        color: #5A5A5A;
+    }
+
+    .nav-bowtie {
+        width: 30px;
+        height: 15px;
+        background-color: #5A7A9E;
+        clip-path: polygon(0% 50%, 40% 0%, 40% 40%, 60% 40%, 60% 0%, 100% 50%, 60% 100%, 60% 60%, 40% 60%, 40% 100%);
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: #5A7A9E;
+    }
+
+    .nav-button {
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+    }
+
+    .btn-signup {
+        background-color: #F4D03F;
+        color: #333;
+    }
+
+    .btn-signup:hover {
+        background-color: #E6C236;
+        transform: translateY(-2px);
+    }
+
+    .btn-login {
+        background-color: #5A7A9E;
+        color: #FFFFFF;
+    }
+
+    .btn-login:hover {
+        background-color: #4A6A8E;
+        transform: translateY(-2px);
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 4px;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        margin-right: 1rem;
+        padding: 1rem;
+        z-index: 1000;
+        min-width: 200px;
+    }
+
+    .mobile-menu a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s;
+    }
+
+    .mobile-menu a:hover {
+        background-color: #EFEFEF;
+        border-radius: 4px;
+    }
+
+    .mobile-menu-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #EFEFEF;
+    }
+
+    .mobile-menu-buttons .nav-button {
+        text-align: center;
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 1rem;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .nav-right>.nav-button {
+            display: none;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<nav>
+    <a href="./index.html" class="nav-logo">
+        <span class="nav-logo-text">
+            <span class="nav-logo-accent">aduLessons</span>
+        </span>
+        <div class="nav-bowtie"></div>
+    </a>
+
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="./modules/modules-logged-out.html">Modules</a>
+            <a href="./about.html">About Us</a>
+        </div>
+
+        <a href="./signup.html" class="nav-button btn-signup">Sign Up</a>
+        <a href="./login.html" class="nav-button btn-login">Log In</a>
+
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="./modules/modules-logged-out.html">Modules</a>
+        <a href="./about.html">About Us</a>
+        <div class="mobile-menu-buttons">
+            <a href="./signup.html" class="nav-button btn-signup">Sign Up</a>
+            <a href="./login.html" class="nav-button btn-login">Log In</a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function (event) {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.querySelector('.hamburger');
+
+        if (menu && hamburger && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove('active');
+        }
+    });
+</script>
