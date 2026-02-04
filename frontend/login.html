@@ -1,1 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aduLessons | Login</title>
+
+    <!-- Google Fonts or other font imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="./css/global.css">
+
+    <!-- Page-specific internal styles -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            position: relative;
+            background-color: #C8E7FF;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid black;
+            box-shadow: 6px 6px 0px #2B5B8B;
+        }
+
+        .login-container h1 {
+            font-family: 'Fredoka', sans-serif;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            color: #000;
+        }
+
+        .login-container p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            color: #000;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            font-family: 'Nunito Sans', sans-serif;
+            box-shadow: 0px 2px 2px #7d7f7c;
+        }
+
+        .login-container input::placeholder {
+            color: #676662;
+        }
+
+        .login-container .login-btn {
+            width: 130px;
+            padding: 0.8rem;
+            background-color: #2f5c96;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.75rem auto;
+            display: block;
+            font-family: 'Nunito Sans', sans-serif;
+            box-shadow: 0px 2px 2px #7d7f7c;
+        }
+
+        .login-container .signup-link {
+            font-size: 0.85rem;
+            color: #000;
+        }
+
+        .login-container .signup-link a {
+            font-weight: 600;
+            text-decoration: underline;
+            color: #000;
+        }
+
+        .login-mascot {
+            position: absolute;
+            left: -180px;
+            bottom: -10px;
+            width: 220px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+
+            .login-mascot {
+                left: -60px;
+                width: 90px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here, not needed for this screen -->
+    <!-- <nav id="navbar"></nav>-->
+
+    <main>
+        <div class="login-container">
+            <h1>Let's Grow Together</h1>
+            <p>Please log in or sign up to continue.</p>
+
+            <form id="loginForm">
+                <input type="email" placeholder="Your Email" required>
+                <input type="password" placeholder="Your Password" required>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="signup-link">
+                No account? <a href="signup.html">Sign up</a>
+            </div>
+
+            <img src="./assets/images/mascot-pointer.png" alt="Mascot" class="login-mascot">
+        </div>
+    </main>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
+
+</body>
+
+</html>
