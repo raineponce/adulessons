@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Intro - Finance 101</title>
+
+    <!-- Google Fonts or other font imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <!-- <link rel="stylesheet" href="./styles/global.css"> -->
+
+    <!-- Page-specific internal styles -->
+    <style>
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header section with navigation arrows */
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: none;
+            background-color: #e8e8e8;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-arrow:hover {
+            background-color: #d8d8d8;
+        }
+
+        .nav-arrow:active {
+            background-color: #c8c8c8;
+        }
+
+        .module-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* Video container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+            display: block;
+        }
+
+        /* Video transcript section */
+        .transcript-section {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .transcript-heading {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .transcript-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #2a2a2a;
+        }
+
+        .transcript-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .module-title {
+                font-size: 2rem;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+            }
+
+            .transcript-heading {
+                font-size: 1.5rem;
+            }
+
+            .transcript-text {
+                font-size: 1rem;
+            }
+
+            main {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .module-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .module-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .video-container {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here -->
+    <nav id="navbar"></nav>
+
+    <main>
+        <!-- Module header with navigation -->
+        <header class="module-header">
+            <button class="nav-arrow" aria-label="Previous module">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <h1 class="module-title">Module Intro</h1>
+            <button class="nav-arrow" aria-label="Next module">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Video section -->
+        <section class="video-container">
+            <!-- Placeholder YouTube embed - Replace VIDEO_ID with actual video ID -->
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Finance 101 Intro - AduLessons"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </section>
+
+        <!-- Transcript section -->
+        <section class="transcript-section">
+            <h2 class="transcript-heading">Video transcript</h2>
+            <div class="transcript-text">
+                <p>"Hey! Welcome to your favorite lesson... kidding. Or maybe not? We're just as excited as you are to
+                    get started.</p>
+
+                <p>In this module, we're going to break down the money stuff nobody ever explains.</p>
+
+                <p>We'll talk about rent basics, like etiquette, fees, and why lease agreements are actually a thing.
+                </p>
+
+                <p>We'll go over budgeting, so you know where your money is going instead of wondering where it went.
+                </p>
+
+                <p>We'll look at taxes and all the forms that sound scary but aren't.</p>
+
+                <p>We'll show you how to find scholarships and financial aid, because free money is the best kind of
+                    money.</p>
+
+                <p>And yes, we'll help you understand how everything comes together.</p>
+
+                <p>Fun, right?</p>
+
+                <p>And if you get confused, just ask a hamster... they claim they know everything.</p>
+
+                <p>(Do they really? We'll let you decide.)</p>
+
+                <p>Alright, let's get into it!"</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+
+    <!-- Toggle mobile hamburger menu -->
+    <script src="../js/hamburger-menu.js"></script>
+</body>
+
+</html>

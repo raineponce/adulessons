@@ -1,0 +1,355 @@
+<!-- Will put reusable nav component for logged in users here later -->
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    nav {
+        background-color: #FFFFFF;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        width: 100%;
+    }
+
+    .nav-logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-logo-image {
+        height: 60px;
+    }
+
+    .nav-logo-text {
+        font-family: "Fredoka", sans-serif;
+    }
+
+    .nav-logo-accent {
+        color: #4A5568;
+    }
+
+    .nav-bowtie {
+        width: 30px;
+        height: 15px;
+        background-color: #4A90E2;
+        clip-path: polygon(0% 50%, 40% 0%, 40% 40%, 60% 40%, 60% 0%, 100% 50%, 60% 100%, 60% 60%, 40% 60%, 40% 100%);
+    }
+
+    .nav-center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .search-dropdown {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .search-button {
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        background-color: #EFEFEF;
+        border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: background-color 0.2s;
+    }
+
+    .search-button:hover {
+        background-color: #E0E0E0;
+    }
+
+    .search-icon {
+        width: 20px;
+        height: 20px;
+        stroke: #333;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #EFEFEF;
+        min-width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+    }
+
+    .dropdown-content a {
+        color: #333;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.2s;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #D0D0D0;
+    }
+
+    .search-dropdown:hover .dropdown-content,
+    .search-dropdown:focus-within .dropdown-content {
+        display: block;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: #4A90E2;
+    }
+
+    .nav-icons {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .nav-icon-link {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        transition: transform 0.2s;
+    }
+
+    .nav-icon-link:hover {
+        transform: translateY(-2px);
+    }
+
+    .profile-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: #D4A574;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .coin-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .icon-label {
+        font-size: 0.9rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 4px;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        margin-right: 1rem;
+        padding: 1rem;
+        z-index: 1000;
+        min-width: 200px;
+    }
+
+    .mobile-menu a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s;
+    }
+
+    .mobile-menu a:hover {
+        background-color: #EFEFEF;
+        border-radius: 4px;
+    }
+
+    .mobile-menu-icons {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #EFEFEF;
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 1rem;
+        }
+
+        .nav-center {
+            display: none;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .nav-icons {
+            display: none;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<nav>
+    <a href="../account/dashboard.html" class="nav-logo">
+        <img class="nav-logo-image" src="../assets/images/logo-1.png" alt="aduLessons Logo">
+    </a>
+
+    <div class="nav-center">
+        <div class="search-dropdown">
+            <button class="search-button">
+                <span>Search</span>
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Finance 101</a>
+                <a href="#">Social Skills</a>
+                <a href="#">Productivity</a>
+                <a href="#">Cooking 101</a>
+                <a href="#">Household Basics</a>
+                <a href="#">Transportation</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="../account/dashboard.html">Home</a>
+            <a href="../modules/module-list.html">Modules</a>
+        </div>
+
+        <div class="nav-icons">
+            <a href="../account/profile.html" class="nav-icon-link">
+                <img class="profile-icon" src="../assets/images/profile-pic.png" alt="Profile Icon">
+                <span class="icon-label">Zoey</span>
+            </a>
+            <a href="../account/rewards.html" class="nav-icon-link">
+                <img class="coin-icon" src="../assets/images/coin-icon.png" alt="Coin Icon">
+                <span class="icon-label">210 pts</span>
+            </a>
+        </div>
+
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../account/dashboard.html">Home</a>
+        <a href="../modules/module-list.html">Modules</a>
+        <div style="padding: 0.5rem 1rem; font-weight: 600; color: #666; margin-top: 0.5rem;">Search Modules:</div>
+        <a href="#" style="padding-left: 1.5rem;">Finance 101</a>
+        <a href="#" style="padding-left: 1.5rem;">Social Skills</a>
+        <a href="#" style="padding-left: 1.5rem;">Productivity</a>
+        <a href="#" style="padding-left: 1.5rem;">Cooking 101</a>
+        <a href="#" style="padding-left: 1.5rem;">Household Basics</a>
+        <a href="#" style="padding-left: 1.5rem;">Transportation</a>
+        <div class="mobile-menu-icons">
+            <a href="../account/profile.html" class="nav-icon-link">
+                <img class="profile-icon" src="../assets/images/profile-pic.png" alt="Profile Icon">
+                <span class="icon-label">Zoey</span>
+            </a>
+            <a href="../account/rewards.html" class="nav-icon-link">
+                <img class="coin-icon" src="../assets/images/coin-icon.png" alt="Coin Icon">
+                <span class="icon-label">210 pts</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function (event) {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.querySelector('.hamburger');
+
+        if (menu && hamburger && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove('active');
+        }
+    });
+</script>

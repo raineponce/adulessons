@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Title</title>
-    
+
     <!-- Google Fonts or other font imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
     <!-- Global styles -->
-    <link rel="stylesheet" href="./css/global.css">
-    
+    <!-- <link rel="stylesheet" href="./styles/global.css"> -->
+
     <!-- Page-specific internal styles -->
     <style>
         /* Page-specific CSS goes here */
-        /* This allows for both global styling and page-specific overrides */
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
     </style>
 </head>
+
 <body>
-    <!-- Navigation component will be inserted here -->
-    <!-- <nav-component /> -->
-    
+    <!-- Navigation component loads here -->
+    <nav id="navbar"></nav>
+
     <main>
         <!-- Page content goes here -->
         <!-- AI will fill this section based on the design -->
     </main>
-    
-    <!-- Footer component will be inserted here -->
-    <!-- <footer-component /> -->
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
 </body>
+
 </html>
