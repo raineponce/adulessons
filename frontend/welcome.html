@@ -14,11 +14,133 @@
         rel="stylesheet">
 
     <!-- Global styles -->
-    <!-- <link rel="stylesheet" href="./styles/global.css"> -->
+    <link rel="stylesheet" href="./styles/global.css">
 
     <!-- Page-specific internal styles -->
     <style>
-        /* Page-specific CSS goes here */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            line-height: 1.6;
+        }
+
+        .hero {
+            position: relative;
+            padding: 3rem 4rem 6rem;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            color: #2B5B8B;
+        }
+
+        .hero-text p {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 2.5rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .cta-button {
+            background-color: #FFCC00;
+            color: #000;
+            font-family: 'Nunito Sans', sans-serif;
+            padding: 1.2rem 1.5rem;
+            border-radius: 25px;
+            box-shadow: 0px 2px 2px #7d7f7c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #e76f3d;
+        }
+
+        .hero-image {
+            position: absolute;
+            bottom: -50px;
+            right: 4rem;
+        }
+
+        .hero-image img {
+            max-width: 400px;
+            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.2));
+            margin-top: 0;
+        }
+
+        .features {
+            background-color: #2B5B8B;
+            width: 100%;
+        }
+
+        .features-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem 3rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-family: 'Fredoka', sans-serif;
+            color: #fff;
+        }
+
+        .feature-columns {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feature-box {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .features p {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+
+            .hero-text {
+                max-width: 50%;
+            }
+
+            .hero-image {
+                max-width: 40%;
+            }
+
+            .feature-columns {
+                flex-direction: row;
+            }
+
+            .feature-box {
+                flex: 1;
+            }
+        }
+
         #navbar {
             position: sticky;
             top: 0;
