@@ -66,7 +66,7 @@
         }
 
         .cta-button:hover {
-            background-color: #e76f3d;
+            background-color: #BADCFF;
         }
 
         .hero-image {
@@ -77,7 +77,6 @@
 
         .hero-image img {
             max-width: 400px;
-            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.2));
             margin-top: 0;
         }
 
@@ -117,6 +116,10 @@
             font-family: 'Nunito Sans', sans-serif;
         }
 
+        .hero-image {
+            display: none;
+        }
+
         @media (min-width: 768px) {
             .hero-content {
                 flex-direction: row;
@@ -129,7 +132,7 @@
             }
 
             .hero-image {
-                max-width: 40%;
+                display: block;
             }
 
             .feature-columns {
