@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title>aduLessons | Sign Up</title>
 
     <!-- Google Fonts or other font imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,12 +28,27 @@
 </head>
 
 <body>
-    <!-- Navigation component loads here -->
-    <nav id="navbar"></nav>
+    <!-- Navigation component loads here, but not needed in this page-->
+    <!--<nav id="navbar"></nav>-->
 
     <main>
-        <!-- Page content goes here -->
-        <!-- AI will fill this section based on the design -->
+        <div class="signup-container">
+            <h1>Sign Up</h1>
+            <p>Learn key adulting skills today!</p>
+
+            <form id="signupForm">
+                <input type="text" placeholder="Enter Display Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="password" placeholder="Your Password" required>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+
+            <div class="login-link">
+                Already have an account? <a href="index.html">Log in</a>
+            </div>
+
+            <img src="./assets/images/mascot-pointer.png" alt="Mascot" class="signup-mascot">
+        </div>
     </main>
 
     <!-- Footer component loads here -->
