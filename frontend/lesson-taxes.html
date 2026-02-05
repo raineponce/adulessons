@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxes - Lesson | aduLessons</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <!-- <link rel="stylesheet" href="./styles/global.css"> -->
+
+    <!-- Page-specific internal styles -->
+    <style>
+        /* CSS Variables */
+        :root {
+            --color-primary: #1a1a2e;
+            --color-pink: #ffc8d0;
+            --color-pink-border: #e8a0aa;
+            --color-pink-hover: #ffb8c4;
+            --color-white: #ffffff;
+            --color-text-dark: #2d2d2d;
+            --color-text-muted: #6b7280;
+            --color-accent-blue: #4a6fa5;
+            --color-light-blue: #d4e5f7;
+            --color-gold: #ffd700;
+            --color-gold-border: #daa520;
+            --font-display: 'Fredoka', sans-serif;
+            --font-body: 'Nunito Sans', sans-serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-white);
+            color: var(--color-text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--color-white);
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .logo-bowtie {
+            width: 24px;
+            height: auto;
+            margin-top: 4px;
+        }
+
+        .search-container {
+            flex: 0 1 300px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f5f5f5;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            color: var(--color-text-muted);
+        }
+
+        .search-box input::placeholder {
+            color: var(--color-text-muted);
+        }
+
+        .search-box svg {
+            color: var(--color-text-muted);
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-accent-blue);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .user-avatar-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            transition: transform 0.2s ease;
+        }
+
+        .user-avatar-link:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 3px solid var(--color-gold);
+            object-fit: cover;
+            background: #f0e6d3;
+        }
+
+        .user-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+
+        .points-badge-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            transition: transform 0.2s ease;
+            padding-top: 8px;
+        }
+
+        .points-badge-link:hover {
+            transform: scale(1.05);
+        }
+
+        .points-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        /* Main Content Styles */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* Navigation Arrows */
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .nav-arrow {
+            background: var(--color-white);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--color-text-dark);
+        }
+
+        .nav-arrow:hover {
+            background: #f5f5f5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-arrow svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-text-dark);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+
+        /* Lesson Content */
+        .lesson-page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lesson-page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .lesson-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        .lesson-title {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .lesson-text {
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-heading {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-list {
+            margin: 1rem 0 1.5rem 1.5rem;
+            font-size: 1.125rem;
+            line-height: 2;
+        }
+
+        .lesson-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-list li strong {
+            font-weight: 700;
+        }
+
+        .nested-list {
+            margin-top: 0.5rem;
+            margin-left: 1.5rem;
+            list-style-type: disc;
+        }
+
+        .nested-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        .lesson-link {
+            color: var(--color-accent-blue);
+            text-decoration: underline;
+        }
+
+        .lesson-link:visited {
+            color: var(--color-accent-blue);
+        }
+
+        .lesson-link:hover {
+            color: var(--color-accent-blue);
+        }
+
+        /* Conclusion Box */
+        .conclusion-box {
+            background: var(--color-light-blue);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+
+        .conclusion-box .section-heading {
+            margin-top: 0;
+        }
+
+        /* Quiz Button */
+        .quiz-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: var(--color-accent-blue);
+            color: var(--color-white);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            background: #3d5d8a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 111, 165, 0.3);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .nav-row {
+                padding: 0;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .search-container {
+                order: 3;
+                flex: 1 1 100%;
+                margin: 0;
+            }
+
+            main {
+                padding: 1.5rem 1rem;
+            }
+
+            .lesson-title {
+                font-size: 1.25rem;
+            }
+
+            .lesson-text {
+                font-size: 1rem;
+            }
+
+            .section-heading {
+                font-size: 1.125rem;
+            }
+
+            .lesson-list {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-section {
+                gap: 0.5rem;
+            }
+
+            .avatar-img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .quiz-button {
+                font-size: 1rem;
+                padding: 0.875rem 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here -->
+    <nav id="navbar">
+        <!-- Placeholder navigation - will be replaced by components.js -->
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                aduLessons
+                <!-- bowtie-icon.svg -->
+                <svg class="logo-bowtie" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8C12 8 8 4 4 2C2 1 0 2 0 4V12C0 14 2 15 4 14C8 12 12 8 12 8Z" fill="#4a6fa5"/>
+                    <path d="M12 8C12 8 16 4 20 2C22 1 24 2 24 4V12C24 14 22 15 20 14C16 12 12 8 12 8Z" fill="#4a6fa5"/>
+                    <circle cx="12" cy="8" r="2" fill="#4a6fa5"/>
+                </svg>
+            </a>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="modules.html" class="nav-link">Modules</a>
+            </div>
+
+            <div class="user-section">
+                <a href="profile.html" class="user-avatar-link">
+                    <!-- user-avatar.png -->
+                    <img src="images/user-avatar.png" alt="User Avatar" class="avatar-img" onerror="this.style.background='#f0e6d3'">
+                    <span class="user-name">Zoey</span>
+                </a>
+                <a href="rewards.html" class="points-badge-link">
+                    <span class="points-text">210 pts</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Navigation Row with Back and Next buttons -->
+        <div class="nav-row">
+            <button class="back-button" onclick="goBack()" aria-label="Go back">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <button class="nav-arrow" id="nextBtn" onclick="changePage(1)" aria-label="Next page">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Page 1: The Very Basics -->
+        <section class="lesson-page active" id="page1">
+            <div class="lesson-content">
+                <h1 class="lesson-title">Taxes (The Very Basics)</h1>
+                
+                <p class="lesson-text">
+                    Welcome to the magical land of taxes, where you get mail you didn't ask for and forms with names like "1099-misc." But don't panic! When you get down to it, taxes aren't as scary as they sound.
+                </p>
+
+                <h2 class="section-heading">So what are taxes?</h2>
+                
+                <p class="lesson-text">
+                    Taxes are basically the way we all chip in to keep things running: roads, schools, libraries, emergency services, all that good stuff.
+                </p>
+                
+                <p class="lesson-text">
+                    When you earn money, buy stuff, or own certain things, a small piece of that goes toward public services.
+                </p>
+
+                <h2 class="section-heading">When do you file?</h2>
+                
+                <p class="lesson-text">
+                    Most people file taxes once a year, usually between January and April.
+                </p>
+                
+                <p class="lesson-text">
+                    The big day to remember is Tax Day, typically around April 15 (unless the government changes it for some reason ... don't worry, a quick internet search can let you know).
+                </p>
+            </div>
+        </section>
+
+        <!-- Page 2: Who Should File -->
+        <section class="lesson-page" id="page2">
+            <div class="lesson-content">
+                <h2 class="section-heading" style="margin-top: 0;">Who Should File?</h2>
+                
+                <p class="lesson-text">
+                    Short answer: Almost everyone.<br>
+                    Even if you made only a little money last year, it's usually worth filing because:
+                </p>
+                
+                <ul class="lesson-list">
+                    <li>You might get some of your money back (we love tax refunds)</li>
+                    <li>It helps you stay in good standing with the IRS</li>
+                    <li>It's great practice for being a Responsible Adult™</li>
+                </ul>
+
+                <h2 class="section-heading">What Should You Expect?</h2>
+                
+                <p class="lesson-text">
+                    When tax season comes around, you'll get documents from places that paid you (like your job, school, or bank).
+                </p>
+                
+                <p class="lesson-text">
+                    These forms tell the IRS how much money you earned so they can compare it to what you report.
+                </p>
+                
+                <p class="lesson-text">
+                    Your job is just to plug those numbers into your tax filing service and let the software do the heavy lifting.
+                </p>
+            </div>
+        </section>
+
+        <!-- Page 3: Tax Filing Services -->
+        <section class="lesson-page" id="page3">
+            <div class="lesson-content">
+                <h2 class="section-heading" style="margin-top: 0;">Tax Filing Services</h2>
+                
+                <p class="lesson-text">
+                    Good news: you don't really have to do any math. Tax software exists and helps make tax filing a breeze :)
+                </p>
+
+                <h3 class="section-heading">Popular Online Filing Services</h3>
+                
+                <ul class="lesson-list">
+                    <li>These can walk you through everything step-by-step:</li>
+                    <li><strong>TurboTax</strong> - very user-friendly, but not always free</li>
+                    <li><strong>H&R Block Online</strong> - solid option with clear explanations</li>
+                    <li><strong>Cash App Taxes</strong> - often free for federal and state returns</li>
+                </ul>
+
+                <h3 class="section-heading">Free Filing Options</h3>
+                
+                <ul class="lesson-list">
+                    <li>If your budget just covers rent and ramen, take a look at these free options:</li>
+                    <li>
+                        <strong>IRS Free File</strong>
+                        <ul class="nested-list">
+                            <li>Available to many taxpayers (usually based on income limits)</li>
+                            <li>Check it out: <a href="https://www.irs.gov/filing/free-file-do-your-federal-taxes-for-free" class="lesson-link" target="_blank" rel="noopener">https://www.irs.gov/filing/free-file-do-your-federal-taxes-for-free</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>FreeTaxUSA</strong>
+                        <ul class="nested-list">
+                            <li>Free for federal returns</li>
+                            <li>State filing usually has a small fee</li>
+                            <li>Easy to navigate and beginner-friendly</li>
+                            <li>Check it out: <a href="https://www.freetaxusa.com/" class="lesson-link" target="_blank" rel="noopener">https://www.freetaxusa.com/</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="conclusion-box">
+                    <h3 class="section-heading">Conclusion</h3>
+                    
+                    <p class="lesson-text" style="margin-bottom: 1rem;">
+                        Taxes feel intimidating at first, but once you've filed once, everything starts clicking.
+                    </p>
+                    
+                    <p class="lesson-text" style="margin-bottom: 0;">
+                        Think of it like laundry: confusing when you're new, but eventually you can do it while half-asleep.
+                    </p>
+                </div>
+
+                <div class="quiz-button-container">
+                    <a href="lesson-quiz.html" class="quiz-button">Quiz Question</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
+
+    <!-- Page Navigation Script -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 3;
+
+        function changePage(direction) {
+            const newPage = currentPage + direction;
+            
+            if (newPage < 1 || newPage > totalPages) return;
+            
+            // Hide current page
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            
+            // Show new page
+            currentPage = newPage;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Update button states
+            updateNavButtons();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateNavButtons() {
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Hide next button on last page
+            if (currentPage === totalPages) {
+                nextBtn.style.visibility = 'hidden';
+            } else {
+                nextBtn.style.visibility = 'visible';
+            }
+        }
+
+        function goBack() {
+            if (currentPage === 1) {
+                // Go back to lessons list
+                window.location.href = 'lesson-list.html';
+            } else {
+                changePage(-1);
+            }
+        }
+
+        // Initialize button states
+        updateNavButtons();
+    </script>
+</body>
+
+</html>
