@@ -63,6 +63,7 @@
             border: 1px solid black;
             box-shadow: 6px 6px 0px #2B5B8B;
             position: relative;
+            margin-top: -3rem;
         }
 
         .signup-container h1 {
@@ -137,7 +138,22 @@
             margin: 0 5px;
         }
 
-        @media (max-width: 480px) {
+        .top-header {
+            padding: 1.5rem 1.5rem;
+        }
+
+        .logo-link img {
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-link img:hover {
+            transform: scale(1.05);
+        }
+
+
+        @media (max-width: 500px) {
             .signup-container {
                 padding: 1.5rem;
             }
@@ -153,6 +169,12 @@
 <body>
     <!-- Navigation component loads here, but not needed in this page-->
     <!--<nav id="navbar"></nav>-->
+
+    <header class="top-header">
+        <a href="../welcome.html" class="logo-link">
+            <img src="../assets/images/logo-1.png" alt="aduLessons logo">
+        </a>
+    </header>
 
     <main>
         <div class="signup-container">
