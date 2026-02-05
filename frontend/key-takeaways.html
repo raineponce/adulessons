@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Take Aways | aduLessons</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <!-- <link rel="stylesheet" href="./styles/global.css"> -->
+
+    <!-- Page-specific internal styles -->
+    <style>
+        /* CSS Variables */
+        :root {
+            --color-primary: #1a1a2e;
+            --color-white: #ffffff;
+            --color-text-dark: #2d2d2d;
+            --color-text-muted: #6b7280;
+            --color-accent-blue: #4a6fa5;
+            --color-gold: #ffd700;
+            --color-gold-border: #daa520;
+            --font-display: 'Fredoka', sans-serif;
+            --font-body: 'Nunito Sans', sans-serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-white);
+            color: var(--color-text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--color-white);
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .logo-bowtie {
+            width: 24px;
+            height: auto;
+            margin-top: 4px;
+        }
+
+        .search-container {
+            flex: 0 1 300px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f5f5f5;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            color: var(--color-text-muted);
+        }
+
+        .search-box input::placeholder {
+            color: var(--color-text-muted);
+        }
+
+        .search-box svg {
+            color: var(--color-text-muted);
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-accent-blue);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .user-avatar-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            transition: transform 0.2s ease;
+        }
+
+        .user-avatar-link:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 3px solid var(--color-gold);
+            object-fit: cover;
+            background: #f0e6d3;
+        }
+
+        .user-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+
+        .points-badge-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            transition: transform 0.2s ease;
+            padding-top: 8px;
+        }
+
+        .points-badge-link:hover {
+            transform: scale(1.05);
+        }
+
+
+        .points-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        /* Main Content Styles */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-text-dark);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+
+        /* Key Takeaways Content */
+        .takeaways-container {
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--color-text-dark);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .print-button {
+            position: absolute;
+            top: 3rem;
+            right: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .print-button:hover {
+            transform: scale(1.1);
+        }
+
+        .print-button svg {
+            width: 40px;
+            height: 40px;
+            color: var(--color-text-dark);
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .takeaways-content {
+            flex: 1;
+        }
+
+        .print-button:hover {
+            transform: scale(1.1);
+        }
+
+        .print-button svg {
+            width: 40px;
+            height: 40px;
+            color: var(--color-text-dark);
+        }
+
+        .takeaways-list {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .takeaways-list li {
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            padding-left: 0.5rem;
+        }
+
+        .takeaways-list li strong {
+            font-weight: 700;
+        }
+
+        .list-number {
+            font-weight: 700;
+        }
+
+        .mascot-container {
+            position: relative;
+        }
+
+        .mascot-img {
+            width: 150px;
+            height: auto;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            margin-top: 2rem;
+        }
+
+        .summary-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--color-text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .points-earned {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .points-coin {
+            width: 36px;
+            height: 36px;
+        }
+
+        .points-value {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+
+        /* Back to Module Button */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .module-button {
+            display: inline-block;
+            background: var(--color-accent-blue);
+            color: var(--color-white);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .module-button:hover {
+            background: #3d5d8a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 111, 165, 0.3);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .search-container {
+                order: 3;
+                flex: 1 1 100%;
+                margin: 0;
+            }
+
+            main {
+                padding: 1.5rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .print-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            .mascot-container {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .mascot-img {
+                width: 120px;
+            }
+
+            .takeaways-list li {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-section {
+                gap: 0.5rem;
+            }
+
+            .avatar-img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .coin-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .module-button {
+                font-size: 1rem;
+                padding: 0.875rem 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here -->
+    <nav id="navbar">
+        <!-- Placeholder navigation - will be replaced by components.js -->
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                aduLessons
+                <!-- bowtie-icon.svg -->
+                <svg class="logo-bowtie" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8C12 8 8 4 4 2C2 1 0 2 0 4V12C0 14 2 15 4 14C8 12 12 8 12 8Z" fill="#4a6fa5" />
+                    <path d="M12 8C12 8 16 4 20 2C22 1 24 2 24 4V12C24 14 22 15 20 14C16 12 12 8 12 8Z"
+                        fill="#4a6fa5" />
+                    <circle cx="12" cy="8" r="2" fill="#4a6fa5" />
+                </svg>
+            </a>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="modules.html" class="nav-link">Modules</a>
+            </div>
+
+            <div class="user-section">
+                <a href="profile.html" class="user-avatar-link">
+                    <!-- user-avatar.png -->
+                    <img src="images/user-avatar.png" alt="User Avatar" class="avatar-img"
+                        onerror="this.style.background='#f0e6d3'">
+                    <span class="user-name">Zoey</span>
+                </a>
+                <a href="rewards.html" class="points-badge-link">
+                    <span class="points-text">210 pts</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <button class="back-button" onclick="window.location.href='lesson-quiz.html'" aria-label="Go back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+
+        <div class="takeaways-container">
+            <h1 class="page-title">Key Take Aways</h1>
+
+            <button class="print-button" onclick="window.print()" aria-label="Print page">
+                <img src="../assets/images/printer-icon.png" alt="Print" style="width: 40px; height: 40px;">
+            </button>
+
+            <div class="content-wrapper">
+                <div class="takeaways-content">
+                    <ol class="takeaways-list">
+                        <li>
+                            <span class="list-number">1.</span> <strong>Taxes</strong> are a yearly process where you
+                            report your income, use simple tools to file, and often get money back if you've overpaid.
+                        </li>
+                        <li>
+                            <span class="list-number">2.</span> <strong>Renting</strong> is about finding a safe place
+                            that fits your budget, understanding your lease, and being a responsible, respectful tenant.
+                        </li>
+                        <li>
+                            <span class="list-number">3.</span> <strong>Managing your money</strong> means budgeting
+                            smartly, building savings, and knowing how to use debit and credit in healthy ways.
+                        </li>
+                    </ol>
+
+                    <div class="summary-section">
+                        <h2 class="summary-title">Summary</h2>
+                        <div class="points-earned">
+                            <img src="../assets/images/coin-icon.png" alt="Coin" class="points-coin">
+                            <span class="points-value">+200 points!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mascot-container">
+                    <!-- hamster-mascot-pointer.png -->
+                    <img src="images/hamster-mascot-pointer.png" alt="Mascot" class="mascot-img"
+                        onerror="this.style.display='none'">
+                </div>
+            </div>
+
+            <div class="button-container">
+                <a href="lesson-list.html" class="module-button">Back to Module</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
+</body>
+
+</html>
