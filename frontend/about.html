@@ -24,6 +24,28 @@
             z-index: 1000;
         }
 
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #1E1E1E;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+
+        .back-button {
+            left: 4rem;
+            top: 2rem;
+        }
+
+
         body {
             font-family: 'Nunito Sans', sans-serif;
             margin: 0;
@@ -35,6 +57,7 @@
             padding: 2rem 1rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
 
         h1,
@@ -154,6 +177,8 @@
     <nav id="navbar"></nav>
 
     <main>
+        <a href="javascript:history.back()" class="back-button">&lt;</a>
+
         <!-- About Us Page -->
         <h1>About Us</h1>
 
