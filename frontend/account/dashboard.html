@@ -1,1 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - aduLessons</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="./styles/global.css">
+
+    <!-- Page-specific internal styles -->
+    <style>
+        :root {
+            --primary-blue: #4a7ca8;
+            --accent-yellow: #f4d03f;
+            --bg-light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
+
+        .welcome-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-header h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .welcome-mascot {
+            width: 120px;
+            height: 120px;
+        }
+
+        .modules-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Module Carousel */
+        .carousel-container {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1rem 0 2rem 0;
+        }
+
+        .carousel-wrapper {
+            overflow: visible;
+            padding: 0 3rem;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.3s ease;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .module-card {
+            min-width: 280px;
+            padding: 1rem 1.5rem 2rem 1.5rem;
+            border-radius: 32px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .module-card.insurance {
+            background:  #fff0b5;
+            box-shadow: 8px 8px 0px 0px #FED18A;
+        }
+
+        .module-card.taxes {
+            background: #FFDBE9;
+            box-shadow: 8px 8px 0px 0px #FFAAD1;
+        }
+
+        .module-card.managing-money {
+            background: #C2D0FE;
+            box-shadow: 8px 8px 0px 0px #8AA1FE;
+        }
+
+        .module-progress {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            padding: 0.15rem 0.4rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 2px solid rgba(0, 0, 0, 0.8);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .module-content {
+            margin-top: 2.5rem;
+        }
+
+        .module-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .module-card h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .module-card .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .module-card .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8bc34a 0%, #9ccc65 100%);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+        .module-card .continue-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            float: right;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s ease;
+        }
+
+        .module-card .continue-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .carousel-btn.prev {
+            left: 0;
+        }
+
+        .carousel-btn.next {
+            right: 0;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d0d0d0;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: var(--text-dark);
+        }
+
+        /* Streak Section */
+        .streak-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+
+        .streak-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .streak-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 2.5rem;
+        }
+
+        .streak-header h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .streak-days {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .day-item {
+            text-align: center;
+        }
+
+        .day-label {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day-icon.active {
+            filter: none;
+        }
+
+        .day-icon.inactive {
+            filter: grayscale(100%);
+            opacity: 0.4;
+        }
+        
+        .day-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .streak-points {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .coin-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Earned Points Section */
+        .points-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+
+        .points-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .points-header h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .points-total {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .activity-tab {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+        }
+
+        .activity-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .activity-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .activity-points {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Prize Store Section */
+        .prize-store-section {
+            margin-bottom: 2rem;
+        }
+
+        .prize-store-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rewards-container {
+            background: linear-gradient(135deg, #d4e9f7 0%, #b8daf0 100%);
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .rewards-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .reward-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+        }
+
+        .reward-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .reward-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .reward-details h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .see-details-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        /* Collectable Section */
+        .collectable-container {
+            background: linear-gradient(135deg, #4a7ca8 0%, #3a6888 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .collectable-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .collectable-content {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .divider-line {
+            width: 2px;
+            height: 100%;
+            min-height: 300px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8bc34a 0%, #a4d65e 100%);
+            border-radius: 10px;
+            width: 33%;
+            transition: width 0.3s ease;
+        }
+
+        .collectable-description {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .mascot-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mascot-image {
+            width: 200px;
+            height: auto;
+        }
+
+        .collect-btn {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .collect-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Coupon Pop-up Overlay */
+        .coupon-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.25);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .coupon-overlay.active {
+            display: flex;
+        }
+
+        .coupon-modal {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .coupon-modal h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .qr-code-container {
+            background: #f0f0f0;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .qr-code-placeholder {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: #999;
+            border-radius: 8px;
+        }
+
+        .close-modal-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(74, 124, 168, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .close-modal-btn:hover {
+            background: #3a6888;
+            box-shadow: 0 6px 16px rgba(74, 124, 168, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .welcome-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .carousel-wrapper {
+                padding: 0 2.5rem;
+            }
+
+            .module-card {
+                min-width: 240px;
+            }
+
+            .streak-days {
+                gap: 0.5rem;
+            }
+
+            .day-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1.5rem;
+            }
+
+            .collectable-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .divider-line {
+                display: none;
+            }
+
+            .mascot-section {
+                order: -1;
+            }
+
+            .mascot-image {
+                width: 180px;
+            }
+
+            .reward-card {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .reward-left {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .streak-days {
+                flex-wrap: wrap;
+            }
+
+            .carousel-wrapper {
+                padding: 0 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here -->
+    <nav id="navbar"></nav>
+
+    <main>
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-header">
+                <h1>Welcome back, Zoey!</h1>
+                <img src="../assets/images/mascot-pointer.png" alt="Mr. Wise mascot" class="welcome-mascot">
+            </div>
+            <h2 class="modules-title">My Modules</h2>
+        </section>
+
+        <!-- Module Carousel -->
+        <section class="carousel-container">
+            <button class="carousel-btn prev" aria-label="Previous module">&#8249;</button>
+            <div class="carousel-wrapper">
+                <div class="carousel">
+                    <div class="module-card insurance">
+                        <span class="module-progress">Finance 101</span>
+                        <div class="module-content">
+                            <h3><img src="../assets/images/finance-icon.png" alt="Insurance icon" class="module-icon"> Insurance</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%;"></div>
+                            </div>
+                            <button class="continue-btn">Continue</button>
+                        </div>
+                    </div>
+                    <div class="module-card taxes">
+                        <span class="module-progress">Finance 101</span>
+                        <div class="module-content">
+                            <h3><img src="../assets/images/finance-icon.png" alt="Taxes icon" class="module-icon"> Taxes</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%;"></div>
+                            </div>
+                            <button class="continue-btn">Continue</button>
+                        </div>
+                    </div>
+                    <div class="module-card managing-money">
+                        <span class="module-progress">Finance 101</span>
+                        <div class="module-content">
+                            <h3><img src="../assets/images/finance-icon.png" alt="Managing Money icon" class="module-icon"> Managing Money</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%;"></div>
+                            </div>
+                            <button class="continue-btn">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next" aria-label="Next module">&#8250;</button>
+            <div class="carousel-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
+
+        <!-- Streak Section -->
+        <section class="streak-section">
+            <div class="streak-header">
+                <img src="../assets/images/streak-icon.png" alt="Streak" class="streak-icon">
+                <h2>19 day Streak! Keep the Wheel Spinning</h2>
+            </div>
+            <div class="streak-days">
+                <div class="day-item">
+                    <div class="day-label">M</div>
+                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                </div>
+                <div class="day-item">
+                    <div class="day-label">T</div>
+                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                </div>
+                <div class="day-item">
+                    <div class="day-label">W</div>
+                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                </div>
+                <div class="day-item">
+                    <div class="day-label">Th</div>
+                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                </div>
+                <div class="day-item">
+                    <div class="day-label">F</div>
+                    <div class="day-icon inactive">⚪</div>
+                </div>
+                <div class="day-item">
+                    <div class="day-label">S</div>
+                    <div class="day-icon inactive">⚪</div>
+                </div>
+                <div class="day-item">
+                    <div class="day-label">Su</div>
+                    <div class="day-icon inactive">⚪</div>
+                </div>
+            </div>
+            <div class="streak-points">
+                <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                <span>+5 points</span>
+            </div>
+        </section>
+
+        <!-- Earned Points Section -->
+        <section class="points-section">
+            <div class="points-header">
+                <h2>Earned Points</h2>
+                <div class="points-total">
+                    <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                    <span>210 pts</span>
+                </div>
+            </div>
+            <button class="activity-tab">Recent Activity</button>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-left">
+                        <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
+                        <span>Complete a lesson from any module</span>
+                    </div>
+                    <div class="activity-points">
+                        <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                        <span>+200 pts</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-left">
+                        <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
+                        <span>Take a quiz</span>
+                    </div>
+                    <div class="activity-points">
+                        <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                        <span>+5 pts</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-left">
+                        <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
+                        <span>Login for more than 1 day</span>
+                    </div>
+                    <div class="activity-points">
+                        <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                        <span>+5 pts</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prize Store Section -->
+        <section class="prize-store-section">
+            <h2 class="prize-store-title">Prize Store</h2>
+            
+            <div class="rewards-container">
+                <h3 class="rewards-title">Rewards</h3>
+                
+                <div class="reward-card">
+                    <div class="reward-left">
+                        <img src="../assets/images/money-coupon.png" alt="$ Coupon" class="reward-icon">
+                        <div class="reward-details">
+                            <h3>$10 Walmart Coupon</h3>
+                        </div>
+                    </div>
+                    <button class="see-details-btn" onclick="openCouponModal('$10 Walmart Coupon')">See Details</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-left">
+                        <img src="../assets/images/percent-coupon.png" alt="% Coupon" class="reward-icon">
+                        <div class="reward-details">
+                            <h3>20% off next purchase at AutoZone</h3>
+                        </div>
+                    </div>
+                    <button class="see-details-btn" onclick="openCouponModal('20% off next purchase at AutoZone')">See Details</button>
+                </div>
+
+                <!-- Collectable Section -->
+                <h3 class="collectable-title">Collectable</h3>
+                <div class="collectable-container">
+                    <div class="collectable-content">
+                        <div class="progress-section">
+                            <h3>Progress</h3>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill"></div>
+                            </div>
+                            <p class="collectable-description">
+                                After you complete all of the modules, you'll earn your very own Mr. Wise figurine! 
+                                This collectible represents all the skills you've learned and mastered throughout 
+                                the lessons. Display him proudly and celebrate your achievements!
+                            </p>
+                        </div>
+                        <div class="divider-line"></div>
+                        <div class="mascot-section">
+                            <img src="../assets/images/mascot-wave.png" alt="Mr. Wise collectible figurine" class="mascot-image">
+                            <button class="collect-btn">
+                                Collect Now <img src="../assets/images/lock-icon.png" alt="Locked" style="width: 16px; height: 16px; display: inline-block;">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Coupon Pop-up Overlay -->
+    <div class="coupon-overlay" id="couponOverlay" onclick="closeCouponModal(event)">
+        <div class="coupon-modal" onclick="event.stopPropagation()">
+            <h3 id="couponTitle">Coupon Details</h3>
+            <div class="qr-code-container">
+                <div class="qr-code-placeholder">
+                    QR Code
+                </div>
+            </div>
+            <button class="close-modal-btn" onclick="closeCouponModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
+
+    <!-- Carousel functionality -->
+    <script>
+        // Carousel functionality
+        const carousel = document.querySelector('.carousel');
+        const prevBtn = document.querySelector('.carousel-btn.prev');
+        const nextBtn = document.querySelector('.carousel-btn.next');
+        const dots = document.querySelectorAll('.dot');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            const cardWidth = document.querySelector('.module-card').offsetWidth;
+            const gap = 24; // 1.5rem in pixels
+            carousel.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const maxIndex = Math.ceil(carousel.children.length / 2) - 1;
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+
+        // Responsive carousel update
+        window.addEventListener('resize', updateCarousel);
+    </script>
+
+    <!-- Coupon Modal Functions -->
+    <script>
+        function openCouponModal(couponName) {
+            const overlay = document.getElementById('couponOverlay');
+            const title = document.getElementById('couponTitle');
+            title.textContent = couponName;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeCouponModal(event) {
+            // Close if clicking overlay or close button
+            if (!event || event.target.id === 'couponOverlay' || event.target.classList.contains('close-modal-btn')) {
+                const overlay = document.getElementById('couponOverlay');
+                overlay.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeCouponModal();
+            }
+        });
+    </script>
+</body>
+
+</html>
