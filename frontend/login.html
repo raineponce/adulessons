@@ -57,6 +57,7 @@
             text-align: center;
             border: 1px solid black;
             box-shadow: 6px 6px 0px #2B5B8B;
+            margin-top: -3rem;
         }
 
         .login-container h1 {
@@ -120,7 +121,21 @@
             width: 220px;
         }
 
-        @media (max-width: 480px) {
+        .top-header {
+            padding: 1.5rem 1.5rem;
+        }
+
+        .logo-link img {
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-link img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 500px) {
             .login-container {
                 padding: 1.5rem;
             }
@@ -137,12 +152,18 @@
     <!-- Navigation component loads here, not needed for this screen -->
     <!-- <nav id="navbar"></nav>-->
 
+    <header class="top-header">
+        <a href="../welcome.html" class="logo-link">
+            <img src="../assets/images/logo-1.png" alt="aduLessons logo">
+        </a>
+    </header>
+
     <main>
         <div class="login-container">
             <h1>Let's Grow Together</h1>
             <p>Please log in or sign up to continue.</p>
 
-            <form id="loginForm">
+            <form id="loginForm" action="account/dashboard.html" method="get">
                 <input type="email" placeholder="Your Email" required>
                 <input type="password" placeholder="Your Password" required>
                 <button type="submit" class="login-btn">Login</button>

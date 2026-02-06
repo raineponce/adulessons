@@ -1,1 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aduLessons | Choose Avatar</title>
+
+    <!-- Google Fonts or other font imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="./styles/global.css">
+
+    <!-- Page-specific internal styles -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #000;
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .avatar-card {
+            background-color: #C8E7FF;
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem 1.5rem;
+            border-radius: 25px;
+            border: 1px solid #000;
+            box-shadow: 8px 8px 0px #2B5B8B;
+            text-align: center;
+
+            margin-top: -3rem;
+        }
+
+        .avatar-card h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-avatar {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-avatar img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+        }
+
+        .camera-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .camera-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .avatar-card p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .avatar-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-options button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .avatar-options img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            background-color: #fff;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .avatar-options button:hover img {
+            transform: scale(1.1);
+            border-color: #2B5B8B;
+            box-shadow: 0 6px 15px rgba(43, 91, 139, 0.4);
+        }
+
+        .avatar-options img.selected {
+            border-color: #2B5B8B;
+            box-shadow: 0 0 0 4px rgba(43, 91, 139, 0.25);
+        }
+
+        .save-btn {
+            background-color: #2B5B8B;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 0.6rem 2rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0px 2px 2px #7d7f7c;
+            text-decoration: none;
+        }
+
+        .top-header {
+            padding: 1.5rem 1.5rem;
+        }
+
+        .logo-link img {
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-link img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .avatar-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .current-avatar img {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here -->
+    <!-- <nav id="navbar"></nav> -->
+
+    <header class="top-header">
+        <a href="../welcome.html" class="logo-link">
+            <img src="../assets/images/logo-1.png" alt="aduLessons logo">
+        </a>
+    </header>
+
+    <main>
+        <section class="avatar-card" aria-labelledby="avatar-heading">
+            <h1 id="avatar-heading">Select Profile Picture</h1>
+
+            <div class="current-avatar">
+                <img src="../assets/images/profile-pic.png" alt="Selected avatar">
+                <span class="camera-icon">
+                    <img src="../assets/images/photo-icon.png" alt="Change avatar icon">
+                </span>
+            </div>
+
+            <p>Choose your avatar</p>
+
+            <div class="avatar-options">
+                <button aria-label="Select avatar option 1">
+                    <img src="../assets/images/mascot-still.png" alt="Avatar option 1" class="selected">
+                </button>
+                <button aria-label="Select avatar option 2">
+                    <img src="../assets/images/mascot-wave.png" alt="Avatar option 2">
+                </button>
+                <button aria-label="Select avatar option 3">
+                    <img src="../assets/images/mascot-pointer.png" alt="Avatar option 3">
+                </button>
+            </div>
+
+            <a href="../account/dashboard.html" class="save-btn">Save</a>
+        </section>
+    </main>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
+</body>
+
+</html>
