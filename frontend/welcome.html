@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aduLessons | Home</title>
+
+    <!-- Google Fonts or other font imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="./styles/global.css">
+
+    <!-- Page-specific internal styles -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            line-height: 1.6;
+        }
+
+        .hero {
+            position: relative;
+            padding: 3rem 4rem 6rem;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            color: #2B5B8B;
+        }
+
+        .hero-text p {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 2.5rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .cta-button {
+            background-color: #FFCC00;
+            color: #000;
+            font-family: 'Nunito Sans', sans-serif;
+            padding: 1.2rem 1.5rem;
+            border-radius: 25px;
+            box-shadow: 0px 2px 2px #7d7f7c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #BADCFF;
+        }
+
+        .hero-image {
+            position: absolute;
+            bottom: -50px;
+            right: 4rem;
+        }
+
+        .hero-image img {
+            max-width: 400px;
+            margin-top: 0;
+        }
+
+        .features {
+            background-color: #2B5B8B;
+            width: 100%;
+        }
+
+        .features-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem 3rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-family: 'Fredoka', sans-serif;
+            color: #fff;
+        }
+
+        .feature-columns {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feature-box {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .features p {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .hero-image {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+
+            .hero-text {
+                max-width: 50%;
+            }
+
+            .hero-image {
+                display: block;
+            }
+
+            .feature-columns {
+                flex-direction: row;
+            }
+
+            .feature-box {
+                flex: 1;
+            }
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation component loads here -->
+    <nav id="navbar"></nav>
+
+    <main>
+        <!-- hero section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Tiny Paws,</h1>
+                    <h1>Big Steps</h1>
+                    <p>A Hamster's Guide to Adulting</p>
+                    <a href="./account/dashboard.html" class="cta-button">Find Courses</a>
+                </div>
+                <div class="hero-image">
+                    <img src="./assets/images/mascot-wave.png" alt="Cartoon hamster in suit waving">
+                </div>
+            </div>
+        </section>
+
+        <!-- feature section -->
+        <section class="features">
+            <div class="features-inner">
+                <h2>What is aduLessons?</h2>
+                <div class="feature-columns">
+                    <div class="feature-box">
+                        <p>
+                            AduLessons combines “adulting” + “lessons” to make mastering real-life skills fun, simple,
+                            and rewarding. Our short, interactive modules and quizzes help you grow with confidence and
+                            turn learning into something you'll actually enjoy.
+                        </p>
+                    </div>
+                    <div class="feature-box">
+                        <p>
+                            When you join, you'll unlock exclusive discounts from popular stores like Publix, Walmart,
+                            AutoZone, and Best Buy, helping you put your new skills into action. Complete every lesson
+                            to earn your very own hamster figure, a fun symbol of your growth and dedication.
+                        </p>
+                    </div>
+                    <div class="feature-box">
+                        <p>
+                            You'll also get access to customizable printables that turn your favorite lessons into daily
+                            reminders, perfect for your desk, wall, or planner.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer component loads here -->
+    <footer id="footer"></footer>
+
+    <!-- Load components -->
+    <script src="../js/components.js"></script>
+    <script src="../js/hamburger-menu.js"></script>
+</body>
+
+</html>
