@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Module = require('../models/Module');
 const { requireAuth } = require('../middleware/authMiddleware');
+const { sanitizeInput } = require('../utils/validators');
 
 // Predefined set of allowed avatar options
 const ALLOWED_AVATARS = ['default', 'avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5'];
@@ -44,10 +45,17 @@ router.put('/avatar', requireAuth, async (req, res) => {
 router.put('/address', requireAuth, async (req, res) => {
   try {
     const { name, street, city, state, zip } = req.body;
+    const sanitized = {
+      name: sanitizeInput(name),
+      street: sanitizeInput(street),
+      city: sanitizeInput(city),
+      state: sanitizeInput(state),
+      zip: sanitizeInput(zip)
+    };
 
     const user = await User.findByIdAndUpdate(
       req.session.userId,
-      { shippingAddress: { name, street, city, state, zip } },
+      { shippingAddress: sanitized },
       { new: true }
     ).select('shippingAddress');
 
