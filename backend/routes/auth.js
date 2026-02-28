@@ -3,6 +3,8 @@ const router = express.Router();
 const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
 
+const DASHBOARD_URL = '/account/dashboard.html';
+
 // Limit login/register to 10 attempts per 15 minutes per IP
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -23,7 +25,7 @@ router.post('/register', authLimiter, async (req, res) => {
 
     // Set session and redirect to dashboard
     req.session.userId = user._id;
-    res.redirect('/account/dashboard.html');
+    res.redirect(DASHBOARD_URL);
   } catch (err) {
     console.error('Register error:', err.message);
     res.status(400).json({ error: err.message });
@@ -70,7 +72,7 @@ router.post('/login', authLimiter, async (req, res) => {
 
     // Set session and redirect to dashboard
     req.session.userId = user._id;
-    res.redirect('/account/dashboard.html');
+    res.redirect(DASHBOARD_URL);
   } catch (err) {
     console.error('Login error:', err.message);
     res.status(500).json({ error: 'Server error' });

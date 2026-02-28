@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+// Number of bcrypt salt rounds — higher is more secure but slower
+const SALT_ROUNDS = 12;
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -64,7 +67,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
-    const salt = await bcrypt.genSalt(12);
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (err) {
