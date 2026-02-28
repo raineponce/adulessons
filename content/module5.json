@@ -1,0 +1,9 @@
+{
+  "moduleId": "mod5",
+  "title": "Productivity & Time Management (placeholder)",
+  "description": "Develop habits for organizing your day, setting goals, and staying on track.",
+  "order": 5,
+  "introPage": { "blocks": [] },
+  "summaryPage": { "blocks": [] },
+  "lessons": []
+}

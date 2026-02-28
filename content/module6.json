@@ -1,0 +1,9 @@
+{
+  "moduleId": "mod6",
+  "title": "Health & Wellness (placeholder)",
+  "description": "Learn about physical health, mental well-being, and healthy lifestyle habits.",
+  "order": 6,
+  "introPage": { "blocks": [] },
+  "summaryPage": { "blocks": [] },
+  "lessons": []
+}

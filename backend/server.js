@@ -1,0 +1,47 @@
+// Load environment variables from .env file
+require('dotenv').config();
+
+const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const path = require('path');
+const connectDB = require('./config/db');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB
+connectDB();
+
+// --- Middleware ---
+// Parse JSON and URL-encoded request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the frontend folder
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Configure session with MongoDB store (1-week cookie)
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
+}));
+
+// --- Routes ---
+app.use('/auth', require('./routes/auth'));
+app.use('/lessons', require('./routes/lessons'));
+app.use('/prizes', require('./routes/prizes'));
+app.use('/codes', require('./routes/codes'));
+app.use('/profile', require('./routes/profile'));
+
+// Fallback: serve index.html for any unmatched routes (SPA-style)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`AduLessons server running on port ${PORT}`);
+});

@@ -1,0 +1,9 @@
+{
+  "moduleId": "mod4",
+  "title": "Social Skills & Communication (placeholder)",
+  "description": "Build confidence in conversations, written communication, and conflict resolution.",
+  "order": 4,
+  "introPage": { "blocks": [] },
+  "summaryPage": { "blocks": [] },
+  "lessons": []
+}

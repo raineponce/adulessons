@@ -1,0 +1,9 @@
+{
+  "moduleId": "mod3",
+  "title": "Transportation & Getting Around (placeholder)",
+  "description": "Learn how to navigate public transit, understand driving basics, and plan trips.",
+  "order": 3,
+  "introPage": { "blocks": [] },
+  "summaryPage": { "blocks": [] },
+  "lessons": []
+}

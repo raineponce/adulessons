@@ -1,0 +1,9 @@
+{
+  "moduleId": "mod2",
+  "title": "Cooking & Nutrition (placeholder)",
+  "description": "Learn how to plan meals, cook simple recipes, and make healthy food choices.",
+  "order": 2,
+  "introPage": { "blocks": [] },
+  "summaryPage": { "blocks": [] },
+  "lessons": []
+}
