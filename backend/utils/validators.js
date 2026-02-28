@@ -13,10 +13,15 @@ const isValidUsername = (username) => {
   return /^[a-zA-Z0-9]{3,20}$/.test(username);
 };
 
-// Basic XSS prevention: strip HTML tags from input
+// Basic XSS prevention: encode HTML special characters to prevent injection
 const sanitizeInput = (str) => {
   if (typeof str !== 'string') return str;
-  return str.replace(/<[^>]*>/g, '');
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
 };
 
 module.exports = { isValidEmail, isValidPassword, isValidUsername, sanitizeInput };
