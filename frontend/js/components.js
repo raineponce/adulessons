@@ -6,7 +6,16 @@ async function loadComponent(componentPath, elementId) {
             throw new Error(`Failed to load ${componentPath}: ${response.statusText}`);
         }
         const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
+        const container = document.getElementById(elementId);
+        container.innerHTML = html;
+
+        // Re-execute any <script> tags — innerHTML does not run them
+        container.querySelectorAll('script').forEach(oldScript => {
+            const newScript = document.createElement('script');
+            newScript.textContent = oldScript.textContent;
+            document.body.appendChild(newScript);
+            newScript.remove();
+        });
     } catch (error) {
         console.error(`Error loading component (${elementId}):`, error);
     }

@@ -107,9 +107,25 @@
         background-color: #D0D0D0;
     }
 
-    .search-dropdown:hover .dropdown-content,
-    .search-dropdown:focus-within .dropdown-content {
+    .search-dropdown.open .dropdown-content {
         display: block;
+    }
+
+    .search-button.open {
+        border-radius: 25px 25px 8px 8px;
+        background-color: #E0E0E0;
+    }
+
+    .search-button .chevron {
+        width: 18px;
+        height: 18px;
+        stroke: #333;
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+    }
+
+    .search-button.open .chevron {
+        transform: rotate(180deg);
     }
 
     .nav-right {
@@ -271,21 +287,22 @@
     </a>
 
     <div class="nav-center">
-        <div class="search-dropdown">
-            <button class="search-button">
-                <span>Search</span>
-                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="search-dropdown" id="searchDropdown">
+            <button class="search-button" id="searchToggle"
+                    aria-haspopup="listbox" aria-expanded="false" aria-controls="dropdownContent">
+                <span id="searchLabel">Browse Modules</span>
+                <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <div class="dropdown-content">
-                <a href="#">Finance 101</a>
-                <a href="#">Social Skills</a>
-                <a href="#">Productivity</a>
-                <a href="#">Cooking 101</a>
-                <a href="#">Household Basics</a>
-                <a href="#">Transportation</a>
+            <div class="dropdown-content" id="dropdownContent" role="listbox">
+                <a href="/modules/finance-101.html"      role="option">Finance 101</a>
+                <a href="/modules/social-skills.html"    role="option">Social Skills</a>
+                <a href="/modules/productivity.html"     role="option">Productivity</a>
+                <a href="/modules/cooking-101.html"      role="option">Cooking 101</a>
+                <a href="/modules/household-basics.html" role="option">Household Basics</a>
+                <a href="/modules/transportation.html"   role="option">Transportation</a>
             </div>
         </div>
     </div>
@@ -338,18 +355,46 @@
 </nav>
 
 <script>
+    // Mobile menu
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');
         menu.classList.toggle('active');
     }
 
-    // Close mobile menu when clicking outside
     document.addEventListener('click', function (event) {
         const menu = document.getElementById('mobileMenu');
         const hamburger = document.querySelector('.hamburger');
-
         if (menu && hamburger && !menu.contains(event.target) && !hamburger.contains(event.target)) {
             menu.classList.remove('active');
         }
     });
+
+    // Search dropdown
+    const searchToggle   = document.getElementById('searchToggle');
+    const searchDropdown = document.getElementById('searchDropdown');
+
+    if (searchToggle && searchDropdown) {
+        searchToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isOpen = searchDropdown.classList.toggle('open');
+            searchToggle.classList.toggle('open', isOpen);
+            searchToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!searchDropdown.contains(e.target)) {
+                searchDropdown.classList.remove('open');
+                searchToggle.classList.remove('open');
+                searchToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                searchDropdown.classList.remove('open');
+                searchToggle.classList.remove('open');
+                searchToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 </script>
