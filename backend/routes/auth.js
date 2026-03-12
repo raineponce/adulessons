@@ -23,8 +23,11 @@ router.post('/register', authLimiter, async (req, res) => {
     const user = new User({ username, email, password });
     await user.save();
 
-    // Set session and redirect to dashboard
+    // Set session; return JSON for API clients, redirect for browser form posts
     req.session.userId = user._id;
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+      return res.json({ success: true, user: { username: user.username, points: user.points } });
+    }
     res.redirect(DASHBOARD_URL);
   } catch (err) {
     console.error('Register error:', err.message);
@@ -70,8 +73,11 @@ router.post('/login', authLimiter, async (req, res) => {
     user.streak.lastActive = now;
     await user.save();
 
-    // Set session and redirect to dashboard
+    // Set session; return JSON for API clients, redirect for browser form posts
     req.session.userId = user._id;
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+      return res.json({ success: true, user: { username: user.username, points: user.points } });
+    }
     res.redirect(DASHBOARD_URL);
   } catch (err) {
     console.error('Login error:', err.message);
@@ -82,8 +88,30 @@ router.post('/login', authLimiter, async (req, res) => {
 // POST /auth/logout — Destroy session and redirect home
 router.post('/logout', (req, res) => {
   req.session.destroy(() => {
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+      return res.json({ success: true });
+    }
     res.redirect('/');
   });
+});
+
+// GET /auth/me — Return current user info or { loggedIn: false }
+router.get('/me', authLimiter, async (req, res) => {
+  try {
+    if (!req.session.userId) {
+      return res.json({ loggedIn: false });
+    }
+    const user = await User.findById(req.session.userId)
+      .select('username email avatar points streak')
+      .lean();
+    if (!user) {
+      return res.json({ loggedIn: false });
+    }
+    res.json({ loggedIn: true, user });
+  } catch (err) {
+    console.error('Auth me error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 module.exports = router;
