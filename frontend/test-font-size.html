@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Size Adjuster - Test</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        /* ── Trigger button (simulates settings page link) ── */
+        .open-btn {
+            padding: 0.75rem 2rem;
+            background: #4a6fa5;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .open-btn:hover { background: #3a5f95; }
+
+        /*OVERLAY */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 900;
+            animation: fadeIn 0.2s ease;
+        }
+        .overlay.active { display: block; }
+
+        @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(24px) scale(0.97); }
+                             to   { opacity: 1; transform: translateY(0)     scale(1);    } }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: min(480px, calc(100vw - 32px));
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.18);
+            padding: 32px;
+            animation: slideUp 0.25s ease;
+            height: 540px;
+            overflow: hidden;
+            /* Lock font-size so rem units inside don't scale with html font-size */
+            font-size: 16px;
+        }
+        .modal.active { display: block; }
+
+        /* Header */
+        .modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .modal-header-text h2 {
+            font-size: 20px;
+            color: #1a1a2e;
+            font-weight: 700;
+        }
+        .modal-header-text p {
+            font-size: 14px;
+            color: #888;
+            margin-top: 3px;
+        }
+        .close-btn {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+        .close-btn:hover { background: #e8e8e8; }
+
+        /* Percentage display */
+        .pct-display {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .pct-display .pct-value {
+            font-size: 48px;
+            font-weight: 800;
+            color: #4a6fa5;
+            line-height: 1;
+        }
+        .pct-display .pct-label {
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 4px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Slider track + fill */
+        .slider-wrap {
+            position: relative;
+            margin-bottom: 8px;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .slider-labels .a-small { font-size: 12px; color: #888; font-weight: 600; }
+        .slider-labels .a-large { font-size: 19px; color: #888; font-weight: 600; }
+
+        .track-container {
+            position: relative;
+            height: 6px;
+            background: #e8e8e8;
+            border-radius: 3px;
+            margin: 8px 0 16px;
+        }
+        .track-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #4a6fa5;
+            border-radius: 3px;
+            pointer-events: none;
+            transition: width 0.05s;
+        }
+
+        /* Native range — invisible but functional */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            cursor: pointer;
+            margin: 0;
+        }
+        input[type="range"]:focus { outline: none; }
+
+        /* Thumb */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #4a6fa5;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 6px rgba(74,111,165,.4);
+            cursor: grab;
+            transition: box-shadow 0.15s, transform 0.15s;
+        }
+        input[type="range"]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(74,111,165,.5);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #4a6fa5;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 6px rgba(74,111,165,.4);
+            cursor: grab;
+        }
+
+        /* Preset buttons */
+        .presets {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .preset-btn {
+            flex: 1;
+            padding: 8px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fff;
+            font-size: 13px;
+            font-family: inherit;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 600;
+        }
+        .preset-btn:hover { border-color: #4a6fa5; color: #4a6fa5; }
+        .preset-btn.active {
+            border-color: #4a6fa5;
+            background: #4a6fa5;
+            color: #fff;
+        }
+
+        /* Preview */
+        .preview-box {
+            background: #f8f9ff;
+            border: 1px solid #e0e8f7;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow: hidden;
+        }
+        .preview-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #aaa;
+            font-weight: 600;
+        }
+        .preview-text-heading {
+            color: #1a1a2e;
+            font-weight: 700;
+            line-height: 1.3;
+            transition: font-size 0.15s;
+        }
+        .preview-text-body {
+            color: #555;
+            line-height: 1.5;
+            transition: font-size 0.15s;
+        }
+
+        /* Action buttons */
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-reset {
+            flex: 1;
+            padding: 11px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            color: #555;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .btn-reset:hover { border-color: #ccc; background: #f5f5f5; }
+
+        .btn-apply {
+            flex: 2;
+            padding: 11px;
+            border: none;
+            border-radius: 12px;
+            background: #4a6fa5;
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-apply:hover { background: #3a5f95; }
+    </style>
+</head>
+<body>
+
+    <h2 style="color:#333;">Font Size Adjuster — Test Page</h2>
+    <p style="color:#777; font-size:0.95rem;">Click the button below to open the modal (simulates Settings → Font Size).</p>
+
+    <button class="open-btn" id="openModal">Font Size Settings</button>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal -->
+    <div class="modal" id="fontModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+        <div class="modal-header">
+            <div class="modal-header-text">
+                <h2 id="modalTitle">Adjust Font Size</h2>
+                <p>Choose a comfortable reading size</p>
+            </div>
+            <button class="close-btn" id="closeModal" aria-label="Close">&times;</button>
+        </div>
+
+        <!-- Percentage display -->
+        <div class="pct-display">
+            <div class="pct-value" id="pctValue">100%</div>
+            <div class="pct-label">Font Size</div>
+        </div>
+
+        <!-- Slider -->
+        <div class="slider-wrap">
+            <div class="slider-labels">
+                <span class="a-small">A</span>
+                <span class="a-large">A</span>
+            </div>
+            <div class="track-container">
+                <div class="track-fill" id="trackFill"></div>
+                <input type="range" id="fontSlider" min="75" max="150" step="1" value="100"
+                       aria-label="Font size slider">
+            </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="presets">
+            <button class="preset-btn" data-value="75">Small<br><span style="font-weight:400;font-size:11px;">75%</span></button>
+            <button class="preset-btn active" data-value="100">Default<br><span style="font-weight:400;font-size:11px;">100%</span></button>
+            <button class="preset-btn" data-value="125">Large<br><span style="font-weight:400;font-size:11px;">125%</span></button>
+            <button class="preset-btn" data-value="150">X-Large<br><span style="font-weight:400;font-size:11px;">150%</span></button>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-box">
+            <span class="preview-label">Preview</span>
+            <div class="preview-text-heading" id="previewHeading">The quick brown fox</div>
+            <div class="preview-text-body" id="previewBody">Learning new life skills helps you thrive every day.</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn-reset" id="btnReset">Reset</button>
+            <button class="btn-apply" id="btnApply">Apply</button>
+        </div>
+
+    </div>
+
+    <script>
+        const modal       = document.getElementById('fontModal');
+        const overlay     = document.getElementById('overlay');
+        const openBtn     = document.getElementById('openModal');
+        const closeBtn    = document.getElementById('closeModal');
+        const slider      = document.getElementById('fontSlider');
+        const trackFill   = document.getElementById('trackFill');
+        const pctValue    = document.getElementById('pctValue');
+        const previewH    = document.getElementById('previewHeading');
+        const previewB    = document.getElementById('previewBody');
+        const presetBtns  = document.querySelectorAll('.preset-btn');
+        const btnReset    = document.getElementById('btnReset');
+        const btnApply    = document.getElementById('btnApply');
+
+        const MIN = 75, MAX = 150;
+
+        // Load saved or default value
+        let currentValue = parseInt(localStorage.getItem('fontSize') || '100');
+        let pendingValue = currentValue;
+
+        /* ── Helpers ── */
+        function pct(val) { return val + '%'; }
+
+        function fillPercent(val) {
+            return ((val - MIN) / (MAX - MIN)) * 100;
+        }
+
+        function updateUI(val) {
+            pendingValue = val;
+            slider.value = val;
+
+            // Track fill
+            trackFill.style.width = fillPercent(val) + '%';
+
+            // Percentage label
+            pctValue.textContent = pct(val);
+
+            // Preview text — scale relative to 16px base
+            const px = (16 * val / 100).toFixed(1);
+            previewH.style.fontSize = (1.15 * val / 100) + 'rem';
+            previewB.style.fontSize = (val / 100) + 'rem';
+
+            // Preset active state
+            presetBtns.forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.value) === val);
+            });
+        }
+
+        function openModal() {
+            pendingValue = currentValue;
+            updateUI(currentValue);
+            modal.classList.add('active');
+            overlay.classList.add('active');
+            slider.focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            overlay.classList.remove('active');
+            // Revert preview if not applied
+            updateUI(currentValue);
+        }
+
+        function applySize() {
+            currentValue = pendingValue;
+            localStorage.setItem('fontSize', currentValue);
+            document.documentElement.style.fontSize = pct(currentValue);
+            closeModal();
+        }
+
+        function reset() {
+            updateUI(100);
+        }
+
+        /* ── Events ── */
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', closeModal);
+        btnReset.addEventListener('click', reset);
+        btnApply.addEventListener('click', applySize);
+
+        slider.addEventListener('input', () => updateUI(parseInt(slider.value)));
+
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => updateUI(parseInt(btn.dataset.value)));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+
+        /* ── Init: apply persisted font size on load ── */
+        if (localStorage.getItem('fontSize')) {
+            document.documentElement.style.fontSize = pct(currentValue);
+        }
+        updateUI(currentValue);
+    </script>
+
+</body>
+</html>

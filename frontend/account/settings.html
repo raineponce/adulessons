@@ -552,6 +552,189 @@
             }
         }
 
+        /* FONT SIZE MODAL */
+        @keyframes fsmFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fsmSlideUp { from { opacity: 0; transform: translate(-50%,-46%) scale(0.97); }
+                                to   { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+
+        .fsm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.45);
+            z-index: 3000;
+            animation: fsmFadeIn 0.2s ease;
+        }
+        .fsm-overlay.active { display: block; }
+
+        .fsm-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 3100;
+            width: min(480px, calc(100vw - 32px));
+            height: 540px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.2);
+            padding: 32px;
+            font-size: 16px; /* lock — immune to html font-size changes */
+            font-family: 'Nunito Sans', sans-serif;
+            animation: fsmSlideUp 0.25s ease;
+        }
+        .fsm-modal.active { display: block; }
+
+        .fsm-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .fsm-header-text h3 { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+        .fsm-header-text p  { font-size: 14px; color: #888; margin-top: 3px; }
+
+        .fsm-close {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+        .fsm-close:hover { background: #e8e8e8; }
+
+        .fsm-pct-display { text-align: center; margin-bottom: 24px; }
+        .fsm-pct-value   { font-size: 48px; font-weight: 800; color: #4a6fa5; line-height: 1; }
+        .fsm-pct-label   { font-size: 13px; color: #aaa; margin-top: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        .fsm-slider-wrap { position: relative; margin-bottom: 8px; }
+        .fsm-slider-labels { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .fsm-slider-labels .fsm-a-sm { font-size: 12px; color: #888; font-weight: 600; }
+        .fsm-slider-labels .fsm-a-lg { font-size: 19px; color: #888; font-weight: 600; }
+
+        .fsm-track {
+            position: relative;
+            height: 6px;
+            background: #e8e8e8;
+            border-radius: 3px;
+            margin: 8px 0 16px;
+        }
+        .fsm-track-fill {
+            position: absolute;
+            left: 0; top: 0;
+            height: 100%;
+            background: #4a6fa5;
+            border-radius: 3px;
+            pointer-events: none;
+        }
+        .fsm-track input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            position: absolute;
+            top: 50%; left: 0;
+            transform: translateY(-50%);
+            width: 100%; height: 100%;
+            background: transparent;
+            cursor: pointer;
+            margin: 0;
+        }
+        .fsm-track input[type="range"]:focus { outline: none; }
+        .fsm-track input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: #4a6fa5;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 6px rgba(74,111,165,.4);
+            cursor: grab;
+            transition: box-shadow 0.15s, transform 0.15s;
+        }
+        .fsm-track input[type="range"]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.15);
+        }
+        .fsm-track input[type="range"]::-moz-range-thumb {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: #4a6fa5;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 6px rgba(74,111,165,.4);
+            cursor: grab;
+        }
+
+        .fsm-presets { display: flex; gap: 8px; margin-bottom: 24px; }
+        .fsm-preset {
+            flex: 1;
+            padding: 8px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fff;
+            font-size: 13px;
+            font-family: inherit;
+            color: #555;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .fsm-preset:hover          { border-color: #4a6fa5; color: #4a6fa5; }
+        .fsm-preset.active         { border-color: #4a6fa5; background: #4a6fa5; color: #fff; }
+
+        .fsm-preview {
+            background: #f8f9ff;
+            border: 1px solid #e0e8f7;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow: hidden;
+        }
+        .fsm-preview-label   { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #aaa; font-weight: 600; }
+        .fsm-preview-heading { color: #1a1a2e; font-weight: 700; line-height: 1.3; transition: font-size 0.15s; }
+        .fsm-preview-body    { color: #555; line-height: 1.5; transition: font-size 0.15s; }
+
+        .fsm-actions { display: flex; gap: 12px; }
+        .fsm-btn-reset {
+            flex: 1;
+            padding: 11px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            color: #555;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .fsm-btn-reset:hover { background: #f5f5f5; border-color: #ccc; }
+        .fsm-btn-apply {
+            flex: 2;
+            padding: 11px;
+            border: none;
+            border-radius: 12px;
+            background: #4a6fa5;
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .fsm-btn-apply:hover { background: #3a5f95; }
+
         /* Animation on page load */
         @keyframes fadeInUp {
             from {
@@ -629,7 +812,7 @@
                 <h2 class="section-title">Accessibility</h2>
 
                 <div class="setting-item">
-                    <div class="setting-label clickable">Font Size</div>
+                    <div class="setting-label clickable" onclick="openFontModal()">Font Size</div>
                 </div>
 
                 <div class="setting-item">
@@ -689,6 +872,53 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- Font Size Modal -->
+    <div class="fsm-overlay" id="fsmOverlay"></div>
+    <div class="fsm-modal" id="fsmModal" role="dialog" aria-modal="true" aria-labelledby="fsmTitle">
+
+        <div class="fsm-header">
+            <div class="fsm-header-text">
+                <h3 id="fsmTitle">Adjust Font Size</h3>
+                <p>Choose a comfortable reading size</p>
+            </div>
+            <button class="fsm-close" onclick="closeFontModal()" aria-label="Close">&times;</button>
+        </div>
+
+        <div class="fsm-pct-display">
+            <div class="fsm-pct-value" id="fsmPctValue">100%</div>
+            <div class="fsm-pct-label">Font Size</div>
+        </div>
+
+        <div class="fsm-slider-wrap">
+            <div class="fsm-slider-labels">
+                <span class="fsm-a-sm">A</span>
+                <span class="fsm-a-lg">A</span>
+            </div>
+            <div class="fsm-track">
+                <div class="fsm-track-fill" id="fsmTrackFill"></div>
+                <input type="range" id="fsmSlider" min="75" max="150" step="1" value="100" aria-label="Font size">
+            </div>
+        </div>
+
+        <div class="fsm-presets">
+            <button class="fsm-preset" data-value="75">Small<br><span style="font-weight:400;font-size:11px;">75%</span></button>
+            <button class="fsm-preset active" data-value="100">Default<br><span style="font-weight:400;font-size:11px;">100%</span></button>
+            <button class="fsm-preset" data-value="125">Large<br><span style="font-weight:400;font-size:11px;">125%</span></button>
+            <button class="fsm-preset" data-value="150">X-Large<br><span style="font-weight:400;font-size:11px;">150%</span></button>
+        </div>
+
+        <div class="fsm-preview">
+            <span class="fsm-preview-label">Preview</span>
+            <div class="fsm-preview-heading" id="fsmPreviewH">The quick brown fox</div>
+            <div class="fsm-preview-body"    id="fsmPreviewB">Learning new life skills helps you thrive every day.</div>
+        </div>
+
+        <div class="fsm-actions">
+            <button class="fsm-btn-reset" id="fsmBtnReset">Reset</button>
+            <button class="fsm-btn-apply" id="fsmBtnApply">Apply</button>
+        </div>
     </div>
 
     <!-- Reset Progress Modal -->
@@ -921,6 +1151,68 @@
         sections.forEach(section => {
             observer.observe(section);
         });
+
+        // ── Font Size Modal ──
+        const FSM_MIN = 75, FSM_MAX = 150;
+        let fsmCurrent = parseInt(localStorage.getItem('fontSize') || '100');
+        let fsmPending = fsmCurrent;
+
+        const fsmModal    = document.getElementById('fsmModal');
+        const fsmOverlay  = document.getElementById('fsmOverlay');
+        const fsmSlider   = document.getElementById('fsmSlider');
+        const fsmFill     = document.getElementById('fsmTrackFill');
+        const fsmPctVal   = document.getElementById('fsmPctValue');
+        const fsmPreviewH = document.getElementById('fsmPreviewH');
+        const fsmPreviewB = document.getElementById('fsmPreviewB');
+        const fsmPresets  = document.querySelectorAll('.fsm-preset');
+        const fsmBtnReset = document.getElementById('fsmBtnReset');
+        const fsmBtnApply = document.getElementById('fsmBtnApply');
+
+        function fsmUpdateUI(val) {
+            fsmPending      = val;
+            fsmSlider.value = val;
+            fsmFill.style.width = ((val - FSM_MIN) / (FSM_MAX - FSM_MIN) * 100) + '%';
+            fsmPctVal.textContent = val + '%';
+            fsmPreviewH.style.fontSize = (1.15 * val / 100) + 'rem';
+            fsmPreviewB.style.fontSize = (val / 100) + 'rem';
+            fsmPresets.forEach(b => b.classList.toggle('active', parseInt(b.dataset.value) === val));
+        }
+
+        function openFontModal() {
+            fsmPending = fsmCurrent;
+            fsmUpdateUI(fsmCurrent);
+            fsmModal.classList.add('active');
+            fsmOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFontModal() {
+            fsmModal.classList.remove('active');
+            fsmOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            fsmUpdateUI(fsmCurrent); // revert pending preview
+        }
+
+        fsmOverlay.addEventListener('click', closeFontModal);
+        fsmSlider.addEventListener('input', () => fsmUpdateUI(parseInt(fsmSlider.value)));
+        fsmPresets.forEach(b => b.addEventListener('click', () => fsmUpdateUI(parseInt(b.dataset.value))));
+        fsmBtnReset.addEventListener('click', () => fsmUpdateUI(100));
+        fsmBtnApply.addEventListener('click', () => {
+            fsmCurrent = fsmPending;
+            localStorage.setItem('fontSize', fsmCurrent);
+            document.documentElement.style.fontSize = fsmCurrent + '%';
+            closeFontModal();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && fsmModal.classList.contains('active')) closeFontModal();
+        });
+
+        // Apply persisted font size on load
+        if (localStorage.getItem('fontSize')) {
+            document.documentElement.style.fontSize = fsmCurrent + '%';
+        }
+        fsmUpdateUI(fsmCurrent);
 
         // Reset sidebar state on window resize
         window.addEventListener('resize', function () {
