@@ -1,5 +1,4 @@
-const User = require('../models/User');
-const Lesson = require('../models/Lesson');
+const User = require("../models/User");
 
 // Middleware that loads the current user from the session and attaches
 // progress information to req.userProgress for use in route handlers
@@ -16,19 +15,11 @@ const attachProgress = async (req, res, next) => {
       return next();
     }
 
-    // Calculate progress percentage based on total lessons
-    const totalLessons = await Lesson.countDocuments();
-    const completedCount = user.completedLessons ? user.completedLessons.length : 0;
-    const progressPercent = totalLessons > 0
-      ? Math.round((completedCount / totalLessons) * 100)
-      : 0;
-
     req.userProgress = {
       completedLessons: user.completedLessons || [],
-      progressPercent,
-      points: user.points,
-      streak: user.streak,
-      currentLesson: user.currentLesson
+      totalPoints: user.totalPoints || 0,
+      currentStreak: user.currentStreak || 0,
+      currentLesson: user.currentLesson,
     };
 
     next();

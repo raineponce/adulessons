@@ -1,71 +1,90 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 // Number of bcrypt salt rounds — higher is more secure but slower
 const SALT_ROUNDS = 12;
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      type: String,
+      default: "default",
+    },
+    totalPoints: {
+      type: Number,
+      default: 0,
+    },
+    currentStreak: {
+      type: Number,
+      default: 0,
+    },
+    lastLoginDate: {
+      type: Date,
+      default: null,
+    },
+    longestStreak: {
+      type: Number,
+      default: 0,
+    },
+    // Array of lessonId strings the user has completed, e.g. 'mod1-lesson1'
+    completedLessons: [{ type: String }],
+    completedQuizzes: [{ type: String }],
+    currentLesson: {
+      type: String,
+      default: null,
+    },
+    redeemedPrizes: [
+      {
+        prizeId: { type: mongoose.Schema.Types.ObjectId, ref: "Prize" },
+        redeemedAt: { type: Date, default: Date.now },
+      },
+    ],
+    allLessonsComplete: {
+      type: Boolean,
+      default: false,
+    },
+    shippingAddress: {
+      name: String,
+      street: String,
+      city: String,
+      state: String,
+      zip: String,
+    },
+    finalPrizeClaimed: {
+      type: Boolean,
+      default: false,
+    },
+    activityLog: [
+      {
+        type: { type: String, required: true },
+        points: { type: Number, default: 0 },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+    usedCodes: [{ type: String }],
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  avatar: {
-    type: String,
-    default: 'default'
-  },
-  points: {
-    type: Number,
-    default: 0
-  },
-  streak: {
-    current: { type: Number, default: 0 },
-    lastActive: { type: Date }
-  },
-  // Array of lessonId strings the user has completed, e.g. 'mod1-lesson1'
-  completedLessons: [{ type: String }],
-  currentLesson: {
-    type: String,
-    default: null
-  },
-  redeemedPrizes: [
-    {
-      prizeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Prize' },
-      redeemedAt: { type: Date, default: Date.now }
-    }
-  ],
-  allLessonsComplete: {
-    type: Boolean,
-    default: false
-  },
-  shippingAddress: {
-    name: String,
-    street: String,
-    city: String,
-    state: String,
-    zip: String
-  },
-  finalPrizeClaimed: {
-    type: Boolean,
-    default: false
-  },
-  usedCodes: [{ type: String }]
-}, { timestamps: true });
+  { timestamps: true },
+);
 
 // Hash password before saving if it has been modified
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
   try {
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
     this.password = await bcrypt.hash(this.password, salt);
@@ -80,4 +99,4 @@ userSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

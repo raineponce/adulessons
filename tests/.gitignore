@@ -1,0 +1,5 @@
+# Keep the shared manual API harness tracked.
+!user-progress-test.html
+
+# Ignore optional local-only scratch pages.
+*.local.html
