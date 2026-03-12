@@ -74,6 +74,10 @@ const userSchema = new mongoose.Schema(
       {
         type: { type: String, required: true },
         points: { type: Number, default: 0 },
+        lessonId: { type: String, default: null },
+        lessonName: { type: String, default: null },
+        moduleId: { type: String, default: null },
+        moduleName: { type: String, default: null },
         createdAt: { type: Date, default: Date.now },
       },
     ],

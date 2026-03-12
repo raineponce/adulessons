@@ -1,4 +1,4 @@
-const awardPoints = async (user, points, type) => {
+const awardPoints = async (user, points, type, metadata = {}) => {
   const normalizedPoints = Number(points) || 0;
 
   if (typeof user.totalPoints !== "number") {
@@ -9,10 +9,21 @@ const awardPoints = async (user, points, type) => {
     user.activityLog = [];
   }
 
+  const {
+    lessonId = null,
+    lessonName = null,
+    moduleId = null,
+    moduleName = null,
+  } = metadata;
+
   user.totalPoints += normalizedPoints;
   user.activityLog.push({
     type,
     points: normalizedPoints,
+    lessonId,
+    lessonName,
+    moduleId,
+    moduleName,
     createdAt: new Date(),
   });
 

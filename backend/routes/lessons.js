@@ -6,6 +6,19 @@ const User = require("../models/User");
 const { requireAuth } = require("../middleware/authMiddleware");
 const { awardPoints } = require("../utils/rewards");
 
+const getLessonActivityMetadata = async (lesson) => {
+  const module = await Module.findOne({ moduleId: lesson.moduleId })
+    .select("moduleId title")
+    .lean();
+
+  return {
+    lessonId: lesson.lessonId,
+    lessonName: lesson.title,
+    moduleId: lesson.moduleId,
+    moduleName: module?.title || null,
+  };
+};
+
 // GET /lessons — Return all modules sorted by order with user progress
 router.get("/", requireAuth, async (req, res) => {
   try {
@@ -90,12 +103,14 @@ router.post("/:lessonId/complete", requireAuth, async (req, res) => {
       return res.status(404).json({ error: "Lesson not found" });
     }
 
+    const activityMetadata = await getLessonActivityMetadata(lesson);
+
     user.completedLessons.push(lessonId);
 
     const totalLessons = await Lesson.countDocuments();
 
     // Completing a lesson always awards +200 points
-    await awardPoints(user, 200, "lesson_complete");
+    await awardPoints(user, 200, "lesson_complete", activityMetadata);
 
     // Check if all lessons are now complete
     if (totalLessons > 0 && user.completedLessons.length >= totalLessons) {
@@ -143,6 +158,8 @@ router.post("/:lessonId/quiz/complete", requireAuth, async (req, res) => {
         .json({ error: "Quiz not available for this lesson" });
     }
 
+    const activityMetadata = await getLessonActivityMetadata(lesson);
+
     if ((user.completedQuizzes || []).includes(lessonId)) {
       return res.json({
         success: true,
@@ -154,7 +171,7 @@ router.post("/:lessonId/quiz/complete", requireAuth, async (req, res) => {
     user.completedQuizzes.push(lessonId);
 
     // Completing a quiz always awards +5 points
-    await awardPoints(user, 5, "quiz_complete");
+    await awardPoints(user, 5, "quiz_complete", activityMetadata);
 
     res.json({
       success: true,

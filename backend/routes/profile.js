@@ -23,6 +23,8 @@ const activityLabels = {
   collectable_claimed: "Claimed collectable reward",
 };
 
+const LESSON_ACTIVITY_TYPES = new Set(["lesson_complete", "quiz_complete"]);
+
 // GET /profile — Return user profile info
 router.get("/", requireAuth, async (req, res) => {
   try {
@@ -168,19 +170,45 @@ router.get("/activity", requireAuth, async (req, res) => {
 
     if (!user) return res.status(404).json({ error: "User not found" });
 
+    const sortedActivity = (user.activityLog || []).sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+    );
+
     // Return only the 3 most recent activities, sorted newest first.
-    const activities = (user.activityLog || [])
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 3)
-      .map((entry) => ({
-        ...entry,
-        pointsEarned: entry.points,
-        detail: activityLabels[entry.type] || entry.type,
-      }));
+    const activities = sortedActivity.slice(0, 3).map((entry) => ({
+      ...entry,
+      pointsEarned: entry.points,
+      detail: activityLabels[entry.type] || entry.type,
+    }));
+
+    // Frontend-ready lesson history for future carousel usage.
+    const recentLessons = [];
+    const seenLessonIds = new Set();
+
+    for (const entry of sortedActivity) {
+      if (!LESSON_ACTIVITY_TYPES.has(entry.type)) continue;
+      if (!entry.lessonId || !entry.lessonName) continue;
+      if (seenLessonIds.has(entry.lessonId)) continue;
+
+      seenLessonIds.add(entry.lessonId);
+      recentLessons.push({
+        lessonId: entry.lessonId,
+        lessonName: entry.lessonName,
+        moduleId: entry.moduleId || null,
+        moduleName: entry.moduleName || null,
+        lastEventType: entry.type,
+        lastEventLabel: activityLabels[entry.type] || entry.type,
+        lastEventAt: entry.createdAt,
+        pointsEarned: entry.points || 0,
+      });
+
+      if (recentLessons.length >= 10) break;
+    }
 
     res.json({
       success: true,
       activities,
+      recentLessons,
       avatar: user.avatar,
       username: user.username,
     });
