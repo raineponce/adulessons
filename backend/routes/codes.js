@@ -36,7 +36,7 @@ router.post('/redeem', requireAuth, async (req, res) => {
 
     // Award points or prize based on rewardType
     if (secretCode.rewardType === 'points') {
-      user.points += secretCode.pointsValue;
+      user.totalPoints += secretCode.pointsValue;
     } else if (secretCode.rewardType === 'prize') {
       user.redeemedPrizes.push({
         prizeId: secretCode.prizeId,
@@ -51,7 +51,7 @@ router.post('/redeem', requireAuth, async (req, res) => {
       success: true,
       rewardType: secretCode.rewardType,
       pointsValue: secretCode.rewardType === 'points' ? secretCode.pointsValue : 0,
-      points: user.points
+      points: user.totalPoints
     });
   } catch (err) {
     console.error('Code redemption error:', err);

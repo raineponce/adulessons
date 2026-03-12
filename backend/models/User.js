@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'default'
   },
-  points: {
+  totalPoints: {
     type: Number,
     default: 0
   },
@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
   redeemedPrizes: [
     {
       prizeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Prize' },
+      // Optional metadata for non-Prize redemptions (e.g. final collectable)
+      name: { type: String, default: null },
+      type: { type: String, default: null },
       redeemedAt: { type: Date, default: Date.now }
     }
   ],
