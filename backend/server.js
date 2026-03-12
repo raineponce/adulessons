@@ -52,7 +52,7 @@ app.use('/prizes', apiLimiter, require('./routes/prizes'));
 app.use('/codes', apiLimiter, require('./routes/codes'));
 app.use('/profile', apiLimiter, require('./routes/profile'));
 // --- Temporary debug routes (remove before production) ---
-app.use('/debug', require('./routes/debug'));
+// app.use('/debug', require('./routes/debug'));
 
 // Fallback: serve index.html for any unmatched routes (SPA-style)
 app.get('*', apiLimiter, (req, res) => {
