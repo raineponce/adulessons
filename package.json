@@ -7,7 +7,8 @@
     "start": "node backend/server.js",
     "seed": "node backend/seed/seedContent.js",
     "seed:users": "node backend/seed/seedUsers.js",
-    "seed:all": "node backend/seed/seedContent.js && node backend/seed/seedUsers.js"
+    "seed:codes": "node backend/seed/seedSecretCodes.js",
+    "seed:all": "node backend/seed/seedContent.js && node backend/seed/seedUsers.js && node backend/seed/seedSecretCodes.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

@@ -241,6 +241,28 @@
     <pre id="lesson-result">Lesson data will appear here...</pre>
   </div>
 
+  <!-- ===== SECRET CODES SECTION ===== -->
+  <h2>🔐 Secret Codes</h2>
+  <div class="section">
+    <div id="codes-status" class="status"></div>
+    <div class="controls">
+      <button onclick="loadSecretCodes()">🔄 Load Secret Codes</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Reward Type</th>
+          <th>Points</th>
+          <th>Active</th>
+          <th>Expires</th>
+        </tr>
+      </thead>
+      <tbody id="codes-tbody"></tbody>
+    </table>
+    <pre id="codes-result">Secret code data will appear here...</pre>
+  </div>
+
   <!-- ===== RAW API SECTION ===== -->
   <!-- <h2>🔧 Raw API Call</h2>
   <div class="section">
@@ -420,6 +442,37 @@
           result.status === 200 ? 'Completed ' + lessonId + '!' : (result.data.error || 'Failed'));
       } catch (err) {
         setStatus('lessons-status', 'error', err.message);
+      }
+    }
+
+    // ─── Secret codes ───────────────────────────────────────
+    async function loadSecretCodes() {
+      try {
+        var result = await api('/test/secret-codes');
+        if (result.status !== 200) {
+          setStatus('codes-status', 'error', result.data.error || 'Failed to load secret codes');
+          document.getElementById('codes-result').textContent = JSON.stringify(result.data, null, 2);
+          return;
+        }
+
+        document.getElementById('codes-result').textContent = JSON.stringify(result.data, null, 2);
+        var tbody = document.getElementById('codes-tbody');
+        tbody.innerHTML = '';
+
+        (result.data.secretCodes || []).forEach(function (sc) {
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td><strong>' + sc.code + '</strong></td>' +
+            '<td>' + sc.rewardType + '</td>' +
+            '<td>' + (sc.pointsValue || 0) + '</td>' +
+            '<td>' + (sc.active ? '✅' : '❌') + '</td>' +
+            '<td>' + (sc.expiresAt ? new Date(sc.expiresAt).toLocaleString() : 'Never') + '</td>';
+          tbody.appendChild(tr);
+        });
+
+        setStatus('codes-status', 'success', 'Loaded ' + (result.data.secretCodes || []).length + ' secret codes');
+      } catch (err) {
+        setStatus('codes-status', 'error', err.message);
       }
     }
 

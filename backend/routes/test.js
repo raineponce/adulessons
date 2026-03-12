@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const SecretCode = require('../models/SecretCode');
 
 // GET /test/users — List all users (test only, no auth required)
 router.get('/users', async (req, res) => {
@@ -59,6 +60,21 @@ router.post('/change-avatar', async (req, res) => {
     res.json({ success: true, username: user.username, avatar: user.avatar });
   } catch (err) {
     console.error('Change avatar error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// GET /test/secret-codes — List all secret codes (test only, no auth required)
+router.get('/secret-codes', async (req, res) => {
+  try {
+    const secretCodes = await SecretCode.find()
+      .select('code rewardType pointsValue active expiresAt prizeId')
+      .sort({ code: 1 })
+      .lean();
+
+    res.json({ success: true, secretCodes });
+  } catch (err) {
+    console.error('Test secret codes error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
