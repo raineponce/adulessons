@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - aduLessons</title>
+    <title>Settings [DARK MODE TEST] - aduLessons</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,10 +13,6 @@
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
 
-    <!-- Global styles -->
-    <link rel="stylesheet" href="./styles/global.css">
-
-    <!-- Page-specific internal styles -->
     <style>
         /* ── Dark Mode Theme Variables ── */
         :root {
@@ -65,13 +61,13 @@
             background: var(--sidebar-bg);
             padding: 30px 20px;
             border-right: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
             position: fixed;
             height: 100vh;
             left: 0;
             top: 0;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .logo {
@@ -79,11 +75,11 @@
             font-size: 20px;
             font-weight: 700;
             color: var(--text-color);
-            transition: color 0.3s ease;
             margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: color 0.3s ease;
         }
 
         .logo-bowtie {
@@ -411,7 +407,6 @@
                 right: 20px;
                 background: var(--back-btn-bg);
                 border-radius: 8px;
-                transition: background-color 0.3s ease, color 0.3s ease;
                 width: 50px;
                 height: 50px;
                 display: flex;
@@ -419,6 +414,7 @@
                 justify-content: center;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
+                transition: background-color 0.3s ease, color 0.3s ease;
             }
 
             .back-button:hover {
@@ -616,7 +612,7 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,.2);
             padding: 32px;
-            font-size: 16px; /* lock — immune to html font-size changes */
+            font-size: 16px;
             font-family: 'Nunito Sans', sans-serif;
             animation: fsmSlideUp 0.25s ease;
         }
@@ -772,15 +768,8 @@
 
         /* Animation on page load */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .settings-section {
@@ -788,16 +777,23 @@
             opacity: 0;
         }
 
-        .settings-section:nth-child(1) {
-            animation-delay: 0.1s;
-        }
+        .settings-section:nth-child(1) { animation-delay: 0.1s; }
+        .settings-section:nth-child(2) { animation-delay: 0.2s; }
+        .settings-section:nth-child(3) { animation-delay: 0.3s; }
 
-        .settings-section:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .settings-section:nth-child(3) {
-            animation-delay: 0.3s;
+        /* Test badge */
+        .test-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 3px 10px;
+            border-radius: 20px;
+            vertical-align: middle;
+            margin-left: 10px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -817,12 +813,12 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <span class="logo-bowtie"><img class="logo-bowtie" src="../assets/images/logo-1.png"></span>
+                <span class="logo-bowtie"><img class="logo-bowtie" src="./assets/images/logo-1.png"></span>
             </div>
 
             <div class="profile-section">
                 <div class="profile-avatar">
-                    <img src="../assets/images/profile-pic.png" alt="Zoey profile avatar">
+                    <img src="./assets/images/profile-pic.png" alt="Zoey profile avatar">
                 </div>
                 <div class="profile-name">Zoey</div>
             </div>
@@ -831,7 +827,7 @@
                 <a href="#accessibility" class="nav-item active">Accessibility</a>
                 <a href="#progress" class="nav-item">Progress</a>
                 <a href="#about" class="nav-item">About Us</a>
-                <a href="profile.html" class="nav-item">Profile</a>
+                <a href="account/profile.html" class="nav-item">Profile</a>
                 <a href="#" class="nav-item sign-out">Sign Out</a>
             </nav>
         </aside>
@@ -840,7 +836,7 @@
         <main class="main-content">
             <button class="back-button" onclick="window.history.back()">‹</button>
 
-            <h1>Settings</h1>
+            <h1>Settings <span class="test-badge">Test Page</span></h1>
 
             <!-- Accessibility Section -->
             <section class="settings-section" id="accessibility">
@@ -900,8 +896,7 @@
 
                     <div class="contact-item">
                         <div class="contact-label">Customer Service</div>
-                        <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                data-cfemail="81e9e4edf1c1e0e5f4ede4f2f2eeeff2afe2eeec">[email&#160;protected]</a></div>
+                        <div class="contact-value">support@adulessons.com</div>
                     </div>
 
                     <div class="contact-item">
@@ -964,13 +959,11 @@
         <div class="modal">
             <h2 class="modal-title">Reset All Progress</h2>
             <p class="modal-description">Resetting your progress delete all question history and quiz scores.</p>
-
             <div class="modal-list-title">Resetting all progress will:</div>
             <ul class="modal-list">
                 <li>Reset all course progress, question history, and quiz scores to zero.</li>
                 <li>Preserve all previously earned points.</li>
             </ul>
-
             <div class="modal-buttons">
                 <button class="modal-button cancel" onclick="closeResetModal()">Cancel</button>
                 <button class="modal-button confirm" onclick="confirmReset()">Reset Progress</button>
@@ -983,13 +976,11 @@
         <div class="modal">
             <h2 class="modal-title">Deactivate Account</h2>
             <p class="modal-description">Deactivating your account can be temporary.</p>
-
             <div class="modal-list-title">Deactivating your account will:</div>
             <ul class="modal-list">
                 <li>Disable your profile from public view.</li>
                 <li>Allow you to restore your account at any time by logging back in.</li>
             </ul>
-
             <div class="modal-buttons">
                 <button class="modal-button cancel" onclick="closeDeactivateModal()">Cancel</button>
                 <button class="modal-button confirm" onclick="confirmDeactivate()">Deactivate account</button>
@@ -1002,13 +993,11 @@
         <div class="modal">
             <h2 class="modal-title modal-title-danger">Delete Account</h2>
             <p class="modal-description">Deleting your account is permanent and cannot be reversed.</p>
-
             <div class="modal-list-title">Deleting your account will:</div>
             <ul class="modal-list">
                 <li>Permanently delete your profile and erase account information.</li>
                 <li>Remove all progress and earned points, which cannot be recovered.</li>
             </ul>
-
             <div class="modal-buttons">
                 <button class="modal-button cancel" onclick="closeDeleteModal()">Cancel</button>
                 <button class="modal-button confirm" onclick="confirmDelete()">Delete account</button>
@@ -1017,128 +1006,19 @@
     </div>
 
     <script>
-        // Modal Functions
-        function openResetModal() {
-            const modal = document.getElementById('resetProgressModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeResetModal() {
-            const modal = document.getElementById('resetProgressModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function confirmReset() {
-            // Add your reset progress logic here
-            console.log('Progress reset confirmed');
-            alert('Progress has been reset successfully!');
-            closeResetModal();
-        }
-
-        function openDeactivateModal() {
-            const modal = document.getElementById('deactivateAccountModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDeactivateModal() {
-            const modal = document.getElementById('deactivateAccountModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function confirmDeactivate() {
-            // Add your deactivate account logic here
-            console.log('Account deactivation confirmed');
-            alert('Your account has been deactivated.');
-            closeDeactivateModal();
-        }
-
-        function openDeleteModal() {
-            const modal = document.getElementById('deleteAccountModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDeleteModal() {
-            const modal = document.getElementById('deleteAccountModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function confirmDelete() {
-            // Add your delete account logic here
-            console.log('Account deletion confirmed');
-            alert('Your account has been permanently deleted.');
-            closeDeleteModal();
-        }
-
-        // Close modal when clicking outside of it
-        document.getElementById('resetProgressModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeResetModal();
-            }
-        });
-
-        document.getElementById('deactivateAccountModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeDeactivateModal();
-            }
-        });
-
-        document.getElementById('deleteAccountModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeDeleteModal();
-            }
-        });
-
-        // Hamburger Menu Toggle
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-        const sidebar = document.querySelector('.sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-        function toggleSidebar() {
-            hamburgerMenu.classList.toggle('active');
-            sidebar.classList.toggle('active');
-            sidebarOverlay.classList.toggle('active');
-
-            // Prevent body scroll when sidebar is open
-            if (sidebar.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-
-        hamburgerMenu.addEventListener('click', toggleSidebar);
-
-        // Close sidebar when clicking overlay
-        sidebarOverlay.addEventListener('click', toggleSidebar);
-
-        // Close sidebar when clicking a nav item on mobile
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function () {
-                if (window.innerWidth <= 768) {
-                    toggleSidebar();
-                }
-            });
-        });
-
         // ── Dark Mode ──
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const darkModeKnob   = document.getElementById('darkModeKnob');
+        const darkToggle = document.getElementById('darkModeToggle');
+        const darkKnob   = document.getElementById('darkModeKnob');
 
         function applyDarkMode(isDark, save) {
             if (isDark) {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                darkModeToggle.classList.add('active');
-                darkModeKnob.textContent = 'On';
+                darkToggle.classList.add('active');
+                darkKnob.textContent = 'On';
             } else {
                 document.documentElement.removeAttribute('data-theme');
-                darkModeToggle.classList.remove('active');
-                darkModeKnob.textContent = 'Off';
+                darkToggle.classList.remove('active');
+                darkKnob.textContent = 'Off';
             }
             if (save) localStorage.setItem('darkMode', isDark);
         }
@@ -1152,69 +1032,103 @@
             applyDarkMode(true, false);
         }
 
-        // Toggle switch functionality
+        // ── Modal Functions ──
+        function openResetModal() {
+            document.getElementById('resetProgressModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeResetModal() {
+            document.getElementById('resetProgressModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function confirmReset() {
+            alert('Progress has been reset successfully!');
+            closeResetModal();
+        }
+
+        function openDeactivateModal() {
+            document.getElementById('deactivateAccountModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDeactivateModal() {
+            document.getElementById('deactivateAccountModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function confirmDeactivate() {
+            alert('Your account has been deactivated.');
+            closeDeactivateModal();
+        }
+
+        function openDeleteModal() {
+            document.getElementById('deleteAccountModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDeleteModal() {
+            document.getElementById('deleteAccountModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function confirmDelete() {
+            alert('Your account has been permanently deleted.');
+            closeDeleteModal();
+        }
+
+        document.getElementById('resetProgressModal').addEventListener('click', function(e) { if (e.target === this) closeResetModal(); });
+        document.getElementById('deactivateAccountModal').addEventListener('click', function(e) { if (e.target === this) closeDeactivateModal(); });
+        document.getElementById('deleteAccountModal').addEventListener('click', function(e) { if (e.target === this) closeDeleteModal(); });
+
+        // ── Hamburger Menu ──
+        const hamburgerMenu  = document.getElementById('hamburgerMenu');
+        const sidebar        = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            hamburgerMenu.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburgerMenu.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 768) toggleSidebar();
+            });
+        });
+
+        // ── Toggle Switch (Animations / Sounds) ──
         function toggleSwitch(element) {
             element.classList.toggle('active');
             const knob = element.querySelector('.toggle-knob');
-
-            if (element.classList.contains('active')) {
-                knob.textContent = 'On';
-            } else {
-                knob.textContent = 'Off';
-            }
+            knob.textContent = element.classList.contains('active') ? 'On' : 'Off';
         }
 
-        // Smooth scroll for navigation
+        // ── Smooth Scroll / Active Nav ──
         document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function (e) {
+            item.addEventListener('click', function(e) {
                 if (this.getAttribute('href').startsWith('#')) {
                     e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-
-                    if (targetSection) {
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-
-                    // Update active state
-                    document.querySelectorAll('.nav-item').forEach(nav => {
-                        nav.classList.remove('active');
-                    });
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
                     this.classList.add('active');
                 }
             });
         });
 
-        // Intersection Observer for active navigation highlighting
-        const sections = document.querySelectorAll('.settings-section');
-        const navItems = document.querySelectorAll('.nav-item');
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const sectionId = entry.target.getAttribute('id');
-                    navItems.forEach(item => {
-                        item.classList.remove('active');
-                        if (item.getAttribute('href') === `#${sectionId}`) {
-                            item.classList.add('active');
-                        }
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.toggle('active', item.getAttribute('href') === `#${id}`);
                     });
                 }
             });
-        }, observerOptions);
+        }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
 
-        sections.forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('.settings-section').forEach(s => observer.observe(s));
 
         // ── Font Size Modal ──
         const FSM_MIN = 75, FSM_MAX = 150;
@@ -1233,7 +1147,7 @@
         const fsmBtnApply = document.getElementById('fsmBtnApply');
 
         function fsmUpdateUI(val) {
-            fsmPending      = val;
+            fsmPending = val;
             fsmSlider.value = val;
             fsmFill.style.width = ((val - FSM_MIN) / (FSM_MAX - FSM_MIN) * 100) + '%';
             fsmPctVal.textContent = val + '%';
@@ -1254,7 +1168,7 @@
             fsmModal.classList.remove('active');
             fsmOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            fsmUpdateUI(fsmCurrent); // revert pending preview
+            fsmUpdateUI(fsmCurrent);
         }
 
         fsmOverlay.addEventListener('click', closeFontModal);
@@ -1267,19 +1181,16 @@
             document.documentElement.style.fontSize = fsmCurrent + '%';
             closeFontModal();
         });
-
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && fsmModal.classList.contains('active')) closeFontModal();
         });
 
-        // Apply persisted font size on load
         if (localStorage.getItem('fontSize')) {
             document.documentElement.style.fontSize = fsmCurrent + '%';
         }
         fsmUpdateUI(fsmCurrent);
 
-        // Reset sidebar state on window resize
-        window.addEventListener('resize', function () {
+        window.addEventListener('resize', function() {
             if (window.innerWidth > 768) {
                 hamburgerMenu.classList.remove('active');
                 sidebar.classList.remove('active');
