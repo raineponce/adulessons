@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prize Shop Backend Tester</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 30px;
+        }
+
+        .auth-box {
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            max-width: 520px;
+        }
+
+        .auth-box input {
+            margin: 6px 8px 6px 0;
+            padding: 8px;
+            width: 220px;
+        }
+
+        button {
+            margin: 6px 8px 6px 0;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 420px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Prize Shop Backend Tester</h2>
+
+    <div class="auth-box">
+        <h3>Session/Auth (Temporary)</h3>
+        <input id="email" type="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
+        <input id="username" type="text" placeholder="Username (register only)">
+        <br>
+        <button onclick="login()">Login</button>
+        <button onclick="registerTempUser()">Register Temp User</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <button onclick="getProfile()">Get Profile (Points)</button>
+    <button onclick="loadPrizes()">Load Prizes</button>
+    <button onclick="redeemFirstPrize()">Redeem First Unlockable Prize</button>
+    <button onclick="redeemCode()">Redeem Secret Code</button>
+    <button onclick="getRedeemed()">Get Redeemed Prizes</button>
+
+    <h3>Output</h3>
+    <pre id="output">Waiting...</pre>
+
+    <script>
+        const output = document.getElementById("output");
+
+        function show(status, data, extra = "") {
+            output.textContent =
+                "STATUS: " + status + "\n" +
+                (extra ? extra + "\n\n" : "\n") +
+                JSON.stringify(data, null, 2);
+        }
+
+        async function parseResponse(res) {
+            const type = res.headers.get("content-type") || "";
+            if (type.includes("application/json")) return res.json();
+            const text = await res.text();
+            return { raw: text.slice(0, 500) };
+        }
+
+        async function api(path, method = "GET", body = null) {
+            const res = await fetch(path, {
+                method,
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: body ? JSON.stringify(body) : null
+            });
+
+            const data = await parseResponse(res);
+            show(res.status, data, "URL: " + res.url);
+            return { status: res.status, data };
+        }
+
+        async function login() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                show(0, { error: "Email and password are required" });
+                return;
+            }
+
+            await api("/auth/login", "POST", { email, password });
+            // Verify session immediately
+            await getProfile();
+        }
+
+        async function registerTempUser() {
+            const stamp = Date.now();
+            const username = "tester" + stamp;
+            const email = "tester" + stamp + "@example.com";
+            const password = "TestPass123!";
+
+            document.getElementById("username").value = username;
+            document.getElementById("email").value = email;
+            document.getElementById("password").value = password;
+
+            await api("/auth/register", "POST", { username, email, password });
+            // Verify session immediately
+            await getProfile();
+        }
+
+        async function logout() {
+            const res = await fetch("/auth/logout", {
+                method: "POST",
+                credentials: "include",
+                headers: { "Accept": "application/json" }
+            });
+            show(res.status, { success: true, message: "Logged out" }, "URL: " + res.url);
+        }
+
+        async function getProfile() {
+            await api("/profile");
+        }
+
+        async function loadPrizes() {
+            const result = await api("/prizes");
+            window.prizes = Array.isArray(result.data) ? result.data : null;
+        }
+
+        async function redeemFirstPrize() {
+            if (!window.prizes) {
+                show(0, { error: "Load prizes first." });
+                return;
+            }
+
+            const redeemable = window.prizes.find(p => p.unlocked && p.available);
+
+            if (!redeemable) {
+                show(0, { error: "No redeemable prize available." });
+                return;
+            }
+
+            await api(`/prizes/${redeemable._id}/redeem`, "POST");
+        }
+
+        async function redeemCode() {
+            const code = prompt("Enter secret code");
+            if (!code) return;
+            await api("/codes/redeem", "POST", { code });
+        }
+
+        async function getRedeemed() {
+            await api("/prizes/redeemed");
+        }
+    </script>
+</body>
+
+</html>

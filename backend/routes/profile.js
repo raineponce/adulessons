@@ -12,7 +12,7 @@ const ALLOWED_AVATARS = ['default', 'avatar1', 'avatar2', 'avatar3', 'avatar4', 
 router.get('/', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId)
-      .select('username email avatar points streak completedLessons currentLesson')
+      .select('username email avatar totalPoints streak completedLessons currentLesson')
       .lean();
 
     res.json(user);
@@ -126,7 +126,7 @@ router.put('/user', requireAuth, async (req, res) => {
 router.get('/progress', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId)
-      .select('completedLessons allLessonsComplete points')
+      .select('completedLessons allLessonsComplete totalPoints')
       .lean();
 
     const modules = await Module.find().sort({ order: 1 }).lean();
@@ -160,6 +160,44 @@ router.get('/progress', requireAuth, async (req, res) => {
       allLessonsComplete: user.allLessonsComplete
     });
   } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// POST /profile/claim-final-prize — Claim final collectable after full completion
+router.post('/claim-final-prize', requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(401).json({ error: 'User session invalid' });
+    }
+
+    if (!user.allLessonsComplete) {
+      return res.status(400).json({ error: 'All lessons must be completed first' });
+    }
+
+    if (user.finalPrizeClaimed) {
+      return res.status(400).json({ error: 'Final prize already claimed' });
+    }
+
+    user.finalPrizeClaimed = true;
+
+    const redeemedAt = new Date();
+    const prize = {
+      name: 'Final 3D Collectable',
+      type: 'collectable',
+      redeemedAt
+    };
+
+    user.redeemedPrizes.push(prize);
+    await user.save();
+
+    res.json({
+      success: true,
+      prize
+    });
+  } catch (err) {
+    console.error('Final prize claim failed:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });

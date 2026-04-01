@@ -7,31 +7,36 @@ const { requireAuth } = require('../middleware/authMiddleware');
 // POST /codes/redeem — Validate and redeem a secret code
 router.post('/redeem', requireAuth, async (req, res) => {
   try {
-    const { code } = req.body;
-    if (!code) {
+    const { code } = req.body || {};
+    if (!code || typeof code !== 'string' || !code.trim()) {
       return res.status(400).json({ error: 'Code is required' });
     }
 
-    const secretCode = await SecretCode.findOne({ code: code.toUpperCase() });
+    const normalizedCode = code.trim().toUpperCase();
+    const secretCode = await SecretCode.findOne({ code: normalizedCode });
 
     // Validate the code exists, is active, and has not expired
     if (!secretCode || !secretCode.active) {
       return res.status(404).json({ error: 'Invalid or inactive code' });
     }
+
     if (secretCode.expiresAt && secretCode.expiresAt < new Date()) {
       return res.status(400).json({ error: 'Code has expired' });
     }
 
     const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(401).json({ error: 'User session invalid' });
+    }
 
-    // Ensure the user hasn't already used this code
+    // Ensure the user has not already used this code
     if (user.usedCodes.includes(secretCode.code)) {
       return res.status(400).json({ error: 'Code already redeemed' });
     }
 
     // Award points or prize based on rewardType
     if (secretCode.rewardType === 'points') {
-      user.points += secretCode.pointsValue;
+      user.totalPoints += secretCode.pointsValue;
     } else if (secretCode.rewardType === 'prize') {
       user.redeemedPrizes.push({
         prizeId: secretCode.prizeId,
@@ -43,12 +48,13 @@ router.post('/redeem', requireAuth, async (req, res) => {
     await user.save();
 
     res.json({
-      message: 'Code redeemed successfully',
+      success: true,
       rewardType: secretCode.rewardType,
       pointsValue: secretCode.rewardType === 'points' ? secretCode.pointsValue : 0,
-      points: user.points
+      points: user.totalPoints
     });
   } catch (err) {
+    console.error('Code redemption error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
