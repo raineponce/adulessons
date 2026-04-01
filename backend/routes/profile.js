@@ -65,6 +65,63 @@ router.put('/address', requireAuth, async (req, res) => {
   }
 });
 
+// PUT /profile/user — Update display name, email, and optionally password
+router.put('/user', requireAuth, async (req, res) => {
+  try {
+    const { username, email, currentPassword, newPassword, confirmPassword } = req.body;
+
+    const USERNAME_REGEX = /^[a-zA-Z0-9]{3,20}$/;
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.com$/i;
+
+    if (!username || !USERNAME_REGEX.test(username)) {
+      return res.status(400).json({ error: 'Username must be 3–20 characters, letters and numbers only.' });
+    }
+    if (!email || !EMAIL_REGEX.test(email)) {
+      return res.status(400).json({ error: 'Please enter a valid email address ending in .com' });
+    }
+
+    const user = await User.findById(req.session.userId);
+    if (!user) return res.status(404).json({ error: 'User not found.' });
+
+    // Check if email is taken by another account
+    if (email.toLowerCase() !== user.email) {
+      const existing = await User.findOne({ email: email.toLowerCase() });
+      if (existing) return res.status(400).json({ error: 'An account with that email already exists.' });
+    }
+
+    user.username = username;
+    user.email = email.toLowerCase();
+
+    // Only update password if any password field was provided
+    if (currentPassword || newPassword || confirmPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ error: 'Current password is required.' });
+      }
+      if (!newPassword || newPassword.length < 8) {
+        return res.status(400).json({ error: 'New password must be at least 8 characters.' });
+      }
+      if (newPassword !== confirmPassword) {
+        return res.status(400).json({ error: 'New passwords do not match.' });
+      }
+
+      const match = await user.comparePassword(currentPassword);
+      if (!match) {
+        return res.status(400).json({ error: 'Current password is incorrect.' });
+      }
+
+      user.password = newPassword;
+    }
+
+    await user.save();
+
+    console.log(`[Profile] User updated: { username: '${user.username}', email: '${user.email}', _id: '${user._id}' }`);
+    res.json({ success: true, username: user.username, email: user.email });
+  } catch (err) {
+    console.error('Profile update error:', err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // GET /profile/progress — Return detailed progress information
 router.get('/progress', requireAuth, async (req, res) => {
   try {
