@@ -47,6 +47,7 @@ const apiLimiter = rateLimit({
 
 // --- Routes ---
 app.use('/auth', require('./routes/auth'));
+app.use('/test', apiLimiter, require('./routes/test'));
 app.use('/lessons', apiLimiter, require('./routes/lessons'));
 app.use('/prizes', apiLimiter, require('./routes/prizes'));
 app.use('/codes', apiLimiter, require('./routes/codes'));

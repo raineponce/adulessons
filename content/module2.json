@@ -1,9 +1,113 @@
 {
   "moduleId": "mod2",
-  "title": "Cooking & Nutrition (placeholder)",
-  "description": "Learn how to plan meals, cook simple recipes, and make healthy food choices.",
+  "title": "Social Skills",
+  "description": "Learn how to interact with others, build relationships, and communicate effectively.",
   "order": 2,
-  "introPage": { "blocks": [] },
-  "summaryPage": { "blocks": [] },
-  "lessons": []
+  "introPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Welcome to Module 2"
+      },
+      {
+        "type": "text",
+        "body": "In this module, you will develop essential social skills. We'll cover effective communication, building meaningful relationships, managing conflict, and navigating social situations—all skills that will help you thrive in your personal and professional life."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/social-icon.png",
+        "alt": "Social skills icon"
+      }
+    ]
+  },
+  "summaryPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Module 2 Complete!"
+      },
+      {
+        "type": "callout",
+        "body": "You've learned the foundations of social skills. Keep practicing!"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "lessonId": "mod2-lesson1",
+      "moduleId": "mod2",
+      "title": "Effective Communication",
+      "order": 1,
+      "pages": [],
+      "quiz": {
+        "question": "What is the most important element of effective communication?",
+        "options": [
+          "Speaking loudly and clearly",
+          "Listening actively and understanding the other person",
+          "Using complex vocabulary",
+          "Talking more than others"
+        ],
+        "correctIndex": 1,
+        "explanation": "Active listening and understanding others is key to effective communication and building strong relationships."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod2-lesson2",
+      "moduleId": "mod2",
+      "title": "Building Relationships",
+      "order": 2,
+      "pages": [],
+      "quiz": {
+        "question": "What is a foundation for building strong relationships?",
+        "options": [
+          "Never showing your true self",
+          "Trust, honesty, and mutual respect",
+          "Only spending time online",
+          "Competing with others"
+        ],
+        "correctIndex": 1,
+        "explanation": "Strong relationships are built on trust, honesty, and mutual respect—qualities that develop through consistent positive interactions."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod2-lesson3",
+      "moduleId": "mod2",
+      "title": "Conflict Resolution",
+      "order": 3,
+      "pages": [],
+      "quiz": {
+        "question": "What is the best approach to resolving conflict?",
+        "options": [
+          "Avoiding the problem entirely",
+          "Blaming the other person",
+          "Listening, understanding perspectives, and finding solutions together",
+          "Winning at all costs"
+        ],
+        "correctIndex": 2,
+        "explanation": "Healthy conflict resolution involves listening to the other person, understanding their perspective, and working together to find a solution."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod2-lesson4",
+      "moduleId": "mod2",
+      "title": "Navigating Social Situations",
+      "order": 4,
+      "pages": [],
+      "quiz": {
+        "question": "How can you feel more confident in social situations?",
+        "options": [
+          "Avoiding people altogether",
+          "Preparing, being authentic, and practicing social skills",
+          "Pretending to be someone you're not",
+          "Only attending mandatory events"
+        ],
+        "correctIndex": 1,
+        "explanation": "Confidence in social situations comes from preparation, authenticity, and practice—the more you engage, the more comfortable you become."
+      },
+      "pointsAwarded": 10
+    }
+  ]
 }

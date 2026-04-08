@@ -11,8 +11,8 @@ services:
       - ./backend:/app/backend
       - ./content:/app/content
     environment:
-      - MONGODB_URI=${MONGODB_URI}
-      - SESSION_SECRET=${SESSION_SECRET}
+      - MONGODB_URI=mongodb://mongo:27017/adulessons
+      - SESSION_SECRET=qwertyuiopasdfghjklzxcvbnm1234567890
 
   mongo:
     image: mongo:7

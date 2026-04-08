@@ -12,4 +12,7 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "backend/server.js"]
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+CMD ["/app/entrypoint.sh"]

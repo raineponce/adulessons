@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DB Test | AduLessons</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 24px;
+      margin-bottom: 8px;
+      color: #333;
+      border-bottom: 2px solid #6c63ff;
+      display: inline-block;
+      padding-bottom: 2px;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .status {
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .status.success {
+      display: block;
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status.error {
+      display: block;
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    th {
+      background: #6c63ff;
+      color: #fff;
+    }
+
+    tr:hover td {
+      background: #f0f0ff;
+    }
+
+    button {
+      background: #6c63ff;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 4px;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #574fd6;
+    }
+
+    button.danger {
+      background: #dc3545;
+    }
+
+    button.danger:hover {
+      background: #c82333;
+    }
+
+    input,
+    select {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin: 4px;
+      font-size: 14px;
+    }
+
+    .controls {
+      margin: 8px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+    }
+
+    pre {
+      background: #1e1e2e;
+      color: #a6e3a1;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 8px;
+      white-space: pre-wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e0e0e0;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin: 2px;
+    }
+
+    .modules-container {
+      margin-top: 10px;
+    }
+
+    .module-row {
+      margin: 6px 0;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🗄️ AduLessons — Database Test Page</h1>
+  <p class="subtitle">Verify that MongoDB properly delivers and updates data.</p>
+
+  <!-- ===== USERS SECTION ===== -->
+  <h2>👤 Users</h2>
+  <div class="section">
+    <div id="users-status" class="status"></div>
+    <div class="controls">
+      <button onclick="loadUsers()">🔄 Load All Users</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Avatar</th>
+          <th>Points</th>
+          <th>Streak</th>
+          <th>Completed</th>
+          <th>All Done?</th>
+        </tr>
+      </thead>
+      <tbody id="users-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- ===== LOGIN TEST ===== -->
+  <h2>🔑 Login Test</h2>
+  <div class="section">
+    <div id="login-status" class="status"></div>
+    <div class="controls">
+      <input id="login-email" type="email" placeholder="Email" value="zoey@test.com">
+      <input id="login-password" type="password" placeholder="Password" value="password123">
+      <button onclick="testLogin()">Login</button>
+      <button onclick="testLogout()" class="danger">Logout</button>
+      <button onclick="testMe()">Check /auth/me</button>
+    </div>
+    <pre id="login-result">Login response will appear here...</pre>
+  </div>
+
+  <!-- ===== UPDATE USER TEST ===== -->
+  <h2>✏️ Update User (Points / Avatar)</h2>
+  <div class="section">
+    <div id="update-status" class="status"></div>
+    <div class="controls">
+      <label>Add points: <input id="add-points" type="number" value="10" min="0" style="width:70px"></label>
+      <button onclick="testAddPoints()">Add Points</button>
+      <label>Avatar:
+        <select id="pick-avatar">
+          <option value="default">default</option>
+          <option value="cat">cat</option>
+          <option value="dog">dog</option>
+          <option value="robot">robot</option>
+          <option value="star">star</option>
+          <option value="rocket">rocket</option>
+          <option value="book">book</option>
+          <option value="globe">globe</option>
+        </select>
+      </label>
+      <button onclick="testChangeAvatar()">Change Avatar</button>
+    </div>
+    <pre id="update-result">Update response will appear here...</pre>
+  </div>
+
+  <!-- ===== LESSONS SECTION ===== -->
+  <h2>📚 Lesson Content</h2>
+  <div class="section">
+    <div id="lessons-status" class="status"></div>
+    <div class="controls">
+      <button onclick="loadModules()">🔄 Load Modules &amp; Lessons</button>
+      <label>Lesson ID: <input id="lesson-id-input" type="text" value="mod1-lesson1" style="width:140px"></label>
+      <button onclick="loadLesson()">Get Lesson</button>
+      <button onclick="testComplete()">Mark Complete</button>
+    </div>
+    <div id="modules-list" class="modules-container"></div>
+    <pre id="lesson-result">Lesson data will appear here...</pre>
+  </div>
+
+  <!-- ===== SECRET CODES SECTION ===== -->
+  <h2>🔐 Secret Codes</h2>
+  <div class="section">
+    <div id="codes-status" class="status"></div>
+    <div class="controls">
+      <button onclick="loadSecretCodes()">🔄 Load Secret Codes</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Reward Type</th>
+          <th>Points</th>
+          <th>Active</th>
+          <th>Expires</th>
+        </tr>
+      </thead>
+      <tbody id="codes-tbody"></tbody>
+    </table>
+    <pre id="codes-result">Secret code data will appear here...</pre>
+  </div>
+
+  <!-- ===== RAW API SECTION ===== -->
+  <!-- <h2>🔧 Raw API Call</h2>
+  <div class="section">
+    <div class="controls">
+      <select id="raw-method">
+        <option>GET</option>
+        <option>POST</option>
+      </select>
+      <input id="raw-url" type="text" placeholder="/auth/me" value="/auth/me" style="flex:1; min-width:200px">
+      <input id="raw-body" type="text" placeholder='{"key":"value"}' style="flex:1; min-width:200px">
+      <button onclick="rawApiCall()">Send</button>
+    </div>
+    <pre id="raw-result">Response will appear here...</pre>
+  </div> -->
+
+  <script>
+    // ─── Helper ──────────────────────────────────────────────
+    async function api(url, method, body) {
+      method = method || 'GET';
+      var opts = {
+        method: method,
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        credentials: 'same-origin'
+      };
+      if (body && method !== 'GET') opts.body = JSON.stringify(body);
+      var res = await fetch(url, opts);
+      var text = await res.text();
+      try { return { status: res.status, data: JSON.parse(text) }; }
+      catch (e) { return { status: res.status, data: text }; }
+    }
+
+    function setStatus(id, type, msg) {
+      var el = document.getElementById(id);
+      el.className = 'status ' + type;
+      el.textContent = msg;
+    }
+
+    // ─── Users ───────────────────────────────────────────────
+    async function loadUsers() {
+      try {
+        var result = await api('/test/users');
+        if (result.status !== 200) {
+          setStatus('users-status', 'error', result.data.error || 'Failed to load users');
+          return;
+        }
+        var tbody = document.getElementById('users-tbody');
+        tbody.innerHTML = '';
+        result.data.users.forEach(function (u) {
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td><strong>' + u.username + '</strong></td>' +
+            '<td>' + u.email + '</td>' +
+            '<td>' + u.avatar + '</td>' +
+            '<td>' + u.points + '</td>' +
+            '<td>' + u.streak.current + ' 🔥</td>' +
+            '<td>' + u.completedLessons.length + ' lessons</td>' +
+            '<td>' + (u.allLessonsComplete ? '✅' : '❌') + '</td>';
+          tbody.appendChild(tr);
+        });
+        setStatus('users-status', 'success', 'Loaded ' + result.data.users.length + ' users');
+      } catch (err) {
+        setStatus('users-status', 'error', err.message);
+      }
+    }
+
+    // ─── Login / Logout / Me ─────────────────────────────────
+    async function testLogin() {
+      try {
+        var email = document.getElementById('login-email').value;
+        var password = document.getElementById('login-password').value;
+        var result = await api('/auth/login', 'POST', { email: email, password: password });
+        document.getElementById('login-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('login-status', result.status < 400 ? 'success' : 'error',
+          result.status < 400 ? 'Login successful!' : (result.data.error || 'Login failed'));
+      } catch (err) {
+        setStatus('login-status', 'error', err.message);
+      }
+    }
+
+    async function testLogout() {
+      try {
+        var result = await api('/auth/logout', 'POST');
+        document.getElementById('login-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('login-status', 'success', 'Logged out');
+      } catch (err) {
+        setStatus('login-status', 'error', err.message);
+      }
+    }
+
+    async function testMe() {
+      try {
+        var result = await api('/auth/me');
+        document.getElementById('login-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('login-status', result.status === 200 ? 'success' : 'error',
+          result.data.loggedIn ? 'Logged in as ' + result.data.user.username : 'Not logged in');
+      } catch (err) {
+        setStatus('login-status', 'error', err.message);
+      }
+    }
+
+    // ─── Update user ─────────────────────────────────────────
+    async function testAddPoints() {
+      try {
+        var pts = parseInt(document.getElementById('add-points').value) || 0;
+        var result = await api('/test/add-points', 'POST', { points: pts });
+        document.getElementById('update-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('update-status', result.status < 400 ? 'success' : 'error',
+          result.status < 400 ? 'Added ' + pts + ' points' : (result.data.error || 'Failed'));
+      } catch (err) {
+        setStatus('update-status', 'error', err.message);
+      }
+    }
+
+    async function testChangeAvatar() {
+      try {
+        var avatar = document.getElementById('pick-avatar').value;
+        var result = await api('/test/change-avatar', 'POST', { avatar: avatar });
+        document.getElementById('update-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('update-status', result.status < 400 ? 'success' : 'error',
+          result.status < 400 ? 'Avatar changed to ' + avatar : (result.data.error || 'Failed'));
+      } catch (err) {
+        setStatus('update-status', 'error', err.message);
+      }
+    }
+
+    // ─── Lessons ─────────────────────────────────────────────
+    async function loadModules() {
+      try {
+        var result = await api('/lessons');
+        if (result.status !== 200) {
+          setStatus('lessons-status', 'error', result.data.error || 'Must be logged in');
+          document.getElementById('lesson-result').textContent = JSON.stringify(result.data, null, 2);
+          return;
+        }
+        document.getElementById('lesson-result').textContent = JSON.stringify(result.data, null, 2);
+
+        var container = document.getElementById('modules-list');
+        container.innerHTML = '';
+        var modules = result.data.modules || [];
+        var completed = result.data.completedLessons || [];
+        modules.forEach(function (m) {
+          var div = document.createElement('div');
+          div.className = 'module-row';
+          var badges = (m.lessonIds || []).map(function (id) {
+            var done = completed.includes(id);
+            return '<span class="badge" style="background:' + (done ? '#d4edda' : '#e0e0e0') + '">' +
+              (done ? '✅' : '⬜') + ' ' + id + '</span>';
+          }).join(' ');
+          div.innerHTML = '<strong>' + m.moduleId + '</strong>: ' + m.title + '<br>' + badges;
+          container.appendChild(div);
+        });
+        setStatus('lessons-status', 'success',
+          modules.length + ' modules, ' + (result.data.progressPercent || 0) + '% complete');
+      } catch (err) {
+        setStatus('lessons-status', 'error', err.message);
+      }
+    }
+
+    async function loadLesson() {
+      try {
+        var lessonId = document.getElementById('lesson-id-input').value.trim();
+        var result = await api('/lessons/' + lessonId);
+        document.getElementById('lesson-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('lessons-status', result.status === 200 ? 'success' : 'error',
+          result.status === 200 ? 'Loaded ' + lessonId : (result.data.error || 'Failed'));
+      } catch (err) {
+        setStatus('lessons-status', 'error', err.message);
+      }
+    }
+
+    async function testComplete() {
+      try {
+        var lessonId = document.getElementById('lesson-id-input').value.trim();
+        var result = await api('/lessons/' + lessonId + '/complete', 'POST');
+        document.getElementById('lesson-result').textContent = JSON.stringify(result.data, null, 2);
+        setStatus('lessons-status', result.status === 200 ? 'success' : 'error',
+          result.status === 200 ? 'Completed ' + lessonId + '!' : (result.data.error || 'Failed'));
+      } catch (err) {
+        setStatus('lessons-status', 'error', err.message);
+      }
+    }
+
+    // ─── Secret codes ───────────────────────────────────────
+    async function loadSecretCodes() {
+      try {
+        var result = await api('/test/secret-codes');
+        if (result.status !== 200) {
+          setStatus('codes-status', 'error', result.data.error || 'Failed to load secret codes');
+          document.getElementById('codes-result').textContent = JSON.stringify(result.data, null, 2);
+          return;
+        }
+
+        document.getElementById('codes-result').textContent = JSON.stringify(result.data, null, 2);
+        var tbody = document.getElementById('codes-tbody');
+        tbody.innerHTML = '';
+
+        (result.data.secretCodes || []).forEach(function (sc) {
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td><strong>' + sc.code + '</strong></td>' +
+            '<td>' + sc.rewardType + '</td>' +
+            '<td>' + (sc.pointsValue || 0) + '</td>' +
+            '<td>' + (sc.active ? '✅' : '❌') + '</td>' +
+            '<td>' + (sc.expiresAt ? new Date(sc.expiresAt).toLocaleString() : 'Never') + '</td>';
+          tbody.appendChild(tr);
+        });
+
+        setStatus('codes-status', 'success', 'Loaded ' + (result.data.secretCodes || []).length + ' secret codes');
+      } catch (err) {
+        setStatus('codes-status', 'error', err.message);
+      }
+    }
+
+    // ─── Raw API ─────────────────────────────────────────────
+    async function rawApiCall() {
+      try {
+        var method = document.getElementById('raw-method').value;
+        var url = document.getElementById('raw-url').value;
+        var bodyStr = document.getElementById('raw-body').value.trim();
+        var body = null;
+        if (bodyStr) {
+          try { body = JSON.parse(bodyStr); }
+          catch (e) { document.getElementById('raw-result').textContent = 'Error: invalid JSON in body'; return; }
+        }
+        var result = await api(url, method, body);
+        document.getElementById('raw-result').textContent =
+          'Status: ' + result.status + '\n\n' + JSON.stringify(result.data, null, 2);
+      } catch (err) {
+        document.getElementById('raw-result').textContent = 'Error: ' + err.message;
+      }
+    }
+  </script>
+
+</body>
+
+</html>
