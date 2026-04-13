@@ -54,7 +54,7 @@ app.use('/codes', apiLimiter, require('./routes/codes'));
 app.use('/profile', apiLimiter, require('./routes/profile'));
 
 // Fallback: serve index.html for any unmatched routes (SPA-style)
-app.get('*', apiLimiter, (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
