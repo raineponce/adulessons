@@ -6,17 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>aduLessons | Sign Up</title>
 
-    <!-- Google Fonts or other font imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
 
-    <!-- Global styles -->
     <link rel="stylesheet" href="./css/global.css">
 
-    <!-- Page-specific internal styles -->
     <style>
         * {
             box-sizing: border-box;
@@ -42,7 +39,7 @@
         .signup-container input,
         .signup-container .signup-btn {
             font-family: 'Nunito Sans', sans-serif;
-            font-size: 3rem;
+            font-size: 0.95rem;
         }
 
         main {
@@ -85,7 +82,6 @@
             margin-bottom: 1rem;
             border: none;
             border-radius: 15px;
-            font-size: 0.95rem;
             box-shadow: 0px 2px 2px #7d7f7c;
         }
 
@@ -104,6 +100,17 @@
             cursor: pointer;
             margin-bottom: 0.75rem;
             box-shadow: 0px 2px 2px #7d7f7c;
+        }
+
+        .signup-error {
+            display: none;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #b00020;
+        }
+
+        .signup-error.is-visible {
+            display: block;
         }
 
         .signup-container .login-link {
@@ -152,7 +159,6 @@
             transform: scale(1.05);
         }
 
-
         @media (max-width: 500px) {
             .signup-container {
                 padding: 1.5rem;
@@ -167,12 +173,9 @@
 </head>
 
 <body>
-    <!-- Navigation component loads here, but not needed in this page-->
-    <!--<nav id="navbar"></nav>-->
-
     <header class="top-header">
-        <a href="../welcome.html" class="logo-link">
-            <img src="../assets/images/logo-1.png" alt="aduLessons logo">
+        <a href="./welcome.html" class="logo-link">
+            <img src="./assets/images/logo-1.png" alt="aduLessons logo">
         </a>
     </header>
 
@@ -181,27 +184,31 @@
             <h1>Sign Up</h1>
             <p>Learn key adulting skills today!</p>
 
-            <form id="signupForm">
-                <input type="text" placeholder="Enter Display Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <input type="password" placeholder="Your Password" required>
-                <button type="submit" class="signup-btn">Sign Up</button>
+            <form id="signupForm" novalidate>
+                <input id="signupName" name="username" type="text" placeholder="Enter Display Name" required
+                    autocomplete="name">
+                <input id="signupEmail" name="email" type="email" placeholder="Your Email" required
+                    autocomplete="email">
+                <input id="signupPassword" name="password" type="password" placeholder="Your Password" required
+                    autocomplete="new-password">
+                <button id="signupSubmitBtn" type="submit" class="signup-btn">Sign Up</button>
+                <p id="signupError" class="signup-error" role="alert" aria-live="polite"></p>
             </form>
 
             <div class="login-link">
-                Already have an account? <a href="login.html">Log in</a>
+                Already have an account? <a href="./login.html">Log in</a>
             </div>
 
             <img src="./assets/images/mascot-pointer.png" alt="Mascot" class="signup-mascot">
         </div>
     </main>
 
-    <!-- Footer component loads here -->
     <footer id="footer"></footer>
 
-    <!-- Load components -->
-    <script src="../js/components.js"></script>
-    <script src="../js/hamburger-menu.js"></script>
+    <script src="./js/components.js"></script>
+    <script src="./js/hamburger-menu.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/pages/auth/signup.js"></script>
 </body>
 
 </html>

@@ -6,17 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>aduLessons | Login</title>
 
-    <!-- Google Fonts or other font imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
 
-    <!-- Global styles -->
     <link rel="stylesheet" href="./css/global.css">
 
-    <!-- Page-specific internal styles -->
     <style>
         * {
             box-sizing: border-box;
@@ -114,6 +111,17 @@
             color: #000;
         }
 
+        .login-error {
+            display: none;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #b00020;
+        }
+
+        .login-error.is-visible {
+            display: block;
+        }
+
         .login-mascot {
             position: absolute;
             left: -180px;
@@ -149,12 +157,9 @@
 </head>
 
 <body>
-    <!-- Navigation component loads here, not needed for this screen -->
-    <!-- <nav id="navbar"></nav>-->
-
     <header class="top-header">
-        <a href="../welcome.html" class="logo-link">
-            <img src="../assets/images/logo-1.png" alt="aduLessons logo">
+        <a href="./welcome.html" class="logo-link">
+            <img src="./assets/images/logo-1.png" alt="aduLessons logo">
         </a>
     </header>
 
@@ -163,27 +168,28 @@
             <h1>Let's Grow Together</h1>
             <p>Please log in or sign up to continue.</p>
 
-            <form id="loginForm" action="account/dashboard.html" method="get">
-                <input type="email" placeholder="Your Email" required>
-                <input type="password" placeholder="Your Password" required>
-                <button type="submit" class="login-btn">Login</button>
+            <form id="loginForm" novalidate>
+                <input id="loginEmail" name="email" type="email" placeholder="Your Email" required autocomplete="email">
+                <input id="loginPassword" name="password" type="password" placeholder="Your Password" required
+                    autocomplete="current-password">
+                <button id="loginSubmitBtn" type="submit" class="login-btn">Login</button>
+                <p id="loginError" class="login-error" role="alert" aria-live="polite"></p>
             </form>
 
             <div class="signup-link">
-                No account? <a href="signup.html">Sign up</a>
+                No account? <a href="./signup.html">Sign up</a>
             </div>
 
             <img src="./assets/images/mascot-pointer.png" alt="Mascot" class="login-mascot">
         </div>
     </main>
 
-    <!-- Footer component loads here -->
     <footer id="footer"></footer>
 
-    <!-- Load components -->
-    <script src="../js/components.js"></script>
-    <script src="../js/hamburger-menu.js"></script>
-
+    <script src="./js/components.js"></script>
+    <script src="./js/hamburger-menu.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/pages/auth/login.js"></script>
 </body>
 
 </html>
