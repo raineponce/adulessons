@@ -26,7 +26,8 @@
   }
 
   // ---- Avatar configuration ----
-  // Maps backend avatar key -> avatar option index (0-based)
+  // Maps backend avatar key -> avatar option index (0-based).
+  // 'default' is treated as avatar1 (index 0) for display purposes.
   var AVATAR_INDEX = {
     'default': 0,
     'avatar1': 0,
@@ -113,7 +114,7 @@
       })
       .catch(function (err) {
         if (!AppApi.handleAuthError(err)) {
-          renderError('Failed to load profile. Please try again.');
+          renderError(err.message || 'Failed to load profile. Please try again.');
         }
       });
   }
