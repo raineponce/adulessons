@@ -1,937 +1,897 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rewards - aduLessons</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Global styles -->
-    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="../css/global.css" />
 
-    <!-- Page-specific internal styles -->
     <style>
-        :root {
-            --primary-blue: #4a7ca8;
-            --accent-yellow: #f4d03f;
-            --bg-light: #f8f9fa;
-            --text-dark: #2c3e50;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
+      :root {
+        --primary-blue: #4a7ca8;
+        --primary-blue-dark: #2f5f82;
+        --accent-yellow: #f4d03f;
+        --bg-light: #f8f9fa;
+        --text-dark: #2c3e50;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: 'Nunito Sans', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+      body {
+        font-family: "Nunito Sans", sans-serif;
+        background: linear-gradient(180deg, #f8fbff 0%, #f5f7fb 100%);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
 
-        #navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+      #navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .back-button {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 10px;
+        margin-bottom: 12px;
+        color: var(--text-dark);
+      }
+
+      .hero-note,
+      .section-message,
+      .unlock-message {
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .hero-note,
+      .section-message.is-muted,
+      .unlock-message {
+        color: #666;
+      }
+
+      .section-message.is-error {
+        color: #b42318;
+      }
+
+      .section-message.is-success {
+        color: #2e6b2e;
+      }
+
+      .state-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 92px;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      .state-pill.locked {
+        background: rgba(153, 153, 153, 0.2);
+        color: #2c3e50;
+      }
+
+      .state-pill.available {
+        background: rgba(121, 188, 74, 0.18);
+        color: #2f6b18;
+      }
+
+      .state-pill.claimed {
+        background: rgba(74, 124, 168, 0.18);
+        color: #244d6b;
+      }
+
+      .earned-points-card,
+      .rewards-section,
+      .printables-section,
+      .secret-code-section,
+      .collectable-card {
+        border-radius: 24px;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .earned-points-card {
+        background: white;
+        padding: 30px;
+        margin-bottom: 24px;
+      }
+
+      .points-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .points-header h2,
+      .section-title,
+      .prize-store-title,
+      .secret-code-title,
+      .printables-header h2 {
+        font-family: "Fredoka", sans-serif;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .points-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .coin-icon,
+      .printer-icon,
+      .coupon-icon,
+      .small-coin,
+      .lock-icon,
+      .activity-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .coin-icon img,
+      .small-coin img {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+      }
+
+      .points-value {
+        font-size: 1.15rem;
+        font-weight: 800;
+      }
+
+      .recent-activity-btn,
+      .coupon-button,
+      .redeem-button,
+      .collect-button,
+      .printable-action {
+        border: none;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease,
+          opacity 0.2s ease;
+      }
+
+      .recent-activity-btn {
+        background: var(--primary-blue);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .activity-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .activity-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e8eef4;
+      }
+
+      .activity-icon img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .activity-text,
+      .activity-points {
+        font-size: 0.95rem;
+      }
+
+      .activity-points {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .prize-store-title {
+        text-align: center;
+        font-size: clamp(2rem, 3vw, 2.6rem);
+        margin: 42px 0 26px;
+      }
+
+      .rewards-section {
+        background: linear-gradient(180deg, #b8d9e8 0%, #a8d0e3 100%);
+        padding: 34px 28px;
+        margin-bottom: 28px;
+      }
+
+      .section-title,
+      .printables-header h2,
+      .secret-code-title {
+        font-size: 1.45rem;
+        margin-bottom: 18px;
+      }
+
+      .rewards-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .coupon-item {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .coupon-item.locked,
+      .printable-card.locked {
+        opacity: 0.6;
+      }
+
+      .coupon-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        min-width: 0;
+      }
+
+      .coupon-icon {
+        width: 50px;
+        height: 50px;
+        flex: 0 0 auto;
+      }
+
+      .coupon-icon img,
+      .printer-icon img,
+      .collectable-image img {
+        object-fit: contain;
+      }
+
+      .coupon-icon img {
+        width: 45px;
+        height: 45px;
+      }
+
+      .coupon-text,
+      .printable-name {
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      .reward-meta,
+      .printable-cost {
+        margin-top: 0.35rem;
+        font-size: 0.88rem;
+        color: #666;
+        font-weight: 700;
+      }
+
+      .coupon-button,
+      .redeem-button,
+      .collect-button,
+      .printable-action {
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 16px;
+        font-size: 0.9rem;
+        font-weight: 800;
+        padding: 10px 18px;
+        white-space: nowrap;
+      }
+
+      .coupon-button:hover,
+      .redeem-button:hover,
+      .collect-button:hover,
+      .recent-activity-btn:hover,
+      .printable-action:hover {
+        background: var(--primary-blue-dark);
+        transform: translateY(-1px);
+      }
+
+      .coupon-button:disabled,
+      .redeem-button:disabled,
+      .collect-button:disabled,
+      .printable-action:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .collectable-card {
+        background: linear-gradient(135deg, #4a7ca8 0%, #355d7f 100%);
+        padding: 30px;
+        color: white;
+        margin-top: 22px;
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+
+      .progress-bar,
+      .progress-bar-container {
+        width: 100%;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .progress-fill,
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #8bc34a 0%, #a4d65e 100%);
+        border-radius: 10px;
+        transition: width 0.3s ease;
+      }
+
+      .collectable-progress-text {
+        font-size: 0.98rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .collectable-content {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .collectable-text {
+        flex: 1;
+        font-size: 0.95rem;
+      }
+
+      .collectable-image {
+        width: 140px;
+        height: 140px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .collectable-image img {
+        max-width: 130px;
+        max-height: 130px;
+      }
+
+      .collect-button {
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 22px;
+        font-size: 0.95rem;
+        font-weight: 800;
+      }
+
+      .collect-button.is-claimed {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .collect-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .printables-section {
+        background: white;
+        padding: 30px;
+        margin: 30px 0;
+      }
+
+      .printables-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 8px;
+      }
+
+      .printer-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .printer-icon img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .printables-subtitle {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 24px;
+      }
+
+      .printables-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 15px;
+      }
+
+      .printable-card {
+        background: #f0f0f0;
+        border-radius: 18px;
+        padding: 22px 18px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .printable-card.available {
+        background: #fff4cc;
+      }
+
+      .printable-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 14px;
+      }
+
+      .printable-icon img {
+        width: 48px;
+        height: 48px;
+      }
+
+      .printable-action {
+        width: 100%;
+        margin-top: 14px;
+        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .unlock-message {
+        margin-top: 16px;
+      }
+
+      .secret-code-section {
+        background: #fff4cc;
+        padding: 30px;
+        margin: 30px 0 12px;
+      }
+
+      .code-input-wrapper {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .code-input {
+        flex: 1;
+        padding: 15px 20px;
+        border: 2px solid #ddd;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-family: "Nunito Sans", sans-serif;
+        outline: none;
+      }
+
+      .code-input:focus {
+        border-color: var(--primary-blue);
+      }
+
+      .redeem-button {
+        background: #2e5266;
+        padding: 15px 34px;
+        border-radius: 24px;
+        font-size: 1rem;
+        white-space: nowrap;
+      }
+
+      .coupon-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.25);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+      }
+
+      .coupon-overlay.active {
+        display: flex;
+      }
+
+      .coupon-modal {
+        background: white;
+        border-radius: 24px;
+        padding: 2rem;
+        max-width: 420px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      .coupon-modal h3 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .modal-body {
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        text-align: left;
+        color: var(--text-dark);
+      }
+
+      .modal-body a {
+        color: var(--primary-blue);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .modal-body a:hover {
+        text-decoration: underline;
+      }
+
+      .close-modal-btn {
+        background: var(--primary-blue);
+        color: white;
+        padding: 0.75rem 2.25rem;
+        border-radius: 999px;
+        font-size: 1rem;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+      }
+
+      .empty-state,
+      .error-state {
+        padding: 1rem;
+        border-radius: 16px;
+        font-size: 0.95rem;
+      }
+
+      .empty-state {
+        background: rgba(255, 255, 255, 0.7);
+        color: #52616f;
+      }
+
+      .error-state {
+        background: rgba(180, 35, 24, 0.08);
+        color: #b42318;
+        font-weight: 700;
+      }
+
+      .collect-button:disabled,
+      .redeem-button:disabled,
+      .coupon-button:disabled,
+      .printable-action:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      @media (max-width: 640px) {
         main {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+          padding: 16px;
         }
 
-        /* Back Button */
-        .back-button {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-
-        /* Earned Points Section */
-        .earned-points-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 30px;
-        }
-
-        .points-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .points-header h2 {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .coin-icon {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .coin-icon img {
-            width: 35px;
-            height: 35px;
-            object-fit: contain;
-        }
-
-        .points-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .recent-activity-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .activity-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .activity-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .activity-icon img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .activity-text {
-            font-size: 14px;
-            color: var(--text-dark);
-        }
-
-        .activity-points {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .small-coin {
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .small-coin img {
-            width: 25px;
-            height: 25px;
-            object-fit: contain;
-        }
-
-        /* Prize Store Section */
-        .prize-store-title {
-            text-align: center;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 40px 0 30px;
-            color: var(--text-dark);
-        }
-
-        .rewards-section {
-            background: linear-gradient(180deg, #B8D9E8 0%, #A8D0E3 100%);
-            border-radius: 30px;
-            padding: 40px 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow);
-        }
-
-        .section-title {
-            text-align: center;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: var(--text-dark);
-        }
-
-        /* Coupon Cards */
-        .coupon-item {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-        }
-
-        .coupon-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .coupon-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .coupon-icon img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-        }
-
-        .coupon-text {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .coupon-button {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: background 0.2s ease;
-        }
-
-        .coupon-button:hover {
-            background: #3a6888;
-        }
-
-        .coupon-locked {
-            background: #999;
-            cursor: not-allowed;
-        }
-
-        .coupon-locked:hover {
-            background: #999;
-        }
-
-        .lock-icon {
-            width: 16px;
-            height: 16px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lock-icon img {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-            display: block;
-        }
-
-        /* Collectable Section */
+        .earned-points-card,
+        .rewards-section,
+        .printables-section,
+        .secret-code-section,
         .collectable-card {
-            background: linear-gradient(135deg, #4a7ca8 0%, #3a6888 100%);
-            border-radius: 25px;
-            padding: 30px;
-            margin-top: 25px;
-            color: white;
-            box-shadow: var(--shadow-lg);
+          padding: 22px;
         }
 
-        .progress-header {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #8bc34a 0%, #a4d65e 100%);
-            width: 40%;
-            transition: width 0.3s ease;
-        }
-
-        .progress-section h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #8bc34a 0%, #a4d65e 100%);
-            border-radius: 10px;
-            width: 33%;
-            transition: width 0.3s ease;
-        }
-        
+        .activity-item,
+        .coupon-item,
+        .code-input-wrapper,
         .collectable-content {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+          flex-direction: column;
+          align-items: stretch;
         }
 
-        .collectable-text {
-            flex: 1;
-            font-size: 14px;
-            line-height: 1.6;
+        .coupon-button,
+        .printable-action,
+        .redeem-button,
+        .collect-button {
+          width: 100%;
         }
 
         .collectable-image {
-            width: 140px;
-            height: 140px;
-            background: #f0f0f0;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .collectable-image img {
-            max-width: 130px;
-            max-height: 130px;
-            object-fit: contain;
-        }
-
-        .collect-button {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .collect-button:hover {
-            background: rgba(255, 255, 255, 0.35);
-        }
-
-        /* Printables Section */
-        .printables-section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .printables-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .printables-header h2 {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .printer-icon {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .printer-icon img {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
-        }
-
-        .printables-subtitle {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 25px;
+          width: 100%;
+          height: auto;
+          min-height: 140px;
         }
 
         .printables-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+          grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
         }
-
-        .printable-card {
-            background: #f0f0f0;
-            border-radius: 15px;
-            padding: 25px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .printable-card.available {
-            background: #FFF4CC;
-        }
-
-        .printable-card.locked {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .printable-card:not(.locked):hover {
-            transform: translateY(-5px);
-        }
-
-        .printable-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .printable-icon img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-        }
-
-        .printable-name {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-
-        .printable-lock {
-            margin-top: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .unlock-message {
-            font-size: 13px;
-            color: #666;
-            margin-top: 15px;
-        }
-
-        /* Secret Code Section */
-        .secret-code-section {
-            background: #FFF4CC;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: var(--shadow);
-        }
-
-        .secret-code-title {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-
-        .code-input-wrapper {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .code-input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-            font-family: 'Nunito Sans', sans-serif;
-        }
-
-        .code-input:focus {
-            border-color: var(--primary-blue);
-        }
-
-        .redeem-button {
-            background: #2E5266;
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }
-
-        .redeem-button:hover {
-            background: #3d6a81;
-        }
-
-        /* Coupon Pop-up Overlay */
-        .coupon-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.25);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .coupon-overlay.active {
-            display: flex;
-        }
-
-        .coupon-modal {
-            background: white;
-            border-radius: 24px;
-            padding: 2rem;
-            max-width: 400px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        .coupon-modal h3 {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        .qr-code-container {
-            background: #f0f0f0;
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .qr-code-placeholder {
-            width: 200px;
-            height: 200px;
-            background: white;
-            border: 2px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            color: #999;
-            border-radius: 8px;
-        }
-
-        .close-modal-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 0.75rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(74, 124, 168, 0.3);
-            transition: all 0.2s ease;
-        }
-
-        .close-modal-btn:hover {
-            background: #3a6888;
-            box-shadow: 0 6px 16px rgba(74, 124, 168, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            main {
-                padding: 15px;
-            }
-
-            .earned-points-card {
-                padding: 20px;
-            }
-
-            .rewards-section {
-                padding: 25px 20px;
-            }
-
-            .collectable-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .code-input-wrapper {
-                flex-direction: column;
-            }
-
-            .redeem-button {
-                width: 100%;
-            }
-
-            .printables-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <!-- Navigation component loads here -->
+  <body>
     <nav id="navbar"></nav>
 
     <main>
-        <!-- Back Button -->
-        <button class="back-button" onclick="history.back()">&#8249;</button>
+      <button class="back-button" type="button" onclick="history.back()">
+        &#8249;
+      </button>
 
-        <!-- Earned Points Section -->
-        <div class="earned-points-card">
-            <div class="points-header">
-                <h2>Earned Points</h2>
-                <div class="coin-icon">
-                    <img src="../assets/images/coin-icon.png" alt="Coin">
-                </div>
-                <span class="points-value">210 pts</span>
-            </div>
+      <p
+        id="pageStatus"
+        class="section-message is-muted"
+        aria-live="polite"
+        hidden
+      ></p>
 
-            <button class="recent-activity-btn">Recent Activity</button>
-
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <div class="activity-icon">
-                            <img src="../assets/images/profile-pic.png" alt="User">
-                        </div>
-                        <span class="activity-text">Complete a lesson from any module</span>
-                    </div>
-                    <div class="activity-points">
-                        <div class="small-coin">
-                            <img src="../assets/images/coin-icon.png" alt="Coin">
-                        </div>
-                        <span>+200 pts</span>
-                    </div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <div class="activity-icon">
-                            <img src="../assets/images/profile-pic.png" alt="User">
-                        </div>
-                        <span class="activity-text">Take a quiz</span>
-                    </div>
-                    <div class="activity-points">
-                        <div class="small-coin">
-                            <img src="../assets/images/coin-icon.png" alt="Coin">
-                        </div>
-                        <span>+5 pts</span>
-                    </div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <div class="activity-icon">
-                            <img src="../assets/images/profile-pic.png" alt="User">
-                        </div>
-                        <span class="activity-text">Login for more than 1 day</span>
-                    </div>
-                    <div class="activity-points">
-                        <div class="small-coin">
-                            <img src="../assets/images/coin-icon.png" alt="Coin">
-                        </div>
-                        <span>+5 pts</span>
-                    </div>
-                </div>
-            </div>
+      <div class="earned-points-card">
+        <div class="points-header">
+          <h2>Earned Points</h2>
+          <div class="coin-icon">
+            <img src="../assets/images/coin-icon.png" alt="Coin" />
+          </div>
+          <span class="points-value" id="pointsValue">Loading...</span>
         </div>
 
-        <!-- Prize Store Title -->
-        <h1 class="prize-store-title">Prize Store</h1>
+        <p
+          id="pointsMessage"
+          class="section-message is-muted"
+          aria-live="polite"
+        ></p>
 
-        <!-- Rewards Section -->
-        <div class="rewards-section">
-            <h2 class="section-title">Rewards</h2>
+        <button class="recent-activity-btn" type="button">
+          Recent Activity
+        </button>
 
-            <!-- Walmart Coupon - Redeemed -->
-            <div class="coupon-item">
-                <div class="coupon-left">
-                    <div class="coupon-icon">
-                        <img src="../assets/images/money-coupon.png" alt="Money">
-                    </div>
-                    <span class="coupon-text">$10 Walmart Coupon</span>
-                </div>
-                <button class="coupon-button" onclick="openCouponModal('$10 Walmart Coupon')">See Details</button>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-left">
+              <div class="activity-icon">
+                <img src="../assets/images/profile-pic.png" alt="User" />
+              </div>
+              <span class="activity-text"
+                >Complete a lesson from any module</span
+              >
             </div>
-
-            <!-- AutoZone Coupon - Redeemed -->
-            <div class="coupon-item">
-                <div class="coupon-left">
-                    <div class="coupon-icon">
-                        <img src="../assets/images/percent-coupon.png" alt="Percent">
-                    </div>
-                    <span class="coupon-text">20% off next purchase at AutoZone</span>
-                </div>
-                <button class="coupon-button" onclick="openCouponModal('20% off next purchase at AutoZone')">See Details</button>
+            <div class="activity-points">
+              <div class="small-coin">
+                <img src="../assets/images/coin-icon.png" alt="Coin" />
+              </div>
+              <span>+200 pts</span>
             </div>
+          </div>
 
-            <!-- Publix Coupon - Locked -->
-            <div class="coupon-item">
-                <div class="coupon-left">
-                    <div class="coupon-icon">
-                        <img src="../assets/images/money-coupon.png" alt="Money">
-                    </div>
-                    <span class="coupon-text">Publix Coupon for fresh produce</span>
-                </div>
-                <button class="coupon-button coupon-locked">
-                    <span class="lock-icon">
-                        <img src="../assets/images/lock-icon.png" alt="Lock">
-                    </span>
-                    <span>250 pts</span>
-                </button>
+          <div class="activity-item">
+            <div class="activity-left">
+              <div class="activity-icon">
+                <img src="../assets/images/profile-pic.png" alt="User" />
+              </div>
+              <span class="activity-text">Take a quiz</span>
             </div>
-
-            <!-- Collectable Section -->
-            <h2 class="section-title" style="margin-top: 30px;">Collectable</h2>
-
-            <div class="collectable-card">
-                <div class="progress-header">Progress</div>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-
-                <div class="collectable-content">
-                    <div class="collectable-text">
-                        After you complete all of the modules, you'll earn your very own Mr. Wise figurine! This collectible represents all the skills you've learned and mastered throughout the lessons. Display him proudly and celebrate your achievements!
-                    </div>
-                    <div class="collectable-image">
-                        <img src="../assets/images/mascot-wave.png" alt="Mr. Wise Figurine">
-                    </div>
-                </div>
-
-                <button class="collect-button">
-                    Collect Now 
-                    <span class="lock-icon">
-                        <img src="../assets/images/lock-icon.png" alt="Lock">
-                    </span>
-                </button>
+            <div class="activity-points">
+              <div class="small-coin">
+                <img src="../assets/images/coin-icon.png" alt="Coin" />
+              </div>
+              <span>+5 pts</span>
             </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-left">
+              <div class="activity-icon">
+                <img src="../assets/images/profile-pic.png" alt="User" />
+              </div>
+              <span class="activity-text">Login for more than 1 day</span>
+            </div>
+            <div class="activity-points">
+              <div class="small-coin">
+                <img src="../assets/images/coin-icon.png" alt="Coin" />
+              </div>
+              <span>+5 pts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="prize-store-title">Prize Store</h1>
+
+      <div class="rewards-section">
+        <h2 class="section-title">Rewards</h2>
+        <div id="rewardsList" class="rewards-list" aria-live="polite"></div>
+        <p
+          id="rewardsMessage"
+          class="section-message is-muted"
+          aria-live="polite"
+        ></p>
+      </div>
+
+      <h2 class="section-title" style="margin-top: 30px">Collectable</h2>
+
+      <div class="collectable-card">
+        <div class="progress-header">
+          <span>Progress</span>
+          <span id="collectableStatus" class="state-pill locked">Loading</span>
         </div>
 
-        <!-- Printables Section -->
-        <div class="printables-section">
-            <div class="printables-header">
-                <h2>Printables</h2>
-                <div class="printer-icon">
-                    <img src="../assets/images/big-printer-icon.png" alt="Printer">
-                </div>
-            </div>
-
-            <p class="printables-subtitle">Get on track with these customizable print-outs!</p>
-
-            <div class="printables-grid">
-                <div class="printable-card available">
-                    <div class="printable-icon">
-                        <img src="../assets/images/printer-icon.png" alt="Printer">
-                    </div>
-                    <div class="printable-name">To-Do List</div>
-                </div>
-
-                <div class="printable-card locked">
-                    <div class="printable-icon">
-                        <img src="../assets/images/printer-icon.png" alt="Printer">
-                    </div>
-                    <div class="printable-name">Budget Planner</div>
-                    <div class="printable-lock">
-                        <span class="lock-icon">
-                            <img src="../assets/images/lock-icon.png" alt="Lock">
-                        </span>
-                        <span>300 pts</span>
-                    </div>
-                </div>
-
-                <div class="printable-card locked">
-                    <div class="printable-icon">
-                        <img src="../assets/images/printer-icon.png" alt="Printer">
-                    </div>
-                    <div class="printable-name">Calendar</div>
-                    <div class="printable-lock">
-                        <span class="lock-icon">
-                            <img src="../assets/images/lock-icon.png" alt="Lock">
-                        </span>
-                        <span>300 pts</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="unlock-message">Complete more lessons to unlock more printables!</p>
+        <div class="progress-bar">
+          <div
+            id="collectableProgressFill"
+            class="progress-fill"
+            style="width: 0%"
+          ></div>
         </div>
 
-        <!-- Secret Code Section -->
-        <div class="secret-code-section">
-            <h3 class="secret-code-title">Insert Secret Code for points!</h3>
-            <div class="code-input-wrapper">
-                <input type="text" class="code-input" placeholder="Enter code here...">
-                <button class="redeem-button">Redeem</button>
-            </div>
+        <p
+          id="collectableProgressText"
+          class="collectable-progress-text is-muted"
+        >
+          Loading your progress...
+        </p>
+
+        <div class="collectable-content">
+          <div class="collectable-text">
+            After you complete all of the modules, you'll earn your very own Mr.
+            Wise figurine! This collectible represents all the skills you've
+            learned and mastered throughout the lessons. Display him proudly and
+            celebrate your achievements!
+          </div>
+          <div class="collectable-image">
+            <img
+              src="../assets/images/mascot-wave.png"
+              alt="Mr. Wise Figurine"
+            />
+          </div>
         </div>
+
+        <button
+          id="collectableActionButton"
+          class="collect-button"
+          type="button"
+        >
+          Collect Now
+          <span class="lock-icon">
+            <img src="../assets/images/lock-icon.png" alt="Lock" />
+          </span>
+        </button>
+
+        <p
+          id="collectableMessage"
+          class="section-message is-muted"
+          aria-live="polite"
+        ></p>
+      </div>
+
+      <div class="printables-section">
+        <div class="printables-header">
+          <h2>Printables</h2>
+          <div class="printer-icon">
+            <img src="../assets/images/big-printer-icon.png" alt="Printer" />
+          </div>
+        </div>
+
+        <p class="printables-subtitle">
+          Get on track with these customizable print-outs!
+        </p>
+
+        <div
+          id="printablesGrid"
+          class="printables-grid"
+          aria-live="polite"
+        ></div>
+
+        <p id="printablesMessage" class="unlock-message" aria-live="polite"></p>
+      </div>
+
+      <div class="secret-code-section">
+        <h3 class="secret-code-title">Insert Secret Code for points!</h3>
+        <div class="code-input-wrapper">
+          <input
+            type="text"
+            id="secretCodeInput"
+            class="code-input"
+            placeholder="Enter code here..."
+            autocomplete="off"
+          />
+          <button id="redeemCodeButton" class="redeem-button" type="button">
+            Redeem
+          </button>
+        </div>
+        <p
+          id="secretCodeMessage"
+          class="section-message is-muted"
+          aria-live="polite"
+        ></p>
+      </div>
     </main>
 
-    <!-- Coupon Pop-up Overlay -->
-    <div class="coupon-overlay" id="couponOverlay" onclick="closeCouponModal(event)">
-        <div class="coupon-modal" onclick="event.stopPropagation()">
-            <h3 id="couponTitle">Coupon Details</h3>
-            <div class="qr-code-container">
-                <div class="qr-code-placeholder">
-                    QR Code
-                </div>
-            </div>
-            <button class="close-modal-btn" onclick="closeCouponModal()">Close</button>
-        </div>
+    <div class="coupon-overlay" id="prizeOverlay">
+      <div
+        class="coupon-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="prizeModalTitle"
+      >
+        <h3 id="prizeModalTitle">Prize Details</h3>
+        <div id="prizeModalBody" class="modal-body"></div>
+        <button id="prizeModalClose" class="close-modal-btn" type="button">
+          Close
+        </button>
+      </div>
     </div>
 
-    <!-- Footer component loads here -->
     <footer id="footer"></footer>
 
-    <!-- Load components -->
     <script src="../js/components.js"></script>
     <script src="../js/hamburger-menu.js"></script>
-
-    <!-- Coupon Modal Functions -->
-    <script>
-        function openCouponModal(couponName) {
-            const overlay = document.getElementById('couponOverlay');
-            const title = document.getElementById('couponTitle');
-            title.textContent = couponName;
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        }
-
-        function closeCouponModal(event) {
-            // Close if clicking overlay or close button
-            if (!event || event.target.id === 'couponOverlay' || event.target.classList.contains('close-modal-btn')) {
-                const overlay = document.getElementById('couponOverlay');
-                overlay.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-        }
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeCouponModal();
-            }
-        });
-
-        // Add interactivity for code redemption
-        document.querySelector('.redeem-button').addEventListener('click', function() {
-            const codeInput = document.querySelector('.code-input');
-            const code = codeInput.value.trim();
-            
-            if (code) {
-                alert('Code submitted: ' + code);
-                // Here you would typically send the code to a server for validation
-                codeInput.value = '';
-            } else {
-                alert('Please enter a code first!');
-            }
-        });
-
-        // Allow Enter key to submit code
-        document.querySelector('.code-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.redeem-button').click();
-            }
-        });
-    </script>
-</body>
-
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/account/rewards.js"></script>
+  </body>
 </html>
