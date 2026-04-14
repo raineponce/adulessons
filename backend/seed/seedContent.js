@@ -14,10 +14,13 @@ const seed = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    // Clear existing module and lesson data
-    await Module.deleteMany({});
-    await Lesson.deleteMany({});
-    console.log('Cleared existing modules and lessons');
+    const existingModules = await Module.countDocuments();
+    const existingLessons = await Lesson.countDocuments();
+
+    if (existingModules > 0 || existingLessons > 0) {
+      console.log('Modules or lessons already exist, skipping content seed');
+      return;
+    }
 
     // Read all JSON files from the /content directory
     const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json'));
@@ -43,7 +46,7 @@ const seed = async () => {
       }
     }
 
-    console.log('Seeding complete!');
+    console.log('Content seeding complete!');
   } catch (err) {
     console.error('Seeding error:', err.message);
   } finally {
