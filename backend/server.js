@@ -22,6 +22,11 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files from the frontend folder
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+// Return an empty favicon response to avoid wildcard fallback on /favicon.ico
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
+
 // Configure session with MongoDB store (1-week cookie)
 app.use(session({
   secret: process.env.SESSION_SECRET,
