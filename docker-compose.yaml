@@ -1,26 +1,8 @@
 services:
-  app:
-    build: .
-    container_name: adulessons-app
+  apache:
+    image: httpd:latest
+    container_name: adulessons-website
     ports:
-      - "3000:3000"
-    depends_on:
-      - mongo
+      - "8080:80"
     volumes:
-      - ./frontend:/app/frontend
-      - ./backend:/app/backend
-      - ./content:/app/content
-    environment:
-      - MONGODB_URI=mongodb://mongo:27017/adulessons
-      - SESSION_SECRET=qwertyuiopasdfghjklzxcvbnm1234567890
-
-  mongo:
-    image: mongo:7
-    container_name: adulessons-mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-
-volumes:
-  mongo-data:
+      - ./frontend:/usr/local/apache2/htdocs
