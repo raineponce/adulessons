@@ -65,6 +65,38 @@ router.put('/address', requireAuth, async (req, res) => {
   }
 });
 
+// PUT /profile/password — Update the user's password
+router.put('/password', requireAuth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({ error: 'New password must be at least 8 characters' });
+    }
+
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const match = await user.comparePassword(currentPassword);
+    if (!match) {
+      return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // GET /profile/progress — Return detailed progress information
 router.get('/progress', requireAuth, async (req, res) => {
   try {
