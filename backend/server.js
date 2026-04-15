@@ -1,12 +1,12 @@
 // Load environment variables from .env file
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
-const rateLimit = require("express-rate-limit");
-const path = require("path");
-const connectDB = require("./config/db");
+const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const rateLimit = require('express-rate-limit');
+const path = require('path');
+const connectDB = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the frontend folder
-app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Configure session with MongoDB store (1-week cookie)
 app.use(
@@ -32,8 +32,8 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
     },
   }),
 );
@@ -41,23 +41,23 @@ app.use(
 // General API rate limiter: 200 requests per 15 minutes per IP
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: process.env.NODE_ENV === "production" ? 200 : 2000,
+  max: process.env.NODE_ENV === 'production' ? 200 : 2000,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Too many requests, please try again later." },
+  message: { error: 'Too many requests, please try again later.' },
 });
 
 // --- Routes ---
-app.use("/auth", require("./routes/auth"));
-app.use("/test", apiLimiter, require("./routes/test"));
-app.use("/lessons", apiLimiter, require("./routes/lessons"));
-app.use("/prizes", apiLimiter, require("./routes/prizes"));
-app.use("/codes", apiLimiter, require("./routes/codes"));
-app.use("/profile", apiLimiter, require("./routes/profile"));
+app.use('/auth', require('./routes/auth'));
+app.use('/test', apiLimiter, require('./routes/test'));
+app.use('/lessons', apiLimiter, require('./routes/lessons'));
+app.use('/prizes', apiLimiter, require('./routes/prizes'));
+app.use('/codes', apiLimiter, require('./routes/codes'));
+app.use('/profile', apiLimiter, require('./routes/profile'));
 
 // Fallback: serve index.html for any unmatched routes (SPA-style)
-app.get("*", apiLimiter, (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+app.get('*', apiLimiter, (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 app.listen(PORT, () => {

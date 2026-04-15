@@ -1,57 +1,57 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
-const Module = require("../models/Module");
-const { requireAuth } = require("../middleware/authMiddleware");
-const { sanitizeInput } = require("../utils/validators");
+const User = require('../models/User');
+const Module = require('../models/Module');
+const { requireAuth } = require('../middleware/authMiddleware');
+const { sanitizeInput } = require('../utils/validators');
 
 // Predefined set of allowed avatar options
 const ALLOWED_AVATARS = [
-  "default",
-  "avatar1",
-  "avatar2",
-  "avatar3",
-  "avatar4",
-  "avatar5",
+  'default',
+  'avatar1',
+  'avatar2',
+  'avatar3',
+  'avatar4',
+  'avatar5',
 ];
 
 // GET /profile — Return user profile info
-router.get("/", requireAuth, async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId)
       .select(
-        "username email avatar points streak completedLessons currentLesson usedCodes",
+        'username email avatar points streak completedLessons currentLesson usedCodes',
       )
       .lean();
 
     res.json(user);
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
 // PUT /profile/avatar — Update the user's avatar
-router.put("/avatar", requireAuth, async (req, res) => {
+router.put('/avatar', requireAuth, async (req, res) => {
   try {
     const { avatar } = req.body;
     if (!ALLOWED_AVATARS.includes(avatar)) {
-      return res.status(400).json({ error: "Invalid avatar selection" });
+      return res.status(400).json({ error: 'Invalid avatar selection' });
     }
 
     const user = await User.findByIdAndUpdate(
       req.session.userId,
       { avatar },
       { new: true },
-    ).select("avatar");
+    ).select('avatar');
 
     res.json({ avatar: user.avatar });
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
 // PUT /profile/address — Update the user's shipping address (for final prize)
-router.put("/address", requireAuth, async (req, res) => {
+router.put('/address', requireAuth, async (req, res) => {
   try {
     const { name, street, city, state, zip } = req.body;
     const sanitized = {
@@ -66,19 +66,19 @@ router.put("/address", requireAuth, async (req, res) => {
       req.session.userId,
       { shippingAddress: sanitized },
       { new: true },
-    ).select("shippingAddress");
+    ).select('shippingAddress');
 
     res.json({ shippingAddress: user.shippingAddress });
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
 // GET /profile/progress — Return detailed progress information
-router.get("/progress", requireAuth, async (req, res) => {
+router.get('/progress', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId)
-      .select("completedLessons allLessonsComplete points")
+      .select('completedLessons allLessonsComplete points')
       .lean();
 
     const modules = await Module.find().sort({ order: 1 }).lean();
@@ -120,7 +120,7 @@ router.get("/progress", requireAuth, async (req, res) => {
       totalLessons,
     });
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
