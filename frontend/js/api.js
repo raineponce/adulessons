@@ -116,6 +116,13 @@
     });
   }
 
+  function updatePassword(currentPassword, newPassword) {
+    return request("/profile/password", {
+      method: "PUT",
+      body: { currentPassword: currentPassword, newPassword: newPassword }
+    });
+  }
+
   window.AppApi = {
     request: request,
     handleAuthError: handleAuthError,
@@ -129,6 +136,7 @@
     getPrizes: getPrizes,
     redeemPrize: redeemPrize,
     getRedeemedPrizes: getRedeemedPrizes,
-    redeemCode: redeemCode
+    redeemCode: redeemCode,
+    updatePassword: updatePassword
   };
 })();
