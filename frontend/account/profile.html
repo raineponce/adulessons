@@ -876,9 +876,9 @@
 
             <div class="profile-section">
                 <div class="profile-avatar" onclick="openEditAvatarModal()">
-                    <img src="../assets/images/profile-pic.png" alt="Zoey profile avatar" id="sidebarAvatar">
+                    <img src="../assets/images/profile-pic.png" alt="Profile avatar" id="sidebarAvatar">
                 </div>
-                <div class="profile-name" id="sidebarProfileName">Zoey</div>
+                <div class="profile-name" id="sidebarProfileName"></div>
             </div>
 
             <nav class="sidebar-nav">
@@ -886,7 +886,7 @@
                 <a href="#security" class="nav-item">Security</a>
                 <a href="#agreement" class="nav-item">User Agreement</a>
                 <a href="settings.html" class="nav-item">Settings</a>
-                <a href="#" class="nav-item sign-out">Sign Out</a>
+                <a href="/login.html" class="nav-item sign-out">Sign Out</a>
             </nav>
         </aside>
 
@@ -914,7 +914,7 @@
                     <label class="form-label">Display Name</label>
                     <div class="input-wrapper">
                         <input type="text" class="form-input" id="displayName" placeholder="Enter display name"
-                            value="displayName">
+                            value="">
                         <span class="edit-icon" onclick="focusInput('displayName')">✎</span>
                     </div>
                     <div class="error-message" id="displayNameError">Display name is required</div>
@@ -924,7 +924,7 @@
                     <label class="form-label">Email</label>
                     <div class="input-wrapper">
                         <input type="email" class="form-input" id="email" placeholder="Enter email address"
-                            value="zoey@email.com">
+                            value="">
                         <span class="edit-icon" onclick="focusInput('email')">✎</span>
                     </div>
                     <div class="error-message" id="emailError">Please enter a valid email address</div>
