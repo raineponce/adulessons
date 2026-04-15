@@ -876,9 +876,9 @@
 
             <div class="profile-section">
                 <div class="profile-avatar" onclick="openEditAvatarModal()">
-                    <img src="../assets/images/profile-pic.png" alt="Zoey profile avatar" id="sidebarAvatar">
+                    <img src="../assets/images/profile-pic.png" alt="profile avatar" id="sidebarAvatar">
                 </div>
-                <div class="profile-name">Zoey</div>
+                <div class="profile-name"></div>
             </div>
 
             <nav class="sidebar-nav">
@@ -903,6 +903,8 @@
                 </a>
             </div>
 
+            <div id="profileApiError" style="display:none;background:#fdecea;color:#b71c1c;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:15px;"></div>
+
             <!-- User Information Section -->
             <section class="account-section" id="user-info">
                 <h2 class="section-title">User Information</h2>
@@ -911,7 +913,7 @@
                     <label class="form-label">Display Name</label>
                     <div class="input-wrapper">
                         <input type="text" class="form-input" id="displayName" placeholder="Enter display name"
-                            value="Zoey">
+                            value="">
                         <span class="edit-icon" onclick="focusInput('displayName')">✎</span>
                     </div>
                     <div class="error-message" id="displayNameError">Display name is required</div>
@@ -921,7 +923,7 @@
                     <label class="form-label">Email</label>
                     <div class="input-wrapper">
                         <input type="email" class="form-input" id="email" placeholder="Enter email address"
-                            value="zoey@email.com">
+                            value="">
                         <span class="edit-icon" onclick="focusInput('email')">✎</span>
                     </div>
                     <div class="error-message" id="emailError">Please enter a valid email address</div>
@@ -1479,6 +1481,7 @@
         </div>
     </div>
 
+    <script src="../js/api.js"></script>
     <script>
         // Avatar paths array
         const avatarPaths = [
@@ -1791,6 +1794,7 @@
             }
         });
     </script>
+    <script src="../js/pages/account/profile.js"></script>
 </body>
 
 </html>
