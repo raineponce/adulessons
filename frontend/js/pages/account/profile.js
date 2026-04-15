@@ -99,10 +99,8 @@
           this.classList.remove('error');
           if (els.displayNameError) els.displayNameError.classList.remove('show');
         } else {
-          // Valid entry — keep sidebar name in sync
-          var trimmed = this.value.trim();
-          originalDisplayName = trimmed;
-          if (els.profileName) els.profileName.textContent = trimmed;
+          // Valid entry — keep sidebar name in sync visually
+          if (els.profileName) els.profileName.textContent = this.value.trim();
         }
       });
     }
