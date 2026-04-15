@@ -892,7 +892,9 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <div id="profileErrorBanner" style="display:none; background:#ffe6e6; color:#e74c3c; border:1px solid #e74c3c; border-radius:8px; padding:14px 20px; margin-bottom:24px; font-size:15px;"></div>
+            <div id="profileErrorBanner"
+                style="display:none; background:#ffe6e6; color:#e74c3c; border:1px solid #e74c3c; border-radius:8px; padding:14px 20px; margin-bottom:24px; font-size:15px;">
+            </div>
             <div class="header-section">
                 <div class="header-left">
                     <button class="back-button" onclick="window.history.back()">‹</button>
@@ -912,7 +914,7 @@
                     <label class="form-label">Display Name</label>
                     <div class="input-wrapper">
                         <input type="text" class="form-input" id="displayName" placeholder="Enter display name"
-                            value="Zoey">
+                            value="displayName">
                         <span class="edit-icon" onclick="focusInput('displayName')">✎</span>
                     </div>
                     <div class="error-message" id="displayNameError">Display name is required</div>

@@ -33,11 +33,11 @@ Follow these rules:
 
 ### Required Behavior
 - On load: 'frontend/account/profile.html'
-- Render: <label class="form-label">Display Name</label>
-- User actions: <input type="text" class="form-input" id="displayName" placeholder="Enter display name" value="displayName">
-- Success state: [WHAT USER SEES]
-- Empty state: [WHAT USER SEES]
-- Error state: <div class="error-message" id="displayNameError">Display name is required</div>
+- Render: the UI will fill line 916-917 with user information that is logged in.
+- User actions: User clicks button (line 918) and they are able to edit their name line 915-917
+- Success state: the user should see their updated name, if changed.
+- Empty state: if they leave it empty and the user clicks away, the name will revert to the original name.
+- Error state: 'profile.html' line 918
 - 401 state: redirect to `/login.html`
 
 ### Implementation Requirements
