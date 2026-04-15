@@ -285,6 +285,7 @@
     AppApi.updatePassword(currentPwd, newPwd)
       .then(function () {
         lockPasswordFields();
+        if (typeof showPasswordSuccess === 'function') showPasswordSuccess();
       })
       .catch(function (err) {
         if (AppApi.handleAuthError(err)) return;
