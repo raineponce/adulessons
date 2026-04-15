@@ -1415,6 +1415,22 @@
             observer.observe(section);
         });
 
+        // Re-apply preferences when page is restored from bfcache (back/forward navigation)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                const theme = localStorage.getItem('aduLessonsTheme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+                const fontSize = localStorage.getItem('aduLessonsFontSize');
+                if (fontSize) {
+                    document.body.style.zoom = parseInt(fontSize) / 100;
+                }
+            }
+        });
+
         // Reset sidebar state on window resize
         window.addEventListener('resize', function () {
             if (window.innerWidth > 768) {
@@ -1427,12 +1443,26 @@
 
         // Dark Mode — apply saved theme immediately on load (before API responds)
         (function () {
+            // Block transitions during initial theme application to prevent white flash
+            var noTransition = document.createElement('style');
+            noTransition.id = 'no-transition-init';
+            noTransition.textContent = '* { transition: none !important; }';
+            document.head.appendChild(noTransition);
+
             const saved = localStorage.getItem('aduLessonsTheme');
             if (saved === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 const toggle = document.getElementById('darkModeToggle');
                 if (toggle) toggle.checked = true;
             }
+
+            // Re-enable transitions after first paint
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    var el = document.getElementById('no-transition-init');
+                    if (el) el.remove();
+                });
+            });
         })();
 
         function applyDarkMode(isDark) {

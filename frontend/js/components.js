@@ -1,13 +1,30 @@
 // Apply theme and font size immediately — before DOM renders — to avoid flash
 (function () {
+    // Block transitions during initial theme application to prevent white flash
+    var noTransition = document.createElement('style');
+    noTransition.id = 'no-transition-init';
+    noTransition.textContent = '* { transition: none !important; }';
+    document.head.appendChild(noTransition);
+
     // Dark mode
     if (localStorage.getItem('aduLessonsTheme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
     }
 
+    // Re-enable transitions after first paint
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            var el = document.getElementById('no-transition-init');
+            if (el) el.remove();
+        });
+    });
+
     // Inject dark mode CSS into every page that loads this script
     var style = document.createElement('style');
     style.textContent = `
+        /* === NAV PLACEHOLDER — reserve height before component loads === */
+        #navbar { min-height: 92px; }
+
         /* === BASE === */
         [data-theme="dark"] body {
             background-color: #1a1a2e !important;
@@ -299,6 +316,24 @@
             color: #2c3e50 !important;
         }
 
+        /* === LESSON QUIZ — modal popups white bg, black text === */
+        [data-theme="dark"] .modal-box {
+            background: white !important;
+        }
+        [data-theme="dark"] .modal-box .modal-text,
+        [data-theme="dark"] .modal-box .modal-title,
+        [data-theme="dark"] .modal-box p,
+        [data-theme="dark"] .modal-box span,
+        [data-theme="dark"] .modal-box h2,
+        [data-theme="dark"] .modal-box h3 {
+            color: #2c3e50 !important;
+        }
+
+        /* === KEY TAKEAWAYS — back to module button white === */
+        [data-theme="dark"] .module-button {
+            color: #ffffff !important;
+        }
+
         /* === LESSON LIST — play and lock icons white === */
         [data-theme="dark"] .play-icon,
         [data-theme="dark"] .lock-icon {
@@ -350,7 +385,7 @@ function isUserLoggedIn() {
     // return document.cookie.includes('authToken=');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Apply font size
     const savedFontSize = localStorage.getItem('aduLessonsFontSize');
     if (savedFontSize) {
@@ -363,6 +398,52 @@ document.addEventListener('DOMContentLoaded', () => {
       ? '/components/nav-loggedin.html'
         : '/components/nav-loggedin.html';
 
-    loadComponent(navPath, 'navbar');
+    await loadComponent(navPath, 'navbar');
     loadComponent('/components/footer.html', 'footer');
+
+    // Wire up search dropdown and mobile menu links with backend module data
+    const dropdownLinks = document.querySelectorAll('.dropdown-content a');
+    const mobileLinks = document.querySelectorAll('.mobile-menu a[style*="padding-left"]');
+
+    const moduleLinks = [
+        { index: 0, moduleId: 'module1', fallbackHref: '/modules/lesson-list.html' },
+        { index: 1, moduleId: 'module2', fallbackHref: '#' },
+        { index: 2, moduleId: 'module3', fallbackHref: '#' },
+        { index: 3, moduleId: 'module4', fallbackHref: '#' },
+        { index: 4, moduleId: 'module5', fallbackHref: '#' },
+        { index: 5, moduleId: 'module6', fallbackHref: '#' },
+    ];
+
+    for (const { index, moduleId, fallbackHref } of moduleLinks) {
+        const link = dropdownLinks[index];
+        const mobileLink = mobileLinks[index];
+        if (link) link.href = fallbackHref;
+        if (mobileLink) mobileLink.href = fallbackHref;
+        try {
+            const res = await fetch(`/lessons/modules/${moduleId}`, { credentials: 'include' });
+            if (res.ok) {
+                const mod = await res.json();
+                if (link) link.textContent = mod.title;
+                if (mobileLink) mobileLink.textContent = mod.title;
+            }
+        } catch (e) {
+            // Backend unavailable — fallback href already set
+        }
+    }
+});
+
+// Re-apply preferences when page is restored from bfcache (back/forward navigation)
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        const theme = localStorage.getItem('aduLessonsTheme');
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+        const fontSize = localStorage.getItem('aduLessonsFontSize');
+        if (fontSize) {
+            document.body.style.zoom = parseInt(fontSize) / 100;
+        }
+    }
 });

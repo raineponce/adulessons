@@ -85,6 +85,10 @@
     return request("/lessons");
   }
 
+  function getModule(moduleId) {
+    return request("/lessons/modules/" + encodeURIComponent(moduleId));
+  }
+
   function getLesson(lessonId) {
     return request("/lessons/" + encodeURIComponent(lessonId));
   }
@@ -135,6 +139,7 @@
     updateAvatar: updateAvatar,
     updateAddress: updateAddress,
     getLessons: getLessons,
+    getModule: getModule,
     getLesson: getLesson,
     completeLesson: completeLesson,
     getPrizes: getPrizes,
