@@ -1,0 +1,113 @@
+{
+  "moduleId": "mod4",
+  "title": "Cooking 101",
+  "description": "Learn the fundamentals of cooking, including techniques, recipes, and kitchen safety.",
+  "order": 4,
+  "introPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Welcome to Module 4"
+      },
+      {
+        "type": "text",
+        "body": "In this module, you will learn the fundamentals of cooking. We'll cover kitchen basics, essential techniques, reading recipes, and creating nutritious meals—all skills that will help you cook with confidence and save money."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/cooking-icon.png",
+        "alt": "Cooking icon"
+      }
+    ]
+  },
+  "summaryPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Module 4 Complete!"
+      },
+      {
+        "type": "callout",
+        "body": "You've learned the basics of cooking. Keep practicing and enjoying delicious meals!"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "lessonId": "mod4-lesson1",
+      "moduleId": "mod4",
+      "title": "Kitchen Basics & Safety",
+      "order": 1,
+      "pages": [],
+      "quiz": {
+        "question": "What is the most important safety practice in the kitchen?",
+        "options": [
+          "Cooking as fast as possible",
+          "Keeping your workspace clean and handling knives and heat carefully",
+          "Not washing your hands",
+          "Ignoring expiration dates"
+        ],
+        "correctIndex": 1,
+        "explanation": "Kitchen safety includes maintaining cleanliness, handling knives and heat properly, and being aware of food safety practices."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod4-lesson2",
+      "moduleId": "mod4",
+      "title": "Essential Cooking Techniques",
+      "order": 2,
+      "pages": [],
+      "quiz": {
+        "question": "What does 'sautéing' mean?",
+        "options": [
+          "Boiling food in lots of water",
+          "Cooking food quickly in a small amount of fat over medium-high heat",
+          "Freezing food",
+          "Grilling over an open flame"
+        ],
+        "correctIndex": 1,
+        "explanation": "Sautéing is a quick cooking method that uses a small amount of fat over medium-high heat to cook food while keeping it tender."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod4-lesson3",
+      "moduleId": "mod4",
+      "title": "Reading Recipes & Measurements",
+      "order": 3,
+      "pages": [],
+      "quiz": {
+        "question": "Why is it important to read through a recipe before you start cooking?",
+        "options": [
+          "It's not necessary—just cook as you go",
+          "To understand the steps, gather ingredients, and avoid mistakes",
+          "To practice your reading skills",
+          "Only for complicated recipes"
+        ],
+        "correctIndex": 1,
+        "explanation": "Reading through the entire recipe first helps you gather all ingredients, understand the process, and cook more efficiently."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod4-lesson4",
+      "moduleId": "mod4",
+      "title": "Nutrition & Meal Planning",
+      "order": 4,
+      "pages": [],
+      "quiz": {
+        "question": "What is a balanced meal?",
+        "options": [
+          "Only vegetables",
+          "A combination of protein, vegetables, whole grains, and healthy fats",
+          "As much food as possible",
+          "Only carbohydrates"
+        ],
+        "correctIndex": 1,
+        "explanation": "A balanced meal includes protein, vegetables, whole grains, and healthy fats to provide proper nutrition and sustained energy."
+      },
+      "pointsAwarded": 10
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "moduleId": "mod1",
+  "title": "Finance 101",
+  "description": "Learn the basics of budgeting, saving, and building financial habits.",
+  "order": 1,
+  "introPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Welcome to Module 1"
+      },
+      {
+        "type": "text",
+        "body": "In this module, you will learn how to take control of your finances. We'll cover budgeting, saving strategies, understanding credit, and the basics of banking, all skills that will help you build a stable financial future."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/finance-icon.png",
+        "alt": "Finance icon"
+      }
+    ]
+  },
+  "summaryPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Module 1 Complete!"
+      },
+      {
+        "type": "callout",
+        "body": "You've learned the foundations of personal finance. Keep it up!"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "lessonId": "mod1-lesson1",
+      "moduleId": "mod1",
+      "title": "Budgeting 101",
+      "order": 1,
+      "pages": [
+        {
+          "pageNumber": 1,
+          "blocks": [
+            {
+              "type": "heading",
+              "body": "What Is a Budget?"
+            },
+            {
+              "type": "text",
+              "body": "A budget is a plan that helps you decide how to spend and save your money each month. By tracking what comes in (income) and what goes out (expenses), you can make sure you have enough for what matters most."
+            },
+            {
+              "type": "image",
+              "src": "/assets/images/coin-icon.png",
+              "alt": "Coin icon"
+            },
+            {
+              "type": "callout",
+              "body": "A budget is a plan for your money — not a restriction!"
+            }
+          ]
+        },
+        {
+          "pageNumber": 2,
+          "blocks": [
+            {
+              "type": "video",
+              "videoId": "U9nv4kRPBz4"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Track your income",
+                "List your expenses",
+                "Find where you can save"
+              ],
+              "ordered": false
+            },
+            {
+              "type": "link",
+              "href": "https://www.consumerfinance.gov/",
+              "linkText": "Consumer Financial Protection Bureau"
+            }
+          ]
+        }
+      ],
+      "quiz": {
+        "question": "What is the main purpose of a budget?",
+        "options": [
+          "To restrict spending",
+          "To plan how you use your money",
+          "To increase your income",
+          "To avoid paying taxes"
+        ],
+        "correctIndex": 1,
+        "explanation": "A budget helps you plan and control how your money is spent — it's a tool, not a punishment."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod1-lesson2",
+      "moduleId": "mod1",
+      "title": "Saving Strategies",
+      "order": 2,
+      "pages": [],
+      "quiz": {
+        "question": "Placeholder question for Saving Strategies",
+        "options": [
+          "Option A",
+          "Option B",
+          "Option C",
+          "Option D"
+        ],
+        "correctIndex": 0,
+        "explanation": "Placeholder explanation."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod1-lesson3",
+      "moduleId": "mod1",
+      "title": "Understanding Credit",
+      "order": 3,
+      "pages": [],
+      "quiz": {
+        "question": "Placeholder question for Understanding Credit",
+        "options": [
+          "Option A",
+          "Option B",
+          "Option C",
+          "Option D"
+        ],
+        "correctIndex": 0,
+        "explanation": "Placeholder explanation."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod1-lesson4",
+      "moduleId": "mod1",
+      "title": "Banking Basics",
+      "order": 4,
+      "pages": [],
+      "quiz": {
+        "question": "Placeholder question for Banking Basics",
+        "options": [
+          "Option A",
+          "Option B",
+          "Option C",
+          "Option D"
+        ],
+        "correctIndex": 0,
+        "explanation": "Placeholder explanation."
+      },
+      "pointsAwarded": 10
+    }
+  ]
+}

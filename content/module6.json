@@ -1,0 +1,113 @@
+{
+  "moduleId": "mod6",
+  "title": "Transportation",
+  "description": "Learn about different transportation options, safety, and how to make informed decisions about getting around.",
+  "order": 6,
+  "introPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Welcome to Module 6"
+      },
+      {
+        "type": "text",
+        "body": "In this module, you will learn about transportation options and management. We'll cover different transportation methods, vehicle safety, maintenance, and how to make informed decisions about your transportation needs—all skills that will help you get where you need to go safely and affordably."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/transportation-icon.png",
+        "alt": "Transportation icon"
+      }
+    ]
+  },
+  "summaryPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Module 6 Complete!"
+      },
+      {
+        "type": "callout",
+        "body": "You've learned the essentials of transportation. Safe travels!"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "lessonId": "mod6-lesson1",
+      "moduleId": "mod6",
+      "title": "Transportation Options",
+      "order": 1,
+      "pages": [],
+      "quiz": {
+        "question": "Which factor should you consider when choosing a transportation method?",
+        "options": [
+          "Only the cost",
+          "Cost, time, reliability, environmental impact, and accessibility",
+          "What your friends use",
+          "Speed only"
+        ],
+        "correctIndex": 1,
+        "explanation": "Choosing the right transportation method involves considering multiple factors: cost, travel time, reliability, environmental impact, and accessibility."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod6-lesson2",
+      "moduleId": "mod6",
+      "title": "Vehicle Safety & Driving",
+      "order": 2,
+      "pages": [],
+      "quiz": {
+        "question": "What is the most important safety measure while driving?",
+        "options": [
+          "Driving as fast as possible",
+          "Wearing a seatbelt, following traffic rules, and staying focused",
+          "Only driving at night",
+          "Ignoring distractions"
+        ],
+        "correctIndex": 1,
+        "explanation": "Vehicle safety requires wearing a seatbelt, following traffic rules, staying focused, and avoiding distractions while driving."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod6-lesson3",
+      "moduleId": "mod6",
+      "title": "Vehicle Maintenance",
+      "order": 3,
+      "pages": [],
+      "quiz": {
+        "question": "Why is regular vehicle maintenance important?",
+        "options": [
+          "It's not necessary—cars never break down",
+          "It prevents breakdowns, extends vehicle life, and ensures safety",
+          "Only if your car is very old",
+          "It's a waste of money"
+        ],
+        "correctIndex": 1,
+        "explanation": "Regular maintenance prevents expensive breakdowns, extends your vehicle's lifespan, and ensures your safety on the road."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod6-lesson4",
+      "moduleId": "mod6",
+      "title": "Making Transportation Decisions",
+      "order": 4,
+      "pages": [],
+      "quiz": {
+        "question": "What should you evaluate when deciding whether to buy a car?",
+        "options": [
+          "Just the purchase price",
+          "Purchase price, insurance, fuel, maintenance, and how often you'll use it",
+          "Only what color you like",
+          "Your friends' opinions"
+        ],
+        "correctIndex": 1,
+        "explanation": "A comprehensive decision about buying a car includes evaluating total costs (purchase, insurance, fuel, maintenance) and frequency of use."
+      },
+      "pointsAwarded": 10
+    }
+  ]
+}

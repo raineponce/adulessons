@@ -1,0 +1,113 @@
+{
+  "moduleId": "mod5",
+  "title": "Household Basics",
+  "description": "Learn the fundamentals of managing your home, including cleaning, organization, and maintenance.",
+  "order": 5,
+  "introPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Welcome to Module 5"
+      },
+      {
+        "type": "text",
+        "body": "In this module, you will master household management. We'll cover cleaning and maintenance, organization and decluttering, laundry care, and home repair basics—all skills that will help you maintain a clean, comfortable living space."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/household-icon.png",
+        "alt": "Household icon"
+      }
+    ]
+  },
+  "summaryPage": {
+    "blocks": [
+      {
+        "type": "heading",
+        "body": "Module 5 Complete!"
+      },
+      {
+        "type": "callout",
+        "body": "You're now equipped to manage your household with confidence!"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "lessonId": "mod5-lesson1",
+      "moduleId": "mod5",
+      "title": "Cleaning & Maintenance",
+      "order": 1,
+      "pages": [],
+      "quiz": {
+        "question": "What is the best approach to keeping a home clean?",
+        "options": [
+          "Only clean when guests are coming",
+          "Develop regular cleaning routines and tackle spills immediately",
+          "Clean once a year",
+          "Wait until it's extremely dirty"
+        ],
+        "correctIndex": 1,
+        "explanation": "Regular cleaning routines and addressing spills immediately help maintain a clean home and prevent deep cleaning emergencies."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod5-lesson2",
+      "moduleId": "mod5",
+      "title": "Organization & Decluttering",
+      "order": 2,
+      "pages": [],
+      "quiz": {
+        "question": "Why is decluttering important?",
+        "options": [
+          "It's just for making things look nice",
+          "It reduces stress, saves space, and makes finding things easier",
+          "Only necessary if you have too many possessions",
+          "It's a waste of time"
+        ],
+        "correctIndex": 1,
+        "explanation": "Decluttering reduces mental clutter, saves physical space, makes it easier to find what you need, and creates a more peaceful home."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod5-lesson3",
+      "moduleId": "mod5",
+      "title": "Laundry Care",
+      "order": 3,
+      "pages": [],
+      "quiz": {
+        "question": "Why should you separate clothes before washing?",
+        "options": [
+          "You don't need to—just wash everything together",
+          "To prevent color bleeding, protect delicate items, and improve cleaning results",
+          "Only if you have a lot of clothes",
+          "To waste more water and detergent"
+        ],
+        "correctIndex": 1,
+        "explanation": "Sorting clothes prevents color transfer, protects delicate fabrics, and ensures each load is washed appropriately for best results."
+      },
+      "pointsAwarded": 10
+    },
+    {
+      "lessonId": "mod5-lesson4",
+      "moduleId": "mod5",
+      "title": "Basic Home Repairs",
+      "order": 4,
+      "pages": [],
+      "quiz": {
+        "question": "What is a benefit of knowing basic home repairs?",
+        "options": [
+          "There are no benefits",
+          "You can fix minor issues quickly and save money on repairs",
+          "You never need to call a professional",
+          "It's only for homeowners"
+        ],
+        "correctIndex": 1,
+        "explanation": "Knowing basic home repairs allows you to fix small issues immediately, prevent them from becoming bigger problems, and save money."
+      },
+      "pointsAwarded": 10
+    }
+  ]
+}
