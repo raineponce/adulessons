@@ -22,11 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files from the frontend folder
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Return an empty favicon response to avoid wildcard fallback on /favicon.ico
-app.get('/favicon.ico', (req, res) => {
-  res.status(204).end();
-});
-
 // Configure session with MongoDB store (1-week cookie)
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -59,7 +54,7 @@ app.use('/codes', apiLimiter, require('./routes/codes'));
 app.use('/profile', apiLimiter, require('./routes/profile'));
 
 // Fallback: serve index.html for any unmatched routes (SPA-style)
-app.get('*', (req, res) => {
+app.get('*', apiLimiter, (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
