@@ -8,6 +8,7 @@
   ];
 
   var MASKED_PASSWORD = '••••••••';
+  var MIN_PASSWORD_LENGTH = 8;
 
   var els = {};
   var originalDisplayName = '';
@@ -172,7 +173,7 @@
             els.newPasswordError.textContent = 'New password is required';
             els.newPasswordError.classList.add('show');
           }
-        } else if (this.value.length < 8) {
+        } else if (this.value.length < MIN_PASSWORD_LENGTH) {
           this.classList.add('error');
           if (els.newPasswordError) {
             els.newPasswordError.textContent = 'Password must be at least 8 characters';
@@ -233,9 +234,9 @@
   window.savePassword = function () {
     if (!passwordEditMode) return;
 
-    var currentPwd = els.currentPassword ? els.currentPassword.value.trim() : '';
-    var newPwd     = els.newPassword     ? els.newPassword.value           : '';
-    var confirmPwd = els.confirmPassword ? els.confirmPassword.value       : '';
+    var currentPwd = els.currentPassword ? els.currentPassword.value : '';
+    var newPwd     = els.newPassword     ? els.newPassword.value     : '';
+    var confirmPwd = els.confirmPassword ? els.confirmPassword.value : '';
     var hasError   = false;
 
     if (!currentPwd) {
@@ -254,7 +255,7 @@
         els.newPasswordError.classList.add('show');
       }
       hasError = true;
-    } else if (newPwd.length < 8) {
+    } else if (newPwd.length < MIN_PASSWORD_LENGTH) {
       if (els.newPassword)      els.newPassword.classList.add('error');
       if (els.newPasswordError) {
         els.newPasswordError.textContent = 'Password must be at least 8 characters';
