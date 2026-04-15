@@ -160,6 +160,43 @@
         justify-content: center;
       }
 
+      .lock-icon {
+        width: 24px;
+        height: 24px;
+        flex: 0 0 auto;
+      }
+
+      .lock-icon img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+
+      .printable-card.locked {
+        background: #d9d9d9;
+        opacity: 0.65;
+      }
+
+      .printable-card.locked .printable-icon {
+        position: relative;
+      }
+
+      .printable-card.locked .printable-icon::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 28px;
+        height: 28px;
+        background: url("../assets/images/lock-icon.png") center / contain
+          no-repeat;
+      }
+
+      .printable-card.available {
+        background: #fff4cc;
+      }
+
       .coin-icon img,
       .small-coin img {
         width: 35px;
@@ -711,54 +748,7 @@
           Recent Activity
         </button>
 
-        <div class="activity-list">
-          <div class="activity-item">
-            <div class="activity-left">
-              <div class="activity-icon">
-                <img src="../assets/images/profile-pic.png" alt="User" />
-              </div>
-              <span class="activity-text"
-                >Complete a lesson from any module</span
-              >
-            </div>
-            <div class="activity-points">
-              <div class="small-coin">
-                <img src="../assets/images/coin-icon.png" alt="Coin" />
-              </div>
-              <span>+200 pts</span>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-left">
-              <div class="activity-icon">
-                <img src="../assets/images/profile-pic.png" alt="User" />
-              </div>
-              <span class="activity-text">Take a quiz</span>
-            </div>
-            <div class="activity-points">
-              <div class="small-coin">
-                <img src="../assets/images/coin-icon.png" alt="Coin" />
-              </div>
-              <span>+5 pts</span>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-left">
-              <div class="activity-icon">
-                <img src="../assets/images/profile-pic.png" alt="User" />
-              </div>
-              <span class="activity-text">Login for more than 1 day</span>
-            </div>
-            <div class="activity-points">
-              <div class="small-coin">
-                <img src="../assets/images/coin-icon.png" alt="Coin" />
-              </div>
-              <span>+5 pts</span>
-            </div>
-          </div>
-        </div>
+        <div id="recentActivityList" class="activity-list"></div>
       </div>
 
       <h1 class="prize-store-title">Prize Store</h1>

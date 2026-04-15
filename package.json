@@ -8,12 +8,13 @@
     "seed": "node backend/seed/seedContent.js",
     "seed:users": "node backend/seed/seedUsers.js",
     "seed:codes": "node backend/seed/seedSecretCodes.js",
+    "seed:rewards-demo": "node backend/seed/seedRewardsDemo.js",
     "seed:all": "node backend/seed/seedContent.js && node backend/seed/seedUsers.js && node backend/seed/seedSecretCodes.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.1.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.6.1",
     "express": "^4.19.2",
     "express-rate-limit": "^8.2.1",
     "express-session": "^1.18.0",

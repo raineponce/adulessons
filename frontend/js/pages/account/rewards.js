@@ -1,11 +1,14 @@
 (function () {
   var COLLECTABLE_STORAGE_KEY = "adulessons.rewards.collectableClaimed";
+  var MAX_RECENT_POINT_EVENTS = 8;
   var state = {
+    profile: null,
     progress: null,
     prizes: [],
     redeemedPrizes: [],
     points: 0,
     loadErrors: {
+      profile: null,
       progress: null,
       prizes: null,
       redeemed: null,
@@ -13,6 +16,7 @@
     collectableClaimed: false,
     redeemingPrizeId: null,
     redeemingCode: false,
+    recentPointEvents: [],
   };
 
   var elements = {};
@@ -29,6 +33,7 @@
     elements.pageStatus = document.getElementById("pageStatus");
     elements.pointsValue = document.getElementById("pointsValue");
     elements.pointsMessage = document.getElementById("pointsMessage");
+    elements.recentActivityList = document.getElementById("recentActivityList");
     elements.rewardsList = document.getElementById("rewardsList");
     elements.rewardsMessage = document.getElementById("rewardsMessage");
     elements.collectableStatus = document.getElementById("collectableStatus");
@@ -112,69 +117,82 @@
     setPageStatus("");
     clearSectionMessages();
 
-    var results = await Promise.allSettled([
-      AppApi.getProgress(),
-      AppApi.getPrizes(),
-      AppApi.getRedeemedPrizes(),
-    ]);
+    try {
+      var results = await Promise.allSettled([
+        AppApi.getProfile(),
+        AppApi.getProgress(),
+        AppApi.getPrizes(),
+        AppApi.getRedeemedPrizes(),
+      ]);
 
-    var progressResult = results[0];
-    var prizesResult = results[1];
-    var redeemedResult = results[2];
+      var profileResult = results[0];
+      var progressResult = results[1];
+      var prizesResult = results[2];
+      var redeemedResult = results[3];
 
-    if (
-      progressResult.status === "rejected" &&
-      AppApi.handleAuthError(progressResult.reason)
-    ) {
-      return;
+      if (
+        profileResult.status === "rejected" &&
+        AppApi.handleAuthError(profileResult.reason)
+      ) {
+        return;
+      }
+
+      if (
+        progressResult.status === "rejected" &&
+        AppApi.handleAuthError(progressResult.reason)
+      ) {
+        return;
+      }
+      if (
+        prizesResult.status === "rejected" &&
+        AppApi.handleAuthError(prizesResult.reason)
+      ) {
+        return;
+      }
+      if (
+        redeemedResult.status === "rejected" &&
+        AppApi.handleAuthError(redeemedResult.reason)
+      ) {
+        return;
+      }
+
+      state.loadErrors.profile =
+        profileResult.status === "rejected" ? profileResult.reason : null;
+      state.loadErrors.progress =
+        progressResult.status === "rejected" ? progressResult.reason : null;
+      state.loadErrors.prizes =
+        prizesResult.status === "rejected" ? prizesResult.reason : null;
+      state.loadErrors.redeemed =
+        redeemedResult.status === "rejected" ? redeemedResult.reason : null;
+
+      state.profile =
+        profileResult.status === "fulfilled" ? profileResult.value : null;
+      state.progress =
+        progressResult.status === "fulfilled" ? progressResult.value : null;
+      state.prizes =
+        prizesResult.status === "fulfilled" && Array.isArray(prizesResult.value)
+          ? prizesResult.value
+          : [];
+      state.redeemedPrizes =
+        redeemedResult.status === "fulfilled" &&
+        Array.isArray(redeemedResult.value)
+          ? redeemedResult.value
+          : [];
+      state.points = getPoints(state.profile, state.progress);
+      state.collectableClaimed = loadCollectableClaimed();
+
+      if (!isCollectableAvailable()) {
+        clearCollectableClaimed();
+        state.collectableClaimed = false;
+      }
+
+      renderAll();
+    } finally {
+      setLoadingState(false);
     }
-    if (
-      prizesResult.status === "rejected" &&
-      AppApi.handleAuthError(prizesResult.reason)
-    ) {
-      return;
-    }
-    if (
-      redeemedResult.status === "rejected" &&
-      AppApi.handleAuthError(redeemedResult.reason)
-    ) {
-      return;
-    }
-
-    state.loadErrors.progress =
-      progressResult.status === "rejected" ? progressResult.reason : null;
-    state.loadErrors.prizes =
-      prizesResult.status === "rejected" ? prizesResult.reason : null;
-    state.loadErrors.redeemed =
-      redeemedResult.status === "rejected" ? redeemedResult.reason : null;
-
-    state.progress =
-      progressResult.status === "fulfilled" ? progressResult.value : null;
-    state.prizes =
-      prizesResult.status === "fulfilled" && Array.isArray(prizesResult.value)
-        ? prizesResult.value
-        : [];
-    state.redeemedPrizes =
-      redeemedResult.status === "fulfilled" &&
-      Array.isArray(redeemedResult.value)
-        ? redeemedResult.value
-        : [];
-    state.points = getPointsFromProgress(state.progress);
-    state.collectableClaimed = loadCollectableClaimed();
-
-    if (!isCollectableAvailable()) {
-      clearCollectableClaimed();
-      state.collectableClaimed = false;
-    }
-
-    renderAll();
   }
 
   function setLoadingState(isLoading) {
-    if (!isLoading) {
-      return;
-    }
-
     if (elements.pointsValue) {
       elements.pointsValue.textContent = isLoading
         ? "Loading..."
@@ -212,26 +230,67 @@
     }
 
     if (elements.collectableActionButton) {
-      elements.collectableActionButton.disabled = true;
-      elements.collectableActionButton.classList.remove("is-claimed");
+      elements.collectableActionButton.disabled = isLoading;
+      if (isLoading) {
+        elements.collectableActionButton.classList.remove("is-claimed");
+      }
     }
 
     if (elements.redeemCodeButton) {
-      elements.redeemCodeButton.disabled = isLoading;
+      elements.redeemCodeButton.disabled = isLoading || state.redeemingCode;
     }
   }
 
   function renderAll() {
     renderPointsSection();
+    renderRecentActivitySection();
     renderCollectableSection();
     renderRewardSections();
     renderPageStatus();
+    syncNavProfileAndPoints();
+  }
+
+  function renderRecentActivitySection() {
+    if (!elements.recentActivityList) {
+      return;
+    }
+
+    var items = getRecentActivityItems();
+
+    if (items.length === 0) {
+      elements.recentActivityList.innerHTML =
+        '<div class="empty-state">No recent activity yet.</div>';
+      return;
+    }
+
+    elements.recentActivityList.innerHTML = items
+      .map(function (item) {
+        return [
+          '<div class="activity-item">',
+          '  <div class="activity-left">',
+          '    <div class="activity-icon">',
+          '      <img src="../assets/images/profile-pic.png" alt="Activity">',
+          "    </div>",
+          '    <span class="activity-text">' +
+            escapeHtml(item.label) +
+            "</span>",
+          "  </div>",
+          '  <div class="activity-points">',
+          '    <div class="small-coin">',
+          '      <img src="../assets/images/coin-icon.png" alt="Coin">',
+          "    </div>",
+          "    <span>+" + escapeHtml(String(item.points)) + " pts</span>",
+          "  </div>",
+          "</div>",
+        ].join("");
+      })
+      .join("");
   }
 
   function renderPageStatus() {
     var errors = [];
 
-    if (state.loadErrors.progress) {
+    if (state.loadErrors.profile || state.loadErrors.progress) {
       errors.push("Points and progress could not be loaded.");
     }
     if (state.loadErrors.prizes || state.loadErrors.redeemed) {
@@ -254,7 +313,7 @@
       return;
     }
 
-    if (state.loadErrors.progress) {
+    if (state.loadErrors.profile && state.loadErrors.progress) {
       elements.pointsValue.textContent = "--";
       setSectionMessage(
         elements.pointsMessage,
@@ -345,6 +404,14 @@
       return prize && prize.type === "printable";
     });
 
+    if (rewards.length === 0) {
+      rewards = getFallbackCouponPrizes();
+    }
+
+    if (printables.length === 0) {
+      printables = getFallbackPrintablePrizes();
+    }
+
     elements.rewardsList.innerHTML =
       rewards.length > 0
         ? rewards
@@ -352,7 +419,7 @@
               return buildPrizeCardMarkup(prize, redeemedSet, "reward");
             })
             .join("")
-        : '<div class="empty-state">No coupon rewards are available right now.</div>';
+        : "";
 
     elements.printablesGrid.innerHTML =
       printables.length > 0
@@ -361,13 +428,9 @@
               return buildPrizeCardMarkup(prize, redeemedSet, "printable");
             })
             .join("")
-        : '<div class="empty-state">No printables are available right now.</div>';
+        : "";
 
-    setSectionMessage(
-      elements.rewardsMessage,
-      rewards.length > 0 ? "" : "No coupon rewards are available right now.",
-      "muted",
-    );
+    setSectionMessage(elements.rewardsMessage, "", "muted");
     setSectionMessage(
       elements.printablesMessage,
       printables.length > 0
@@ -598,9 +661,16 @@
   }
 
   function getPrizeAction(prize, redeemed, enoughPoints) {
+    if (prize && prize.isPlaceholder) {
+      return "locked";
+    }
+
     if (redeemed) {
       if (prize.type === "printable" && prize.fileUrl) {
         return "download";
+      }
+      if (prize.type === "coupon") {
+        return "details";
       }
       return "details";
     }
@@ -613,9 +683,16 @@
   }
 
   function getPrizeButtonLabel(prize, redeemed, enoughPoints) {
+    if (prize && prize.isPlaceholder) {
+      return "Locked";
+    }
+
     if (redeemed) {
       if (prize.type === "printable" && prize.fileUrl) {
         return "Download";
+      }
+      if (prize.type === "coupon") {
+        return "Claimed";
       }
       return prize.type === "printable" ? "Unlocked" : "See details";
     }
@@ -664,7 +741,11 @@
   }
 
   function isCollectableAvailable() {
-    return Boolean(state.progress && state.progress.allLessonsComplete);
+    return Boolean(
+      state.progress &&
+      state.progress.allLessonsComplete &&
+      getProgressPercent() === 100,
+    );
   }
 
   function getCollectableStatus() {
@@ -676,7 +757,7 @@
       return "claimed";
     }
 
-    if (state.progress.allLessonsComplete) {
+    if (state.progress.allLessonsComplete && getProgressPercent() === 100) {
       return "available";
     }
 
@@ -692,11 +773,11 @@
       return "You already claimed this collectable.";
     }
 
-    if (state.progress.allLessonsComplete) {
+    if (state.progress.allLessonsComplete && getProgressPercent() === 100) {
       return "Your collectable is ready to claim.";
     }
 
-    return "Complete all lessons to unlock this collectable.";
+    return "Complete all lessons and finish the progress bar to unlock this collectable.";
   }
 
   function getCollectableProgressText() {
@@ -738,6 +819,83 @@
     return totals;
   }
 
+  function getRecentActivityItems() {
+    var items = [];
+
+    if (
+      Array.isArray(state.recentPointEvents) &&
+      state.recentPointEvents.length
+    ) {
+      items = state.recentPointEvents.slice();
+    }
+
+    var totals = getProgressTotals();
+    var totalPoints = Number(state.points || 0);
+    var usedCodes =
+      state.profile && Array.isArray(state.profile.usedCodes)
+        ? state.profile.usedCodes.length
+        : 0;
+
+    var lessonPoints = totals.completed * 10;
+    var quizPoints = Math.max(0, Math.min(totalPoints - lessonPoints, 5));
+    var streakPoints = Math.max(0, totalPoints - lessonPoints - quizPoints);
+
+    if (totals.completed > 0 && lessonPoints > 0) {
+      items.push({
+        label: "Completed " + totals.completed + " lessons",
+        points: lessonPoints,
+      });
+    }
+
+    if (usedCodes > 0 && quizPoints > 0) {
+      items.push({
+        label: "Redeemed a secret code",
+        points: quizPoints,
+      });
+    }
+
+    var streak =
+      state.profile && state.profile.streak ? state.profile.streak.current : 0;
+    if (streak > 1 && streakPoints > 0) {
+      items.push({
+        label: "Earned " + streak + " day login streak",
+        points: streakPoints,
+      });
+    }
+
+    if (items.length === 0 && totalPoints > 0) {
+      items.push({
+        label: "Points earned",
+        points: totalPoints,
+      });
+    }
+
+    return items;
+  }
+
+  function addRecentPointEvent(label, points) {
+    var normalizedPoints = Number(points || 0);
+    if (!label || normalizedPoints <= 0) {
+      return;
+    }
+
+    if (!Array.isArray(state.recentPointEvents)) {
+      state.recentPointEvents = [];
+    }
+
+    state.recentPointEvents.unshift({
+      label: String(label),
+      points: normalizedPoints,
+    });
+
+    if (state.recentPointEvents.length > MAX_RECENT_POINT_EVENTS) {
+      state.recentPointEvents = state.recentPointEvents.slice(
+        0,
+        MAX_RECENT_POINT_EVENTS,
+      );
+    }
+  }
+
   function getProgressPercent() {
     if (!state.progress) {
       return 0;
@@ -759,6 +917,93 @@
       : 0;
   }
 
+  function getPointsFromProfile(profile) {
+    return profile && typeof profile.points === "number" ? profile.points : 0;
+  }
+
+  function getPoints(profile, progress) {
+    if (profile && typeof profile.points === "number") {
+      return profile.points;
+    }
+    return getPointsFromProgress(progress);
+  }
+
+  function syncNavProfileAndPoints() {
+    updateNavPointsLabels(formatPoints(state.points));
+
+    var username =
+      state.profile && state.profile.username
+        ? String(state.profile.username)
+        : "";
+
+    if (username) {
+      updateNavUsernameLabels(username);
+    }
+
+    window.setTimeout(function () {
+      updateNavPointsLabels(formatPoints(state.points));
+      if (username) {
+        updateNavUsernameLabels(username);
+      }
+    }, 120);
+  }
+
+  function updateNavPointsLabels(text) {
+    var labels = document.querySelectorAll("[data-nav-points-label]");
+    Array.prototype.forEach.call(labels, function (label) {
+      label.textContent = text;
+    });
+  }
+
+  function updateNavUsernameLabels(text) {
+    var labels = document.querySelectorAll("[data-nav-username-label]");
+    Array.prototype.forEach.call(labels, function (label) {
+      label.textContent = text;
+    });
+  }
+
+  function getFallbackCouponPrizes() {
+    return [
+      {
+        _id: "fallback-coupon-1",
+        name: "$10 Grocery Coupon",
+        type: "coupon",
+        cost: 25,
+        available: true,
+        isPlaceholder: true,
+      },
+      {
+        _id: "fallback-coupon-2",
+        name: "Home Savings Coupon",
+        type: "coupon",
+        cost: 25,
+        available: true,
+        isPlaceholder: true,
+      },
+    ];
+  }
+
+  function getFallbackPrintablePrizes() {
+    return [
+      {
+        _id: "fallback-printable-1",
+        name: "Budget Planner Printable",
+        type: "printable",
+        cost: 50,
+        available: true,
+        isPlaceholder: true,
+      },
+      {
+        _id: "fallback-printable-2",
+        name: "Meal Planner Printable",
+        type: "printable",
+        cost: 50,
+        available: true,
+        isPlaceholder: true,
+      },
+    ];
+  }
+
   async function handleSecretCodeRedeem() {
     if (state.redeemingCode) {
       return;
@@ -774,6 +1019,19 @@
       return;
     }
 
+    if (
+      state.profile &&
+      Array.isArray(state.profile.usedCodes) &&
+      state.profile.usedCodes.includes(code.toUpperCase())
+    ) {
+      setSectionMessage(
+        elements.secretCodeMessage,
+        "You've already used this code.",
+        "error",
+      );
+      return;
+    }
+
     state.redeemingCode = true;
     elements.redeemCodeButton.disabled = true;
     setSectionMessage(
@@ -783,8 +1041,19 @@
     );
 
     try {
+      var previousPoints = Number(state.points || 0);
       var result = await AppApi.redeemCode(code);
       elements.secretCodeInput.value = "";
+
+      var earnedPoints =
+        result && typeof result.pointsValue === "number"
+          ? result.pointsValue
+          : Math.max(0, Number(result && result.points) - previousPoints);
+
+      if (earnedPoints > 0) {
+        addRecentPointEvent("Code redeemed", earnedPoints);
+      }
+
       if (typeof result.points === "number") {
         state.points = result.points;
       }
