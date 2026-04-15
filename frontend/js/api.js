@@ -116,6 +116,17 @@
     });
   }
 
+  function getPreferences() {
+    return request("/profile/preferences");
+  }
+
+  function updatePreferences(preferences) {
+    return request("/profile/preferences", {
+      method: "PUT",
+      body: preferences
+    });
+  }
+
   window.AppApi = {
     request: request,
     handleAuthError: handleAuthError,
@@ -129,6 +140,8 @@
     getPrizes: getPrizes,
     redeemPrize: redeemPrize,
     getRedeemedPrizes: getRedeemedPrizes,
-    redeemCode: redeemCode
+    redeemCode: redeemCode,
+    getPreferences: getPreferences,
+    updatePreferences: updatePreferences
   };
 })();
