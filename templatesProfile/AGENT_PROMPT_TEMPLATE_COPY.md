@@ -33,11 +33,11 @@ Follow these rules:
 
 ### Required Behavior
 - On load: 'frontend/account/profile.html'
-- Render: [WHAT UI SECTIONS TO POPULATE]
-- User actions: [BUTTONS/FORMS AND WHAT THEY TRIGGER]
+- Render: <label class="form-label">Display Name</label>
+- User actions: <input type="text" class="form-input" id="displayName" placeholder="Enter display name" value="displayName">
 - Success state: [WHAT USER SEES]
 - Empty state: [WHAT USER SEES]
-- Error state: [WHAT USER SEES]
+- Error state: <div class="error-message" id="displayNameError">Display name is required</div>
 - 401 state: redirect to `/login.html`
 
 ### Implementation Requirements
