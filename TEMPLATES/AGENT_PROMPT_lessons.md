@@ -34,9 +34,9 @@ Follow these rules:
 - On load: [WHAT DATA TO LOAD]
 - Render: [WHAT UI SECTIONS TO POPULATE]
 - User actions: [BUTTONS/FORMS AND WHAT THEY TRIGGER]
-- Success state: [WHAT USER SEES]
-- Empty state: [WHAT USER SEES]
-- Error state: [WHAT USER SEES]
+- Success state: User will be able to see the lesson's data, including lesson's introduction, text content, links, and
+- Empty state: 'No lesson content was retrieved'
+- Error state: '[WHAT USER SEES]'
 - 401 state: redirect to `/login.html`
 
 ### Implementation Requirements
