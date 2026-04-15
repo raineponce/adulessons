@@ -966,6 +966,8 @@
                     <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
                 </div>
 
+                <div id="passwordSuccess" style="display:none;color:#2e7d32;font-size:14px;margin-top:8px;"></div>
+
                 <div class="form-actions">
                     <button class="btn btn-cancel" onclick="resetPasswordForm()">Cancel</button>
                     <button class="btn btn-save" onclick="savePassword()">Save</button>
@@ -1683,13 +1685,23 @@
             }
         });
 
-        // Save password function
-        function savePassword() {
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+        // Show a timed success banner in the password section
+        function showPasswordSuccess() {
+            var successEl = document.getElementById('passwordSuccess');
+            if (successEl) {
+                successEl.textContent = 'Password changed successfully!';
+                successEl.style.display = 'block';
+                setTimeout(function () { successEl.style.display = 'none'; }, 3000);
+            }
+        }
 
-            let hasError = false;
+        // Save password function (overridden by profile.js with edit-mode guard)
+        function savePassword() {
+            var currentPassword = document.getElementById('currentPassword').value;
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            var hasError = false;
 
             // Validate current password
             if (!currentPassword) {
@@ -1712,23 +1724,33 @@
                 hasError = true;
             }
 
-            if (!hasError) {
-                alert('Password changed successfully!');
-                resetPasswordForm();
-            }
+            if (hasError) return;
+
+            AppApi.updatePassword(currentPassword, newPassword)
+                .then(function () {
+                    resetPasswordForm();
+                    showPasswordSuccess();
+                })
+                .catch(function (err) {
+                    if (AppApi.handleAuthError(err)) return;
+                    document.getElementById('currentPassword').classList.add('error');
+                    var errEl = document.getElementById('currentPasswordError');
+                    errEl.textContent = err.message || 'Failed to update password';
+                    errEl.classList.add('show');
+                });
         }
 
-        // Reset password form
+        // Reset password form (overridden by profile.js)
         function resetPasswordForm() {
             document.getElementById('currentPassword').value = '';
             document.getElementById('newPassword').value = '';
             document.getElementById('confirmPassword').value = '';
 
-            document.querySelectorAll('.form-input').forEach(input => {
+            document.querySelectorAll('.form-input').forEach(function (input) {
                 input.classList.remove('error');
             });
 
-            document.querySelectorAll('.error-message').forEach(error => {
+            document.querySelectorAll('.error-message').forEach(function (error) {
                 error.classList.remove('show');
             });
         }
