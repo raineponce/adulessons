@@ -876,9 +876,9 @@
 
             <div class="profile-section">
                 <div class="profile-avatar" onclick="openEditAvatarModal()">
-                    <img src="../assets/images/profile-pic.png" alt="Profile avatar" id="sidebarAvatar">
+                    <img src="../assets/images/profile-pic.png" alt="Zoey profile avatar" id="sidebarAvatar">
                 </div>
-                <div class="profile-name" id="sidebarProfileName"></div>
+                <div class="profile-name">Zoey</div>
             </div>
 
             <nav class="sidebar-nav">
@@ -886,15 +886,12 @@
                 <a href="#security" class="nav-item">Security</a>
                 <a href="#agreement" class="nav-item">User Agreement</a>
                 <a href="settings.html" class="nav-item">Settings</a>
-                <a href="/login.html" class="nav-item sign-out">Sign Out</a>
+                <a href="#" class="nav-item sign-out">Sign Out</a>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            <div id="profileErrorBanner"
-                style="display:none; background:#ffe6e6; color:#e74c3c; border:1px solid #e74c3c; border-radius:8px; padding:14px 20px; margin-bottom:24px; font-size:15px;">
-            </div>
             <div class="header-section">
                 <div class="header-left">
                     <button class="back-button" onclick="window.history.back()">‹</button>
@@ -914,7 +911,7 @@
                     <label class="form-label">Display Name</label>
                     <div class="input-wrapper">
                         <input type="text" class="form-input" id="displayName" placeholder="Enter display name"
-                            value="">
+                            value="Zoey">
                         <span class="edit-icon" onclick="focusInput('displayName')">✎</span>
                     </div>
                     <div class="error-message" id="displayNameError">Display name is required</div>
@@ -924,7 +921,7 @@
                     <label class="form-label">Email</label>
                     <div class="input-wrapper">
                         <input type="email" class="form-input" id="email" placeholder="Enter email address"
-                            value="">
+                            value="zoey@email.com">
                         <span class="edit-icon" onclick="focusInput('email')">✎</span>
                     </div>
                     <div class="error-message" id="emailError">Please enter a valid email address</div>
@@ -1482,8 +1479,318 @@
         </div>
     </div>
 
-    <script src="../js/api.js"></script>
-    <script src="../js/pages/account/profile.js"></script>
+    <script>
+        // Avatar paths array
+        const avatarPaths = [
+            './images/avatar-1.png',
+            './images/avatar-2.png',
+            './images/avatar-3.png'
+        ];
+
+        let selectedAvatarIndex = 0;
+
+        // Edit Avatar Modal Functions
+        function openEditAvatarModal() {
+            const modal = document.getElementById('editAvatarModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Update modal's current avatar to match sidebar
+            const sidebarAvatar = document.getElementById('sidebarAvatar').src;
+            document.getElementById('modalCurrentAvatar').src = sidebarAvatar;
+        }
+
+        function closeEditAvatarModal() {
+            const modal = document.getElementById('editAvatarModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function selectAvatar(index) {
+            selectedAvatarIndex = index;
+
+            // Remove selected class from all options
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            document.querySelector(`[data-avatar="${index}"]`).classList.add('selected');
+
+            // Update the modal's current avatar display
+            document.getElementById('modalCurrentAvatar').src = avatarPaths[index];
+        }
+
+        function saveAvatar() {
+            // Update sidebar avatar
+            document.getElementById('sidebarAvatar').src = avatarPaths[selectedAvatarIndex];
+
+            // Show success message
+            alert('Profile picture updated successfully!');
+
+            // Close modal
+            closeEditAvatarModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editAvatarModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeEditAvatarModal();
+            }
+        });
+
+        // Policy Modal Functions
+        function openPrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openTermsModal() {
+            const modal = document.getElementById('termsModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTermsModal() {
+            const modal = document.getElementById('termsModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('privacyModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closePrivacyModal();
+            }
+        });
+
+        document.getElementById('termsModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeTermsModal();
+            }
+        });
+
+        // Hamburger Menu Toggle
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            hamburgerMenu.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+
+            if (sidebar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        hamburgerMenu.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                if (window.innerWidth <= 768 && this.getAttribute('href').startsWith('#')) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+        // Focus input when edit icon is clicked
+        function focusInput(inputId) {
+            document.getElementById(inputId).focus();
+        }
+
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Display name validation
+        function validateDisplayName(name) {
+            return name.trim().length > 0;
+        }
+
+        // Password validation
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+
+        // Real-time validation
+        document.getElementById('email').addEventListener('blur', function () {
+            const emailInput = this;
+            const emailError = document.getElementById('emailError');
+
+            if (!validateEmail(emailInput.value)) {
+                emailInput.classList.add('error');
+                emailError.classList.add('show');
+            } else {
+                emailInput.classList.remove('error');
+                emailError.classList.remove('show');
+            }
+        });
+
+        document.getElementById('displayName').addEventListener('blur', function () {
+            const nameInput = this;
+            const nameError = document.getElementById('displayNameError');
+
+            if (!validateDisplayName(nameInput.value)) {
+                nameInput.classList.add('error');
+                nameError.classList.add('show');
+            } else {
+                nameInput.classList.remove('error');
+                nameError.classList.remove('show');
+            }
+        });
+
+        document.getElementById('newPassword').addEventListener('blur', function () {
+            const passwordInput = this;
+            const passwordError = document.getElementById('newPasswordError');
+
+            if (passwordInput.value && !validatePassword(passwordInput.value)) {
+                passwordInput.classList.add('error');
+                passwordError.classList.add('show');
+            } else {
+                passwordInput.classList.remove('error');
+                passwordError.classList.remove('show');
+            }
+        });
+
+        document.getElementById('confirmPassword').addEventListener('blur', function () {
+            const confirmInput = this;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmError = document.getElementById('confirmPasswordError');
+
+            if (confirmInput.value && confirmInput.value !== newPassword) {
+                confirmInput.classList.add('error');
+                confirmError.classList.add('show');
+            } else {
+                confirmInput.classList.remove('error');
+                confirmError.classList.remove('show');
+            }
+        });
+
+        // Save password function
+        function savePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            let hasError = false;
+
+            // Validate current password
+            if (!currentPassword) {
+                document.getElementById('currentPassword').classList.add('error');
+                document.getElementById('currentPasswordError').classList.add('show');
+                hasError = true;
+            }
+
+            // Validate new password
+            if (!validatePassword(newPassword)) {
+                document.getElementById('newPassword').classList.add('error');
+                document.getElementById('newPasswordError').classList.add('show');
+                hasError = true;
+            }
+
+            // Validate confirm password
+            if (newPassword !== confirmPassword) {
+                document.getElementById('confirmPassword').classList.add('error');
+                document.getElementById('confirmPasswordError').classList.add('show');
+                hasError = true;
+            }
+
+            if (!hasError) {
+                alert('Password changed successfully!');
+                resetPasswordForm();
+            }
+        }
+
+        // Reset password form
+        function resetPasswordForm() {
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.classList.remove('error');
+            });
+
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+            });
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+
+                    document.querySelectorAll('.nav-item').forEach(nav => {
+                        nav.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for active navigation highlighting
+        const sections = document.querySelectorAll('.account-section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-50% 0px -50% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.getAttribute('id');
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === `#${sectionId}`) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Reset sidebar state on window resize
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) {
+                hamburgerMenu.classList.remove('active');
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
 </body>
 
 </html>
