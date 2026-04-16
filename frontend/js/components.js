@@ -364,25 +364,89 @@ async function loadComponent(componentPath, elementId) {
             throw new Error(`Failed to load ${componentPath}: ${response.statusText}`);
         }
         const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
+        const element = document.getElementById(elementId);
+
+        if (!element) {
+            throw new Error(`Missing mount point: ${elementId}`);
+        }
+
+        element.innerHTML = html;
     } catch (error) {
         console.error(`Error loading component (${elementId}):`, error);
     }
 }
 
-// Check if user is logged in
-function isUserLoggedIn() {
-    // Option A: Check localStorage
-    return localStorage.getItem('authToken') !== null;
+async function getAuthState() {
+    try {
+        const response = await fetch('/auth/me', {
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json'
+            }
+        });
 
-    // Option B: Check sessionStorage
-    // return sessionStorage.getItem('user') !== null;
+        if (!response.ok) {
+            return { loggedIn: false };
+        }
 
-    // Option C: Check a global variable set by your backend
-    // return window.user !== null;
+        return await response.json();
+    } catch (error) {
+        console.error('Error checking auth state:', error);
+        return { loggedIn: false };
+    }
+}
 
-    // Option D: Check a cookie
-    // return document.cookie.includes('authToken=');
+function getAvatarSrc(avatar) {
+    const avatarMap = {
+        default: '/assets/images/profile-pic.png',
+        avatar1: '/assets/images/profile-pic.png',
+        avatar2: '/assets/images/profile-pic.png',
+        avatar3: '/assets/images/profile-pic.png',
+        avatar4: '/assets/images/profile-pic.png',
+        avatar5: '/assets/images/profile-pic.png'
+    };
+
+    return avatarMap[avatar] || avatarMap.default;
+}
+
+function populateLoggedInNavbar(user) {
+    const navbar = document.getElementById('navbar');
+
+    if (!navbar || !user) {
+        return;
+    }
+
+    const username = user.username || 'User';
+    const points = Number.isFinite(user.points) ? user.points : 0;
+    const avatarSrc = getAvatarSrc(user.avatar);
+
+    navbar.querySelectorAll('[data-nav-username]').forEach((element) => {
+        element.textContent = username;
+    });
+
+    navbar.querySelectorAll('[data-nav-points]').forEach((element) => {
+        element.textContent = `${points} pts`;
+    });
+
+    navbar.querySelectorAll('[data-nav-avatar]').forEach((element) => {
+        element.src = avatarSrc;
+        element.alt = `${username} avatar`;
+    });
+}
+
+async function loadNavbar() {
+    const authState = await getAuthState();
+    const navPath = authState.loggedIn
+        ? '/components/nav-loggedin.html'
+        : '/components/nav-loggedout.html';
+
+    await loadComponent(navPath, 'navbar');
+
+    if (authState.loggedIn) {
+        populateLoggedInNavbar(authState.user);
+    }
+
+    return authState;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -392,14 +456,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.style.zoom = parseInt(savedFontSize) / 100;
     }
 
-    // Load appropriate nav based on login state
-    const navPath = isUserLoggedIn()
-      // will change link after ':' to nav-loggedin.html later
-      ? '/components/nav-loggedin.html'
-        : '/components/nav-loggedin.html';
-
-    await loadComponent(navPath, 'navbar');
-    loadComponent('/components/footer.html', 'footer');
+    await loadNavbar();
+    await loadComponent('/components/footer.html', 'footer');
 
     // Wire up search dropdown and mobile menu links with backend module data
     const dropdownLinks = document.querySelectorAll('.dropdown-content a');
@@ -447,3 +505,9 @@ window.addEventListener('pageshow', (event) => {
         }
     }
 });
+
+window.AppComponents = {
+    loadComponent: loadComponent,
+    getAuthState: getAuthState,
+    loadNavbar: loadNavbar
+};
