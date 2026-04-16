@@ -301,6 +301,23 @@ const lessons = [
             "linkText": "Consumer Financial Protection Bureau"
           }
         ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Quick Budget Tip"
+          },
+          {
+            "type": "text",
+            "body": "Try the 50/30/20 method: 50% for needs, 30% for wants, and 20% for savings or debt. It is a simple way to start balancing your money."
+          },
+          {
+            "type": "callout",
+            "body": "Small changes can make a big difference over time."
+          }
+        ]
       }
     ],
     "quiz": {
@@ -321,17 +338,63 @@ const lessons = [
     "moduleId": "mod1",
     "title": "Saving Strategies",
     "order": 2,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Why Save Money?"
+          },
+          {
+            "type": "text",
+            "body": "Saving money helps you prepare for emergencies and reach goals like travel, school, or a new laptop."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/coin-icon.png",
+            "alt": "Savings icon"
+          },
+          {
+            "type": "callout",
+            "body": "Start by saving a small amount each week."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "fTTGALaRZoc"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Set a savings goal",
+              "Use automatic transfers",
+              "Keep savings in a separate account"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.fdic.gov/resources/consumers/money-smart/index.html",
+            "linkText": "FDIC Money Smart"
+          }
+        ]
+      }
+    ],
     "quiz": {
-      "question": "Placeholder question for Saving Strategies",
+      "question": "What is a simple way to save money consistently?",
       "options": [
-        "Option A",
-        "Option B",
-        "Option C",
-        "Option D"
+        "Spend first, save what is left",
+        "Set up automatic transfers to savings",
+        "Keep all your money in cash",
+        "Only save once a year"
       ],
-      "correctIndex": 0,
-      "explanation": "Placeholder explanation."
+      "correctIndex": 1,
+      "explanation": "Automatic transfers make saving easy and consistent."
     },
     "pointsAwarded": 10
   },
@@ -340,17 +403,63 @@ const lessons = [
     "moduleId": "mod1",
     "title": "Understanding Credit",
     "order": 3,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "What Is Credit?"
+          },
+          {
+            "type": "text",
+            "body": "Credit lets you borrow money now and pay it back later. Lenders use your history to decide if you are a safe borrower."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/finance-icon.png",
+            "alt": "Credit icon"
+          },
+          {
+            "type": "callout",
+            "body": "Paying bills on time helps build good credit."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "2nB4nQfaj3Q"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Pay on time",
+              "Keep balances low",
+              "Check your credit report"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.annualcreditreport.com/",
+            "linkText": "Annual Credit Report"
+          }
+        ]
+      }
+    ],
     "quiz": {
-      "question": "Placeholder question for Understanding Credit",
+      "question": "Which habit helps improve your credit score?",
       "options": [
-        "Option A",
-        "Option B",
-        "Option C",
-        "Option D"
+        "Missing payments often",
+        "Keeping credit card balances very high",
+        "Paying bills on time",
+        "Closing every account quickly"
       ],
-      "correctIndex": 0,
-      "explanation": "Placeholder explanation."
+      "correctIndex": 2,
+      "explanation": "On-time payments are one of the biggest factors in your credit score."
     },
     "pointsAwarded": 10
   },
@@ -359,17 +468,63 @@ const lessons = [
     "moduleId": "mod1",
     "title": "Banking Basics",
     "order": 4,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Types of Bank Accounts"
+          },
+          {
+            "type": "text",
+            "body": "Checking accounts are used for daily spending. Savings accounts are used to store money and earn a little interest."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/finance-icon.png",
+            "alt": "Bank account icon"
+          },
+          {
+            "type": "callout",
+            "body": "Choose the right account for your needs."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "R4A6l4Y9V7I"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Compare account fees",
+              "Use online banking tools",
+              "Review your transactions weekly"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.consumerfinance.gov/consumer-tools/bank-accounts/",
+            "linkText": "Bank Account Basics"
+          }
+        ]
+      }
+    ],
     "quiz": {
-      "question": "Placeholder question for Banking Basics",
+      "question": "What is a common use of a checking account?",
       "options": [
-        "Option A",
-        "Option B",
-        "Option C",
-        "Option D"
+        "Long-term investing only",
+        "Everyday spending and bill payments",
+        "Avoiding all bank fees forever",
+        "Replacing a credit report"
       ],
-      "correctIndex": 0,
-      "explanation": "Placeholder explanation."
+      "correctIndex": 1,
+      "explanation": "Checking accounts are designed for regular purchases and paying bills."
     },
     "pointsAwarded": 10
   },
@@ -378,7 +533,53 @@ const lessons = [
     "moduleId": "mod2",
     "title": "Effective Communication",
     "order": 1,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Communication Basics"
+          },
+          {
+            "type": "text",
+            "body": "Good communication means speaking clearly and listening carefully so both people feel understood."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/social-icon.png",
+            "alt": "Communication icon"
+          },
+          {
+            "type": "callout",
+            "body": "Listen first, then respond."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "HAnw168huqA"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Make eye contact",
+              "Ask clarifying questions",
+              "Repeat key points"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.skillsyouneed.com/ips/communication-skills.html",
+            "linkText": "Communication Skills"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is the most important element of effective communication?",
       "options": [
@@ -397,7 +598,53 @@ const lessons = [
     "moduleId": "mod2",
     "title": "Building Relationships",
     "order": 2,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Building Trust"
+          },
+          {
+            "type": "text",
+            "body": "Strong relationships grow when people are honest, dependable, and respectful over time."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/social-icon.png",
+            "alt": "Relationship icon"
+          },
+          {
+            "type": "callout",
+            "body": "Small acts of reliability build trust."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "CFlGJ4n2N4I"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Keep your promises",
+              "Be respectful",
+              "Show appreciation"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.apa.org/topics/relationships",
+            "linkText": "Healthy Relationships"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is a foundation for building strong relationships?",
       "options": [
@@ -416,7 +663,53 @@ const lessons = [
     "moduleId": "mod2",
     "title": "Conflict Resolution",
     "order": 3,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Handling Conflict"
+          },
+          {
+            "type": "text",
+            "body": "Conflict happens in every relationship, and calm communication helps people solve issues together."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/social-icon.png",
+            "alt": "Conflict resolution icon"
+          },
+          {
+            "type": "callout",
+            "body": "Focus on solutions, not blame."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "KY5TWVz5ZDU"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Stay calm",
+              "Use 'I' statements",
+              "Agree on next steps"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.mindtools.com/ax67k7o/conflict-resolution",
+            "linkText": "Conflict Resolution Tips"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is the best approach to resolving conflict?",
       "options": [
@@ -435,7 +728,53 @@ const lessons = [
     "moduleId": "mod2",
     "title": "Navigating Social Situations",
     "order": 4,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Social Confidence"
+          },
+          {
+            "type": "text",
+            "body": "You can feel more comfortable in social settings by preparing a little and being yourself."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/social-icon.png",
+            "alt": "Social situations icon"
+          },
+          {
+            "type": "callout",
+            "body": "Practice makes social situations easier."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "fA1Qb8M5LQY"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Prepare conversation starters",
+              "Ask open-ended questions",
+              "Be kind to yourself"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.helpguide.org/articles/relationships-communication/effective-communication.htm",
+            "linkText": "Social Communication Basics"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "How can you feel more confident in social situations?",
       "options": [
@@ -454,7 +793,53 @@ const lessons = [
     "moduleId": "mod3",
     "title": "Time Management",
     "order": 1,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Managing Your Time"
+          },
+          {
+            "type": "text",
+            "body": "Time management helps you plan your day, finish priorities, and feel less stressed."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/productivity-icon.png",
+            "alt": "Time management icon"
+          },
+          {
+            "type": "callout",
+            "body": "Plan first, then act."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "iONDebHX9qk"
+          },
+          {
+            "type": "list",
+            "items": [
+              "List top 3 tasks",
+              "Use a timer",
+              "Review your day"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://todoist.com/productivity-methods",
+            "linkText": "Productivity Methods"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is the main benefit of effective time management?",
       "options": [
@@ -473,7 +858,53 @@ const lessons = [
     "moduleId": "mod3",
     "title": "Goal Setting",
     "order": 2,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Set Clear Goals"
+          },
+          {
+            "type": "text",
+            "body": "Clear goals help you stay focused and track progress toward what matters most."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/productivity-icon.png",
+            "alt": "Goal setting icon"
+          },
+          {
+            "type": "callout",
+            "body": "Make goals specific and realistic."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "lRtV-ugIT0k"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Write the goal",
+              "Pick a deadline",
+              "Track progress weekly"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.mindtools.com/a4wo118/smart-goals",
+            "linkText": "SMART Goals Guide"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What makes a goal SMART?",
       "options": [
@@ -492,7 +923,53 @@ const lessons = [
     "moduleId": "mod3",
     "title": "Organization & Planning",
     "order": 3,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Stay Organized"
+          },
+          {
+            "type": "text",
+            "body": "Organization makes it easier to find what you need and keep your tasks on track."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/productivity-icon.png",
+            "alt": "Organization icon"
+          },
+          {
+            "type": "callout",
+            "body": "A tidy system saves time."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "NEm6X0NrdY0"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Use one to-do list",
+              "Keep a calendar",
+              "Review plans each week"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.atlassian.com/blog/productivity",
+            "linkText": "Planning Tips"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "Why is organization important for productivity?",
       "options": [
@@ -511,7 +988,53 @@ const lessons = [
     "moduleId": "mod3",
     "title": "Overcoming Procrastination",
     "order": 4,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Beat Procrastination"
+          },
+          {
+            "type": "text",
+            "body": "Procrastination often fades when you begin with one small step instead of waiting for perfect motivation."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/productivity-icon.png",
+            "alt": "Procrastination icon"
+          },
+          {
+            "type": "callout",
+            "body": "Start tiny, then keep going."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "arj7oStGLkU"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Use the 5-minute rule",
+              "Break tasks into steps",
+              "Remove distractions"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.apa.org/topics/procrastination",
+            "linkText": "Understanding Procrastination"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is an effective strategy to overcome procrastination?",
       "options": [
@@ -530,7 +1053,53 @@ const lessons = [
     "moduleId": "mod4",
     "title": "Kitchen Basics & Safety",
     "order": 1,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Kitchen Safety Basics"
+          },
+          {
+            "type": "text",
+            "body": "Safe cooking starts with clean hands, a tidy workspace, and careful use of heat and knives."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/cooking-icon.png",
+            "alt": "Kitchen safety icon"
+          },
+          {
+            "type": "callout",
+            "body": "Clean as you cook to stay safe."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "Qw4I7QyR8RU"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Wash hands before cooking",
+              "Keep raw meat separate",
+              "Turn pot handles inward"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.foodsafety.gov/",
+            "linkText": "Food Safety Basics"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is the most important safety practice in the kitchen?",
       "options": [
@@ -549,7 +1118,53 @@ const lessons = [
     "moduleId": "mod4",
     "title": "Essential Cooking Techniques",
     "order": 2,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Core Techniques"
+          },
+          {
+            "type": "text",
+            "body": "Basic techniques like sauteing, roasting, and boiling help you cook many meals with confidence."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/cooking-icon.png",
+            "alt": "Cooking techniques icon"
+          },
+          {
+            "type": "callout",
+            "body": "Practice one technique at a time."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "sUQ8Y6qf6Q8"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Preheat before cooking",
+              "Use medium heat when unsure",
+              "Taste and adjust seasoning"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.bbcgoodfood.com/howto/guide/cooking-skills",
+            "linkText": "Basic Cooking Skills"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What does 'sautéing' mean?",
       "options": [
@@ -568,7 +1183,53 @@ const lessons = [
     "moduleId": "mod4",
     "title": "Reading Recipes & Measurements",
     "order": 3,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Read Before You Cook"
+          },
+          {
+            "type": "text",
+            "body": "Reading the full recipe first helps you prep ingredients, tools, and timing before you start."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/cooking-icon.png",
+            "alt": "Recipe reading icon"
+          },
+          {
+            "type": "callout",
+            "body": "Measure carefully for better results."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "v-Cx7V3R0tQ"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Read all steps first",
+              "Gather ingredients",
+              "Double-check measurements"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.allrecipes.com/article/how-to-read-a-recipe/",
+            "linkText": "How to Read a Recipe"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "Why is it important to read through a recipe before you start cooking?",
       "options": [
@@ -587,7 +1248,53 @@ const lessons = [
     "moduleId": "mod4",
     "title": "Nutrition & Meal Planning",
     "order": 4,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Balanced Meals"
+          },
+          {
+            "type": "text",
+            "body": "Simple meal planning helps you save money and build balanced meals with better nutrition."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/cooking-icon.png",
+            "alt": "Meal planning icon"
+          },
+          {
+            "type": "callout",
+            "body": "Plan a few meals before shopping."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "E7Q5Q2k4nqA"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Include protein",
+              "Add vegetables",
+              "Choose whole grains"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.myplate.gov/",
+            "linkText": "MyPlate Meal Planning"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is a balanced meal?",
       "options": [
@@ -606,7 +1313,53 @@ const lessons = [
     "moduleId": "mod5",
     "title": "Cleaning & Maintenance",
     "order": 1,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Cleaning Routine"
+          },
+          {
+            "type": "text",
+            "body": "A simple routine keeps your home cleaner and makes chores feel more manageable."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/household-icon.png",
+            "alt": "Cleaning icon"
+          },
+          {
+            "type": "callout",
+            "body": "Do a little each day."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "u6qP5Aq5r5A"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Wipe surfaces daily",
+              "Vacuum weekly",
+              "Clean spills right away"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.goodhousekeeping.com/home/cleaning/",
+            "linkText": "Home Cleaning Tips"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is the best approach to keeping a home clean?",
       "options": [
@@ -625,7 +1378,53 @@ const lessons = [
     "moduleId": "mod5",
     "title": "Organization & Decluttering",
     "order": 2,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Declutter Your Space"
+          },
+          {
+            "type": "text",
+            "body": "Decluttering reduces stress and helps you find things quickly when you need them."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/household-icon.png",
+            "alt": "Decluttering icon"
+          },
+          {
+            "type": "callout",
+            "body": "Keep what you use and value."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "m6Q8z9q4JgY"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Start with one drawer",
+              "Sort into keep/donate/trash",
+              "Set a monthly reset"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.apartmenttherapy.com/decluttering-tips-36611140",
+            "linkText": "Decluttering Tips"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "Why is decluttering important?",
       "options": [
@@ -644,7 +1443,53 @@ const lessons = [
     "moduleId": "mod5",
     "title": "Laundry Care",
     "order": 3,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Laundry Basics"
+          },
+          {
+            "type": "text",
+            "body": "Sorting clothes and reading care labels helps protect fabrics and improve wash results."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/household-icon.png",
+            "alt": "Laundry icon"
+          },
+          {
+            "type": "callout",
+            "body": "Sort before you wash."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "f8b7G5H6kQ4"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Separate lights and darks",
+              "Check labels",
+              "Use the right water temperature"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.consumerreports.org/appliances/laundry/how-to-do-laundry/",
+            "linkText": "Laundry How-To"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "Why should you separate clothes before washing?",
       "options": [
@@ -663,7 +1508,53 @@ const lessons = [
     "moduleId": "mod5",
     "title": "Basic Home Repairs",
     "order": 4,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Simple Home Fixes"
+          },
+          {
+            "type": "text",
+            "body": "Learning basic repairs can help you solve small household problems quickly and safely."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/household-icon.png",
+            "alt": "Home repairs icon"
+          },
+          {
+            "type": "callout",
+            "body": "Know your limits and stay safe."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "e5X9k3R2d8A"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Tighten loose screws",
+              "Unclog simple drains",
+              "Replace light bulbs safely"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.familyhandyman.com/list/home-repair-basics/",
+            "linkText": "Home Repair Basics"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is a benefit of knowing basic home repairs?",
       "options": [
@@ -682,7 +1573,53 @@ const lessons = [
     "moduleId": "mod6",
     "title": "Transportation Options",
     "order": 1,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Choosing Transportation"
+          },
+          {
+            "type": "text",
+            "body": "The best transportation option depends on your budget, schedule, and safety needs."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/transportation-icon.png",
+            "alt": "Transportation options icon"
+          },
+          {
+            "type": "callout",
+            "body": "Compare options before deciding."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "b3R8n4K1LmQ"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Check travel time",
+              "Estimate total cost",
+              "Review reliability"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.transportation.gov/",
+            "linkText": "Transportation Resources"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "Which factor should you consider when choosing a transportation method?",
       "options": [
@@ -701,7 +1638,53 @@ const lessons = [
     "moduleId": "mod6",
     "title": "Vehicle Safety & Driving",
     "order": 2,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Drive Safely"
+          },
+          {
+            "type": "text",
+            "body": "Safe driving means staying alert, following rules, and avoiding distractions."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/transportation-icon.png",
+            "alt": "Driving safety icon"
+          },
+          {
+            "type": "callout",
+            "body": "Seatbelts on, phone away."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "c9N2k7Q4xY8"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Wear your seatbelt",
+              "Follow speed limits",
+              "Keep a safe distance"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.nhtsa.gov/road-safety",
+            "linkText": "Road Safety Basics"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What is the most important safety measure while driving?",
       "options": [
@@ -720,7 +1703,53 @@ const lessons = [
     "moduleId": "mod6",
     "title": "Vehicle Maintenance",
     "order": 3,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Maintain Your Vehicle"
+          },
+          {
+            "type": "text",
+            "body": "Regular maintenance keeps your vehicle safer, more reliable, and less expensive over time."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/transportation-icon.png",
+            "alt": "Vehicle maintenance icon"
+          },
+          {
+            "type": "callout",
+            "body": "Small checks prevent big repairs."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "k2L8m5P1zQ7"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Check tire pressure",
+              "Change oil on schedule",
+              "Watch warning lights"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.aaa.com/autorepair/articles/car-maintenance-guide",
+            "linkText": "Car Maintenance Guide"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "Why is regular vehicle maintenance important?",
       "options": [
@@ -739,7 +1768,53 @@ const lessons = [
     "moduleId": "mod6",
     "title": "Making Transportation Decisions",
     "order": 4,
-    "pages": [],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Make Smart Decisions"
+          },
+          {
+            "type": "text",
+            "body": "Transportation decisions should include total cost, safety, and how often you will use each option."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/transportation-icon.png",
+            "alt": "Transportation decisions icon"
+          },
+          {
+            "type": "callout",
+            "body": "Look at long-term costs, not just price today."
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "blocks": [
+          {
+            "type": "video",
+            "videoId": "q8W3n6B2hR1"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Compare monthly costs",
+              "Think about reliability",
+              "Choose what fits your routine"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "link",
+            "href": "https://www.consumerreports.org/cars/",
+            "linkText": "Transportation Buying Advice"
+          }
+        ]
+      }
+    ],
     "quiz": {
       "question": "What should you evaluate when deciding whether to buy a car?",
       "options": [

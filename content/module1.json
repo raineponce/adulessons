@@ -83,6 +83,23 @@
               "linkText": "Consumer Financial Protection Bureau"
             }
           ]
+        },
+        {
+          "pageNumber": 3,
+          "blocks": [
+            {
+              "type": "heading",
+              "body": "Quick Budget Tip"
+            },
+            {
+              "type": "text",
+              "body": "Try the 50/30/20 method: 50% for needs, 30% for wants, and 20% for savings or debt. It is a simple way to start balancing your money."
+            },
+            {
+              "type": "callout",
+              "body": "Small changes can make a big difference over time."
+            }
+          ]
         }
       ],
       "quiz": {
@@ -103,17 +120,63 @@
       "moduleId": "mod1",
       "title": "Saving Strategies",
       "order": 2,
-      "pages": [],
+      "pages": [
+        {
+          "pageNumber": 1,
+          "blocks": [
+            {
+              "type": "heading",
+              "body": "Why Save Money?"
+            },
+            {
+              "type": "text",
+              "body": "Saving money helps you prepare for emergencies and reach goals like travel, school, or a new laptop."
+            },
+            {
+              "type": "image",
+              "src": "/assets/images/coin-icon.png",
+              "alt": "Savings icon"
+            },
+            {
+              "type": "callout",
+              "body": "Start by saving a small amount each week."
+            }
+          ]
+        },
+        {
+          "pageNumber": 2,
+          "blocks": [
+            {
+              "type": "video",
+              "videoId": "fTTGALaRZoc"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Set a savings goal",
+                "Use automatic transfers",
+                "Keep savings in a separate account"
+              ],
+              "ordered": false
+            },
+            {
+              "type": "link",
+              "href": "https://www.fdic.gov/resources/consumers/money-smart/index.html",
+              "linkText": "FDIC Money Smart"
+            }
+          ]
+        }
+      ],
       "quiz": {
-        "question": "Placeholder question for Saving Strategies",
+        "question": "What is a simple way to save money consistently?",
         "options": [
-          "Option A",
-          "Option B",
-          "Option C",
-          "Option D"
+          "Spend first, save what is left",
+          "Set up automatic transfers to savings",
+          "Keep all your money in cash",
+          "Only save once a year"
         ],
-        "correctIndex": 0,
-        "explanation": "Placeholder explanation."
+        "correctIndex": 1,
+        "explanation": "Automatic transfers make saving easy and consistent."
       },
       "pointsAwarded": 10
     },
@@ -122,17 +185,63 @@
       "moduleId": "mod1",
       "title": "Understanding Credit",
       "order": 3,
-      "pages": [],
+      "pages": [
+        {
+          "pageNumber": 1,
+          "blocks": [
+            {
+              "type": "heading",
+              "body": "What Is Credit?"
+            },
+            {
+              "type": "text",
+              "body": "Credit lets you borrow money now and pay it back later. Lenders use your history to decide if you are a safe borrower."
+            },
+            {
+              "type": "image",
+              "src": "/assets/images/finance-icon.png",
+              "alt": "Credit icon"
+            },
+            {
+              "type": "callout",
+              "body": "Paying bills on time helps build good credit."
+            }
+          ]
+        },
+        {
+          "pageNumber": 2,
+          "blocks": [
+            {
+              "type": "video",
+              "videoId": "2nB4nQfaj3Q"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Pay on time",
+                "Keep balances low",
+                "Check your credit report"
+              ],
+              "ordered": false
+            },
+            {
+              "type": "link",
+              "href": "https://www.annualcreditreport.com/",
+              "linkText": "Annual Credit Report"
+            }
+          ]
+        }
+      ],
       "quiz": {
-        "question": "Placeholder question for Understanding Credit",
+        "question": "Which habit helps improve your credit score?",
         "options": [
-          "Option A",
-          "Option B",
-          "Option C",
-          "Option D"
+          "Missing payments often",
+          "Keeping credit card balances very high",
+          "Paying bills on time",
+          "Closing every account quickly"
         ],
-        "correctIndex": 0,
-        "explanation": "Placeholder explanation."
+        "correctIndex": 2,
+        "explanation": "On-time payments are one of the biggest factors in your credit score."
       },
       "pointsAwarded": 10
     },
@@ -141,17 +250,63 @@
       "moduleId": "mod1",
       "title": "Banking Basics",
       "order": 4,
-      "pages": [],
+      "pages": [
+        {
+          "pageNumber": 1,
+          "blocks": [
+            {
+              "type": "heading",
+              "body": "Types of Bank Accounts"
+            },
+            {
+              "type": "text",
+              "body": "Checking accounts are used for daily spending. Savings accounts are used to store money and earn a little interest."
+            },
+            {
+              "type": "image",
+              "src": "/assets/images/finance-icon.png",
+              "alt": "Bank account icon"
+            },
+            {
+              "type": "callout",
+              "body": "Choose the right account for your needs."
+            }
+          ]
+        },
+        {
+          "pageNumber": 2,
+          "blocks": [
+            {
+              "type": "video",
+              "videoId": "R4A6l4Y9V7I"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Compare account fees",
+                "Use online banking tools",
+                "Review your transactions weekly"
+              ],
+              "ordered": false
+            },
+            {
+              "type": "link",
+              "href": "https://www.consumerfinance.gov/consumer-tools/bank-accounts/",
+              "linkText": "Bank Account Basics"
+            }
+          ]
+        }
+      ],
       "quiz": {
-        "question": "Placeholder question for Banking Basics",
+        "question": "What is a common use of a checking account?",
         "options": [
-          "Option A",
-          "Option B",
-          "Option C",
-          "Option D"
+          "Long-term investing only",
+          "Everyday spending and bill payments",
+          "Avoiding all bank fees forever",
+          "Replacing a credit report"
         ],
-        "correctIndex": 0,
-        "explanation": "Placeholder explanation."
+        "correctIndex": 1,
+        "explanation": "Checking accounts are designed for regular purchases and paying bills."
       },
       "pointsAwarded": 10
     }
