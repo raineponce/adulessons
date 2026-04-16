@@ -830,47 +830,69 @@
     }
 
     var totals = getProgressTotals();
-    var totalPoints = Number(state.points || 0);
     var usedCodes =
       state.profile && Array.isArray(state.profile.usedCodes)
         ? state.profile.usedCodes.length
         : 0;
 
-    var lessonPoints = totals.completed * 10;
-    var quizPoints = Math.max(0, Math.min(totalPoints - lessonPoints, 5));
-    var streakPoints = Math.max(0, totalPoints - lessonPoints - quizPoints);
-
-    if (totals.completed > 0 && lessonPoints > 0) {
+    // Show a single lesson-completion activity item instead of an aggregate total.
+    if (
+      totals.completed > 0 &&
+      !hasActivityLabel(items, "Completed a lesson")
+    ) {
       items.push({
-        label: "Completed " + totals.completed + " lessons",
-        points: lessonPoints,
+        label: "Completed a lesson",
+        points: 10,
       });
     }
 
-    if (usedCodes > 0 && quizPoints > 0) {
+    if (usedCodes > 0 && !hasActivityLabel(items, "Code redeemed")) {
       items.push({
-        label: "Redeemed a secret code",
-        points: quizPoints,
+        label: "Code redeemed",
+        points: 15,
       });
     }
+
+    var lastActive =
+      state.profile && state.profile.streak && state.profile.streak.lastActive
+        ? new Date(state.profile.streak.lastActive)
+        : null;
+    var now = new Date();
+    var isLoggedInToday =
+      lastActive &&
+      now.getFullYear() === lastActive.getFullYear() &&
+      now.getMonth() === lastActive.getMonth() &&
+      now.getDate() === lastActive.getDate();
 
     var streak =
       state.profile && state.profile.streak ? state.profile.streak.current : 0;
-    if (streak > 1 && streakPoints > 0) {
+    if (
+      streak > 0 &&
+      isLoggedInToday &&
+      !hasActivityLabel(items, "Streak reward")
+    ) {
       items.push({
-        label: "Earned " + streak + " day login streak",
-        points: streakPoints,
+        label: "Streak reward",
+        points: 5,
       });
     }
 
-    if (items.length === 0 && totalPoints > 0) {
+    if (items.length === 0 && Number(state.points || 0) > 0) {
       items.push({
         label: "Points earned",
-        points: totalPoints,
+        points: Number(state.points || 0),
       });
     }
 
     return items;
+  }
+
+  function hasActivityLabel(items, label) {
+    return Array.isArray(items)
+      ? items.some(function (item) {
+          return item && item.label === label;
+        })
+      : false;
   }
 
   function addRecentPointEvent(label, points) {
@@ -1186,30 +1208,57 @@
     }
 
     var details = [];
-    details.push(
-      "<div><strong>Name:</strong> " +
-        escapeHtml(prize.name || "Prize") +
-        "</div>",
-    );
-    if (prize.description) {
+    var isQrOnlyCouponModal = prize.type === "coupon" && isRedeemed;
+
+    if (!isQrOnlyCouponModal) {
       details.push(
-        "<div><strong>Description:</strong> " +
-          escapeHtml(prize.description) +
+        "<div><strong>Name:</strong> " +
+          escapeHtml(prize.name || "Prize") +
+          "</div>",
+      );
+      if (prize.description) {
+        details.push(
+          "<div><strong>Description:</strong> " +
+            escapeHtml(prize.description) +
+            "</div>",
+        );
+      }
+      details.push(
+        "<div><strong>Cost:</strong> " +
+          escapeHtml(formatPoints(prize.cost)) +
+          "</div>",
+      );
+      details.push(
+        "<div><strong>Status:</strong> " +
+          escapeHtml(isRedeemed ? "Unlocked" : "Available") +
           "</div>",
       );
     }
-    details.push(
-      "<div><strong>Cost:</strong> " +
-        escapeHtml(formatPoints(prize.cost)) +
-        "</div>",
-    );
-    details.push(
-      "<div><strong>Status:</strong> " +
-        escapeHtml(isRedeemed ? "Unlocked" : "Available") +
-        "</div>",
-    );
 
-    if (
+    if (isQrOnlyCouponModal) {
+      var couponQrImage = getCouponQrImage(prize, redeemResult);
+      if (couponQrImage) {
+        details.push(
+          '<div class="coupon-qr-shell">' +
+            '<div class="coupon-qr-inner">' +
+            '<img class="coupon-qr-image" src="' +
+            escapeHtml(couponQrImage) +
+            '" alt="' +
+            escapeHtml(prize.name || "Coupon QR") +
+            '">' +
+            "</div>" +
+            "</div>",
+        );
+      } else {
+        details.push(
+          '<div class="coupon-qr-shell">' +
+            '<div class="coupon-qr-inner">' +
+            '<span class="coupon-qr-fallback" aria-hidden="true"></span>' +
+            "</div>" +
+            "</div>",
+        );
+      }
+    } else if (
       prize.type === "coupon" &&
       redeemResult &&
       redeemResult.prize &&
@@ -1240,6 +1289,40 @@
     elements.prizeModalBody.innerHTML = details.join("");
     elements.prizeOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
+  }
+
+  function getCouponQrImage(prize, redeemResult) {
+    var couponCode = "";
+    if (redeemResult && redeemResult.prize && redeemResult.prize.couponCode) {
+      couponCode = String(redeemResult.prize.couponCode).toUpperCase();
+    } else if (prize && prize.couponCode) {
+      couponCode = String(prize.couponCode).toUpperCase();
+    }
+
+    var prizeName = String((prize && prize.name) || "").toLowerCase();
+
+    if (
+      couponCode.indexOf("WALMART") !== -1 ||
+      prizeName.indexOf("walmart") !== -1
+    ) {
+      return "../assets/images/rewards/walmart-coupon.png";
+    }
+
+    if (
+      couponCode.indexOf("AUTO") !== -1 ||
+      prizeName.indexOf("autozone") !== -1
+    ) {
+      return "../assets/images/rewards/autozone-coupon.png";
+    }
+
+    if (
+      couponCode.indexOf("PUBLIX") !== -1 ||
+      prizeName.indexOf("publix") !== -1
+    ) {
+      return "../assets/images/rewards/publix-coupon.png";
+    }
+
+    return null;
   }
 
   function closePrizeModal() {
