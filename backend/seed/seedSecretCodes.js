@@ -42,8 +42,11 @@ const seed = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    await SecretCode.deleteMany({});
-    console.log('Cleared existing secret codes');
+    const existingCodes = await SecretCode.countDocuments();
+    if (existingCodes > 0) {
+      console.log('Secret codes already exist, skipping secret code seed');
+      return;
+    }
 
     const created = await SecretCode.insertMany(secretCodes);
     console.log(`Created ${created.length} secret codes`);
