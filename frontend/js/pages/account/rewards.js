@@ -727,7 +727,10 @@
     var prizeName = String((prize && prize.name) || "").toLowerCase();
     var fileUrl = String((prize && prize.fileUrl) || "").toLowerCase();
 
-    if (prizeName.indexOf("budget") !== -1 || fileUrl.indexOf("budget") !== -1) {
+    if (
+      prizeName.indexOf("budget") !== -1 ||
+      fileUrl.indexOf("budget") !== -1
+    ) {
       return {
         name: "Budget Tracker Printable",
         buttonLabel: "Download Budget Tracker PDF",
