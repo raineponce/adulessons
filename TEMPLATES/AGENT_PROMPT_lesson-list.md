@@ -31,7 +31,7 @@ Navigation format: lesson-taxes.html?moduleId=mod1&lessonId=mod1-lesson1 for Tax
 Progress state: use completedLessons from GET /lessons response to visually mark completed lessons.
 Progress state: keep lessons already in completedLessons unlocked and styled as completed.
 Progress state: use completedLessons to decide which lesson cards remain locked.
-Locked lessons: keep existing modal behavior and prevent navigation.
+Locked lessons: don't lock the lessons. all buttons will go to lesson-taxes.html and allow that page to display the corresponding lesson content.
 Success state: lesson cards render with correct titles/order and unlocked/locked state.
 Empty state: show no lessons available message.
 Error state: show friendly error with retry action.
