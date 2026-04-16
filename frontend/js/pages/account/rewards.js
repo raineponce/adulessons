@@ -1099,7 +1099,6 @@
         cost: 50,
         fileUrl: "/assets/images/printables/budget-tracker-printable.pdf",
         available: true,
-        isPlaceholder: true,
       },
       {
         _id: "fallback-printable-2",
@@ -1108,7 +1107,6 @@
         cost: 50,
         fileUrl: "/assets/images/printables/calendar-printable.pdf",
         available: true,
-        isPlaceholder: true,
       },
       {
         _id: "fallback-printable-3",
@@ -1117,7 +1115,6 @@
         cost: 50,
         fileUrl: "/assets/images/printables/to-do-printable.pdf",
         available: true,
-        isPlaceholder: true,
       },
     ];
   }
