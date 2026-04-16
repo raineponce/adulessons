@@ -1,5 +1,7 @@
 (function () {
   var COLLECTABLE_STORAGE_KEY = "adulessons.rewards.collectableClaimed";
+  var RECENT_POINT_EVENTS_STORAGE_KEY = "adulessons.rewards.recentPointEvents";
+  var LAST_COMPLETED_LESSONS_STORAGE_KEY = "adulessons.rewards.lastCompletedLessons";
   var MAX_RECENT_POINT_EVENTS = 8;
   var state = {
     profile: null,
@@ -180,6 +182,8 @@
           : [];
       state.points = getPoints(state.profile, state.progress);
       state.collectableClaimed = loadCollectableClaimed();
+      state.recentPointEvents = loadRecentPointEvents();
+      reconcileRecentLessonEvents();
 
       if (!isCollectableAvailable()) {
         clearCollectableClaimed();
@@ -565,14 +569,43 @@
 
     if (action === "download") {
       var printableDownloadUrl = getPrintableDownloadFile(prize);
-      if (printableDownloadUrl) {
-        triggerFileDownload(
-          printableDownloadUrl,
-          getPrintableDownloadFilename(prize),
-        );
-      } else {
+      if (!printableDownloadUrl) {
         openPrizeModal(prize, true);
+        return;
       }
+
+      // First download redeems the printable (deduct points); later downloads are free.
+      if (prize.type === "printable" && !isPrizeRedeemed(prizeId)) {
+        setPrizeButtonBusy(prizeId, true);
+        try {
+          var printableResult = await AppApi.redeemPrize(prizeId);
+          if (typeof printableResult.points === "number") {
+            state.points = printableResult.points;
+          }
+          await refreshRedeemedPrizes();
+          setSectionMessage(
+            elements.printablesMessage,
+            "Printable unlocked. Your points total has been updated.",
+            "success",
+          );
+          renderAll();
+        } catch (error) {
+          if (AppApi.handleAuthError(error)) {
+            return;
+          }
+
+          setSectionMessage(
+            elements.printablesMessage,
+            getPrizeRedeemErrorMessage(error, prize),
+            "error",
+          );
+          return;
+        } finally {
+          setPrizeButtonBusy(prizeId, false);
+        }
+      }
+
+      triggerFileDownload(printableDownloadUrl, getPrintableDownloadFilename(prize));
       return;
     }
 
@@ -683,6 +716,9 @@
     }
 
     if (enoughPoints) {
+      if (prize.type === "printable" && getPrintableDownloadFile(prize)) {
+        return "download";
+      }
       return "redeem";
     }
 
@@ -705,6 +741,9 @@
     }
 
     if (enoughPoints) {
+      if (prize.type === "printable" && getPrintableDownloadFile(prize)) {
+        return getPrintableDownloadButtonLabel(prize);
+      }
       return "Unlock";
     }
 
@@ -789,6 +828,18 @@
 
   function getPrintableDownloadFilename(prize) {
     return getPrintableMeta(prize).fileName;
+  }
+
+  function isPrizeRedeemed(prizeId) {
+    var normalizedId = String(prizeId || "");
+    if (!normalizedId || !Array.isArray(state.redeemedPrizes)) {
+      return false;
+    }
+
+    return state.redeemedPrizes.some(function (item) {
+      var id = item && item.prizeId ? item.prizeId._id || item.prizeId : null;
+      return id && String(id) === normalizedId;
+    });
   }
 
   function triggerFileDownload(url, fileName) {
@@ -905,13 +956,14 @@
   }
 
   function getRecentActivityItems() {
+    var MAX_VISIBLE_ACTIVITY_ITEMS = 3;
     var items = [];
 
     if (
       Array.isArray(state.recentPointEvents) &&
       state.recentPointEvents.length
     ) {
-      items = state.recentPointEvents.slice();
+      items = state.recentPointEvents.slice(0, MAX_VISIBLE_ACTIVITY_ITEMS);
     }
 
     var totals = getProgressTotals();
@@ -920,18 +972,17 @@
         ? state.profile.usedCodes.length
         : 0;
 
-    // Show a single lesson-completion activity item instead of an aggregate total.
-    if (
-      totals.completed > 0 &&
-      !hasActivityLabel(items, "Completed a lesson")
-    ) {
+    // Fill remaining visible slots with lesson-completion entries.
+    var lessonEvents = Number(totals.completed || 0);
+    while (lessonEvents > 0 && items.length < MAX_VISIBLE_ACTIVITY_ITEMS) {
       items.push({
         label: "Completed a lesson",
         points: 10,
       });
+      lessonEvents -= 1;
     }
 
-    if (usedCodes > 0 && !hasActivityLabel(items, "Code redeemed")) {
+    if (usedCodes > 0 && items.length < MAX_VISIBLE_ACTIVITY_ITEMS) {
       items.push({
         label: "Code redeemed",
         points: 15,
@@ -951,11 +1002,7 @@
 
     var streak =
       state.profile && state.profile.streak ? state.profile.streak.current : 0;
-    if (
-      streak > 0 &&
-      isLoggedInToday &&
-      !hasActivityLabel(items, "Streak reward")
-    ) {
+    if (streak > 0 && isLoggedInToday && items.length < MAX_VISIBLE_ACTIVITY_ITEMS) {
       items.push({
         label: "Streak reward",
         points: 5,
@@ -969,15 +1016,28 @@
       });
     }
 
-    return items;
+    return items.slice(0, MAX_VISIBLE_ACTIVITY_ITEMS);
   }
 
-  function hasActivityLabel(items, label) {
-    return Array.isArray(items)
-      ? items.some(function (item) {
-          return item && item.label === label;
-        })
-      : false;
+  function reconcileRecentLessonEvents() {
+    var totals = getProgressTotals();
+    var completedNow = Number(totals.completed || 0);
+    var completedBefore = loadLastCompletedLessons();
+
+    if (completedBefore === null) {
+      saveLastCompletedLessons(completedNow);
+      return;
+    }
+
+    if (completedNow > completedBefore) {
+      var delta = completedNow - completedBefore;
+      while (delta > 0) {
+        addRecentPointEvent("Completed a lesson", 10);
+        delta -= 1;
+      }
+    }
+
+    saveLastCompletedLessons(completedNow);
   }
 
   function addRecentPointEvent(label, points) {
@@ -1000,6 +1060,86 @@
         0,
         MAX_RECENT_POINT_EVENTS,
       );
+    }
+
+    saveRecentPointEvents();
+  }
+
+  function loadRecentPointEvents() {
+    try {
+      var raw = window.sessionStorage.getItem(RECENT_POINT_EVENTS_STORAGE_KEY);
+      if (!raw) {
+        return [];
+      }
+
+      var parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+
+      return parsed
+        .filter(function (item) {
+          return (
+            item &&
+            typeof item.label === "string" &&
+            item.label.trim() &&
+            Number(item.points || 0) > 0
+          );
+        })
+        .map(function (item) {
+          return {
+            label: String(item.label),
+            points: Number(item.points),
+          };
+        })
+        .slice(0, MAX_RECENT_POINT_EVENTS);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveRecentPointEvents() {
+    try {
+      window.sessionStorage.setItem(
+        RECENT_POINT_EVENTS_STORAGE_KEY,
+        JSON.stringify(state.recentPointEvents || []),
+      );
+    } catch (error) {
+      // Ignore storage failures.
+    }
+  }
+
+  function loadLastCompletedLessons() {
+    try {
+      var raw = window.sessionStorage.getItem(LAST_COMPLETED_LESSONS_STORAGE_KEY);
+      if (raw === null || raw === "") {
+        return null;
+      }
+
+      var parsed = Number(raw);
+      if (!Number.isFinite(parsed) || parsed < 0) {
+        return null;
+      }
+
+      return Math.floor(parsed);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveLastCompletedLessons(count) {
+    try {
+      var normalized = Number(count || 0);
+      if (!Number.isFinite(normalized) || normalized < 0) {
+        normalized = 0;
+      }
+
+      window.sessionStorage.setItem(
+        LAST_COMPLETED_LESSONS_STORAGE_KEY,
+        String(Math.floor(normalized)),
+      );
+    } catch (error) {
+      // Ignore storage failures.
     }
   }
 
