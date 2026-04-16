@@ -239,8 +239,8 @@
       }
 
       .activity-item {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
         gap: 12px;
       }
@@ -271,11 +271,37 @@
       }
 
       .activity-points {
-        display: flex;
+        display: grid;
+        grid-template-columns: 35px 0.2rem 4ch 2.5rem;
         align-items: center;
-        gap: 8px;
+        column-gap: 1px;
         font-weight: 800;
         white-space: nowrap;
+        justify-content: end;
+        min-width: 220px;
+      }
+
+      .activity-plus,
+      .activity-points-value,
+      .activity-points-unit {
+        display: inline-block;
+      }
+
+      .activity-points .small-coin {
+        margin-right: 10px;
+      }
+
+      .activity-plus {
+        text-align: center;
+      }
+
+      .activity-points-value {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .activity-points-unit {
+        text-align: left;
       }
 
       .prize-store-title {
@@ -368,6 +394,40 @@
         font-weight: 800;
         padding: 10px 18px;
         white-space: nowrap;
+      }
+
+      .coupon-button {
+        min-width: 130px;
+        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .coupon-button[data-coupon-state="locked"] {
+        background: #9f9f9f;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .coupon-button[data-coupon-state="details"] {
+        background: #4f82ad;
+      }
+
+      .coupon-lock-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .coupon-lock-icon img {
+        width: 14px;
+        height: 14px;
+        object-fit: contain;
+      }
+
+      .coupon-lock-text {
+        font-variant-numeric: tabular-nums;
       }
 
       .coupon-button:hover,
@@ -621,8 +681,43 @@
         display: grid;
         gap: 0.75rem;
         margin-bottom: 1.5rem;
-        text-align: left;
+        text-align: center;
         color: var(--text-dark);
+      }
+
+      .coupon-qr-shell {
+        margin: 0 auto;
+        width: min(350px, 100%);
+        aspect-ratio: 1 / 1;
+        border-radius: 20px;
+        background: #ececec;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14%;
+      }
+
+      .coupon-qr-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 3px solid #d2d2d2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .coupon-qr-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .coupon-qr-fallback {
+        font-size: 1.5rem;
+        color: #999;
       }
 
       .modal-body a {
@@ -686,12 +781,20 @@
           padding: 22px;
         }
 
-        .activity-item,
         .coupon-item,
         .code-input-wrapper,
         .collectable-content {
           flex-direction: column;
           align-items: stretch;
+        }
+
+        .activity-item {
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+        }
+
+        .activity-points {
+          min-width: 210px;
         }
 
         .coupon-button,
