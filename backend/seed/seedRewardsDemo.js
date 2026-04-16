@@ -15,11 +15,11 @@ const fakePrizes = [
     available: true,
   },
   {
-    name: "Budget Planner Printable",
-    description: "A downloadable printable to help track monthly spending.",
+    name: "Budget Tracker Printable",
+    description: "A downloadable budget tracker PDF.",
     type: "printable",
     cost: 50,
-    fileUrl: "/assets/printables/budget-planner.pdf",
+    fileUrl: "/assets/images/printables/budget-tracker-printable.pdf",
     available: true,
   },
   {
@@ -39,11 +39,19 @@ const fakePrizes = [
     available: true,
   },
   {
-    name: "Meal Planner Printable",
-    description: "A simple meal planner for weekly meal prep.",
+    name: "Calendar Printable",
+    description: "A downloadable monthly calendar PDF.",
     type: "printable",
     cost: 50,
-    fileUrl: "/assets/printables/meal-planner.pdf",
+    fileUrl: "/assets/images/printables/calendar-printable.pdf",
+    available: true,
+  },
+  {
+    name: "To-Do Printable",
+    description: "A downloadable to-do list PDF.",
+    type: "printable",
+    cost: 50,
+    fileUrl: "/assets/images/printables/to-do-printable.pdf",
     available: true,
   },
 ];

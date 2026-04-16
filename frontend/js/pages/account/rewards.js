@@ -445,6 +445,9 @@
     var redeemed = redeemedSet.has(prizeId);
     var enoughPoints = hasEnoughPoints(prize);
     var isPrintable = prize.type === "printable";
+    var printableName = isPrintable
+      ? getPrintableDisplayName(prize)
+      : prize.name || "Printable";
     var action = getPrizeAction(prize, redeemed, enoughPoints);
     var buttonLabel = getPrizeButtonLabel(prize, redeemed, enoughPoints);
     var buttonDisabled = action === "locked";
@@ -472,11 +475,11 @@
           '    <img src="' +
             escapeHtml(getPrizeIcon(prize)) +
             '" alt="' +
-            escapeHtml(prize.name || "Printable") +
+            escapeHtml(printableName) +
             '">',
           "  </div>",
           '  <div class="printable-name">' +
-            escapeHtml(prize.name || "Printable") +
+            escapeHtml(printableName) +
             "</div>",
           '  <div class="printable-cost">' +
             escapeHtml(formatPoints(prize.cost)) +
@@ -561,8 +564,12 @@
     }
 
     if (action === "download") {
-      if (prize.fileUrl) {
-        window.open(prize.fileUrl, "_blank", "noopener");
+      var printableDownloadUrl = getPrintableDownloadFile(prize);
+      if (printableDownloadUrl) {
+        triggerFileDownload(
+          printableDownloadUrl,
+          getPrintableDownloadFilename(prize),
+        );
       } else {
         openPrizeModal(prize, true);
       }
@@ -666,7 +673,7 @@
     }
 
     if (redeemed) {
-      if (prize.type === "printable" && prize.fileUrl) {
+      if (prize.type === "printable" && getPrintableDownloadFile(prize)) {
         return "download";
       }
       if (prize.type === "coupon") {
@@ -688,8 +695,8 @@
     }
 
     if (redeemed) {
-      if (prize.type === "printable" && prize.fileUrl) {
-        return "Download";
+      if (prize.type === "printable" && getPrintableDownloadFile(prize)) {
+        return getPrintableDownloadButtonLabel(prize);
       }
       if (prize.type === "coupon") {
         return "Claimed";
@@ -714,6 +721,81 @@
     }
 
     return "../assets/images/money-coupon.png";
+  }
+
+  function getPrintableMeta(prize) {
+    var prizeName = String((prize && prize.name) || "").toLowerCase();
+    var fileUrl = String((prize && prize.fileUrl) || "").toLowerCase();
+
+    if (prizeName.indexOf("budget") !== -1 || fileUrl.indexOf("budget") !== -1) {
+      return {
+        name: "Budget Tracker Printable",
+        buttonLabel: "Download Budget Tracker PDF",
+        fileUrl: "/assets/images/printables/budget-tracker-printable.pdf",
+        fileName: "budget-tracker-printable.pdf",
+      };
+    }
+
+    if (
+      prizeName.indexOf("calendar") !== -1 ||
+      prizeName.indexOf("meal") !== -1 ||
+      fileUrl.indexOf("calendar") !== -1 ||
+      fileUrl.indexOf("meal") !== -1
+    ) {
+      return {
+        name: "Calendar Printable",
+        buttonLabel: "Download Calendar PDF",
+        fileUrl: "/assets/images/printables/calendar-printable.pdf",
+        fileName: "calendar-printable.pdf",
+      };
+    }
+
+    if (
+      prizeName.indexOf("to-do") !== -1 ||
+      prizeName.indexOf("todo") !== -1 ||
+      fileUrl.indexOf("to-do") !== -1 ||
+      fileUrl.indexOf("todo") !== -1
+    ) {
+      return {
+        name: "To-Do Printable",
+        buttonLabel: "Download To-Do PDF",
+        fileUrl: "/assets/images/printables/to-do-printable.pdf",
+        fileName: "to-do-printable.pdf",
+      };
+    }
+
+    return {
+      name: (prize && prize.name) || "Printable",
+      buttonLabel: "Download PDF",
+      fileUrl: (prize && prize.fileUrl) || "",
+      fileName: "printable.pdf",
+    };
+  }
+
+  function getPrintableDisplayName(prize) {
+    return getPrintableMeta(prize).name;
+  }
+
+  function getPrintableDownloadButtonLabel(prize) {
+    return getPrintableMeta(prize).buttonLabel;
+  }
+
+  function getPrintableDownloadFile(prize) {
+    return getPrintableMeta(prize).fileUrl;
+  }
+
+  function getPrintableDownloadFilename(prize) {
+    return getPrintableMeta(prize).fileName;
+  }
+
+  function triggerFileDownload(url, fileName) {
+    var anchor = document.createElement("a");
+    anchor.href = String(url);
+    anchor.download = String(fileName || "download.pdf");
+    anchor.rel = "noopener";
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
   }
 
   async function refreshRedeemedPrizes() {
@@ -1009,17 +1091,28 @@
     return [
       {
         _id: "fallback-printable-1",
-        name: "Budget Planner Printable",
+        name: "Budget Tracker Printable",
         type: "printable",
         cost: 50,
+        fileUrl: "/assets/images/printables/budget-tracker-printable.pdf",
         available: true,
         isPlaceholder: true,
       },
       {
         _id: "fallback-printable-2",
-        name: "Meal Planner Printable",
+        name: "Calendar Printable",
         type: "printable",
         cost: 50,
+        fileUrl: "/assets/images/printables/calendar-printable.pdf",
+        available: true,
+        isPlaceholder: true,
+      },
+      {
+        _id: "fallback-printable-3",
+        name: "To-Do Printable",
+        type: "printable",
+        cost: 50,
+        fileUrl: "/assets/images/printables/to-do-printable.pdf",
         available: true,
         isPlaceholder: true,
       },
@@ -1280,8 +1373,10 @@
     if (prize.type === "printable" && prize.fileUrl) {
       details.push(
         "<div><a href='" +
-          escapeHtml(prize.fileUrl) +
-          "' target='_blank' rel='noopener'>Download printable</a></div>",
+          escapeHtml(getPrintableDownloadFile(prize)) +
+          "' download='" +
+          escapeHtml(getPrintableDownloadFilename(prize)) +
+          "' rel='noopener'>Download printable PDF</a></div>",
       );
     }
 
