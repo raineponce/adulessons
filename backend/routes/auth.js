@@ -80,9 +80,8 @@ router.post("/login", authLimiter, async (req, res) => {
         user.streak.current += 1;
         user.points += DAILY_STREAK_POINTS;
       } else if (dayDifference > 1) {
-        // Missed one or more days: reset to day 1 and award points for today.
-        user.streak.current = 1;
-        user.points += DAILY_STREAK_POINTS;
+        // Missed one or more days: streak is lost.
+        user.streak.current = 0;
       }
       // If dayDifference === 0, this is a same-day login; no streak change or points.
     } else {

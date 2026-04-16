@@ -2,6 +2,8 @@
   var COLLECTABLE_STORAGE_KEY = "adulessons.rewards.collectableClaimed";
   var RECENT_POINT_EVENTS_STORAGE_KEY = "adulessons.rewards.recentPointEvents";
   var LAST_COMPLETED_LESSONS_STORAGE_KEY = "adulessons.rewards.lastCompletedLessons";
+  var LAST_STREAK_ACTIVITY_DATE_STORAGE_KEY = "adulessons.rewards.lastStreakActivityDate";
+  var LAST_STREAK_COUNT_STORAGE_KEY = "adulessons.rewards.lastStreakCount";
   var MAX_RECENT_POINT_EVENTS = 8;
   var state = {
     profile: null,
@@ -183,6 +185,7 @@
       state.points = getPoints(state.profile, state.progress);
       state.collectableClaimed = loadCollectableClaimed();
       state.recentPointEvents = loadRecentPointEvents();
+      reconcileRecentStreakEvent();
       reconcileRecentLessonEvents();
 
       if (!isCollectableAvailable()) {
@@ -957,66 +960,11 @@
 
   function getRecentActivityItems() {
     var MAX_VISIBLE_ACTIVITY_ITEMS = 3;
-    var items = [];
-
-    if (
-      Array.isArray(state.recentPointEvents) &&
-      state.recentPointEvents.length
-    ) {
-      items = state.recentPointEvents.slice(0, MAX_VISIBLE_ACTIVITY_ITEMS);
+    if (!Array.isArray(state.recentPointEvents)) {
+      return [];
     }
 
-    var totals = getProgressTotals();
-    var usedCodes =
-      state.profile && Array.isArray(state.profile.usedCodes)
-        ? state.profile.usedCodes.length
-        : 0;
-
-    // Fill remaining visible slots with lesson-completion entries.
-    var lessonEvents = Number(totals.completed || 0);
-    while (lessonEvents > 0 && items.length < MAX_VISIBLE_ACTIVITY_ITEMS) {
-      items.push({
-        label: "Completed a lesson",
-        points: 10,
-      });
-      lessonEvents -= 1;
-    }
-
-    if (usedCodes > 0 && items.length < MAX_VISIBLE_ACTIVITY_ITEMS) {
-      items.push({
-        label: "Code redeemed",
-        points: 15,
-      });
-    }
-
-    var lastActive =
-      state.profile && state.profile.streak && state.profile.streak.lastActive
-        ? new Date(state.profile.streak.lastActive)
-        : null;
-    var now = new Date();
-    var isLoggedInToday =
-      lastActive &&
-      now.getFullYear() === lastActive.getFullYear() &&
-      now.getMonth() === lastActive.getMonth() &&
-      now.getDate() === lastActive.getDate();
-
-    var streak =
-      state.profile && state.profile.streak ? state.profile.streak.current : 0;
-    if (streak > 0 && isLoggedInToday && items.length < MAX_VISIBLE_ACTIVITY_ITEMS) {
-      items.push({
-        label: "Streak reward",
-        points: 5,
-      });
-    }
-
-    if (items.length === 0 && Number(state.points || 0) > 0) {
-      items.push({
-        label: "Points earned",
-        points: Number(state.points || 0),
-      });
-    }
-
-    return items.slice(0, MAX_VISIBLE_ACTIVITY_ITEMS);
+    return state.recentPointEvents.slice(0, MAX_VISIBLE_ACTIVITY_ITEMS);
   }
 
   function reconcileRecentLessonEvents() {
@@ -1040,6 +988,45 @@
     saveLastCompletedLessons(completedNow);
   }
 
+  function reconcileRecentStreakEvent() {
+    var streak = state.profile && state.profile.streak ? state.profile.streak : null;
+    var lastActive = streak && streak.lastActive ? new Date(streak.lastActive) : null;
+    if (!lastActive || Number.isNaN(lastActive.getTime())) {
+      return;
+    }
+
+    var streakCurrent = Number(streak.current || 0);
+    var streakDateKey = getLocalDateKey(lastActive);
+    if (!streakDateKey) {
+      return;
+    }
+
+    var lastRecordedStreakDateKey = loadLastStreakActivityDateKey();
+    var lastRecordedStreakCount = loadLastStreakCount();
+
+    // Avoid creating a fake historical event on first load.
+    if (lastRecordedStreakDateKey === "" && lastRecordedStreakCount === null) {
+      saveLastStreakActivityDateKey(streakDateKey);
+      saveLastStreakCount(streakCurrent);
+      return;
+    }
+
+    var streakCountIncreased =
+      lastRecordedStreakCount !== null && streakCurrent > lastRecordedStreakCount;
+    var streakDateAdvanced =
+      lastRecordedStreakDateKey !== "" &&
+      lastRecordedStreakDateKey !== streakDateKey &&
+      streakCurrent > 0 &&
+      (lastRecordedStreakCount === null || streakCurrent >= lastRecordedStreakCount);
+
+    if (streakCountIncreased || streakDateAdvanced) {
+      addRecentPointEvent("Streak reward", 5);
+    }
+
+    saveLastStreakActivityDateKey(streakDateKey);
+    saveLastStreakCount(streakCurrent);
+  }
+
   function addRecentPointEvent(label, points) {
     var normalizedPoints = Number(points || 0);
     if (!label || normalizedPoints <= 0) {
@@ -1053,6 +1040,7 @@
     state.recentPointEvents.unshift({
       label: String(label),
       points: normalizedPoints,
+      timestamp: Date.now(),
     });
 
     if (state.recentPointEvents.length > MAX_RECENT_POINT_EVENTS) {
@@ -1067,7 +1055,12 @@
 
   function loadRecentPointEvents() {
     try {
-      var raw = window.sessionStorage.getItem(RECENT_POINT_EVENTS_STORAGE_KEY);
+      var storageKey = getScopedStorageKey(RECENT_POINT_EVENTS_STORAGE_KEY);
+      if (!storageKey) {
+        return [];
+      }
+
+      var raw = window.sessionStorage.getItem(storageKey);
       if (!raw) {
         return [];
       }
@@ -1090,6 +1083,7 @@
           return {
             label: String(item.label),
             points: Number(item.points),
+            timestamp: Number(item.timestamp || 0),
           };
         })
         .slice(0, MAX_RECENT_POINT_EVENTS);
@@ -1100,8 +1094,13 @@
 
   function saveRecentPointEvents() {
     try {
+      var storageKey = getScopedStorageKey(RECENT_POINT_EVENTS_STORAGE_KEY);
+      if (!storageKey) {
+        return;
+      }
+
       window.sessionStorage.setItem(
-        RECENT_POINT_EVENTS_STORAGE_KEY,
+        storageKey,
         JSON.stringify(state.recentPointEvents || []),
       );
     } catch (error) {
@@ -1111,7 +1110,12 @@
 
   function loadLastCompletedLessons() {
     try {
-      var raw = window.sessionStorage.getItem(LAST_COMPLETED_LESSONS_STORAGE_KEY);
+      var storageKey = getScopedStorageKey(LAST_COMPLETED_LESSONS_STORAGE_KEY);
+      if (!storageKey) {
+        return null;
+      }
+
+      var raw = window.sessionStorage.getItem(storageKey);
       if (raw === null || raw === "") {
         return null;
       }
@@ -1129,18 +1133,139 @@
 
   function saveLastCompletedLessons(count) {
     try {
+      var storageKey = getScopedStorageKey(LAST_COMPLETED_LESSONS_STORAGE_KEY);
+      if (!storageKey) {
+        return;
+      }
+
       var normalized = Number(count || 0);
       if (!Number.isFinite(normalized) || normalized < 0) {
         normalized = 0;
       }
 
       window.sessionStorage.setItem(
-        LAST_COMPLETED_LESSONS_STORAGE_KEY,
+        storageKey,
         String(Math.floor(normalized)),
       );
     } catch (error) {
       // Ignore storage failures.
     }
+  }
+
+  function getLocalDateKey(date) {
+    if (!date || Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    return (
+      String(date.getFullYear()) +
+      "-" +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(date.getDate()).padStart(2, "0")
+    );
+  }
+
+  function loadLastStreakActivityDateKey() {
+    try {
+      var storageKey = getScopedStorageKey(LAST_STREAK_ACTIVITY_DATE_STORAGE_KEY);
+      if (!storageKey) {
+        return "";
+      }
+
+      var raw = window.sessionStorage.getItem(storageKey);
+      if (!raw) {
+        return "";
+      }
+
+      return String(raw);
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function saveLastStreakActivityDateKey(dateKey) {
+    try {
+      if (!dateKey) {
+        return;
+      }
+
+      var storageKey = getScopedStorageKey(LAST_STREAK_ACTIVITY_DATE_STORAGE_KEY);
+      if (!storageKey) {
+        return;
+      }
+
+      window.sessionStorage.setItem(storageKey, String(dateKey));
+    } catch (error) {
+      // Ignore storage failures.
+    }
+  }
+
+  function loadLastStreakCount() {
+    try {
+      var storageKey = getScopedStorageKey(LAST_STREAK_COUNT_STORAGE_KEY);
+      if (!storageKey) {
+        return null;
+      }
+
+      var raw = window.sessionStorage.getItem(storageKey);
+      if (raw === null || raw === "") {
+        return null;
+      }
+
+      var parsed = Number(raw);
+      if (!Number.isFinite(parsed) || parsed < 0) {
+        return null;
+      }
+
+      return Math.floor(parsed);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveLastStreakCount(count) {
+    try {
+      var storageKey = getScopedStorageKey(LAST_STREAK_COUNT_STORAGE_KEY);
+      if (!storageKey) {
+        return;
+      }
+
+      var normalized = Number(count || 0);
+      if (!Number.isFinite(normalized) || normalized < 0) {
+        normalized = 0;
+      }
+
+      window.sessionStorage.setItem(
+        storageKey,
+        String(Math.floor(normalized)),
+      );
+    } catch (error) {
+      // Ignore storage failures.
+    }
+  }
+
+  function getScopedStorageKey(baseKey) {
+    if (!baseKey || !state.profile) {
+      return "";
+    }
+
+    var identity = "";
+    if (state.profile._id) {
+      identity = String(state.profile._id);
+    } else if (state.profile.username) {
+      identity = String(state.profile.username);
+    }
+
+    if (!identity) {
+      return "";
+    }
+
+    return (
+      String(baseKey) +
+      ":" +
+      identity.replace(/[^a-zA-Z0-9_-]/g, "_")
+    );
   }
 
   function getProgressPercent() {
