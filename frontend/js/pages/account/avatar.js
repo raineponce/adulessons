@@ -101,6 +101,11 @@
 
       renderAvatar(savedAvatar);
       renderStatus("Avatar updated successfully.", "success");
+
+      setTimeout(function () {
+    window.location.href = "/account/dashboard.html";
+  }, 1000);
+
     } catch (err) {
       if (window.AppApi.handleAuthError(err)) return;
       renderError(err && err.message ? err.message : "Unable to update avatar.");

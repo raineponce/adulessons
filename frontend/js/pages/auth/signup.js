@@ -70,7 +70,7 @@
         }
       });
 
-      window.location.href = "/account/dashboard.html";
+      window.location.href = "/account/avatar.html";
     } catch (err) {
       if (err && err.status === 401) {
         window.AppApi.handleAuthError(err);

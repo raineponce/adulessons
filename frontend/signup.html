@@ -14,11 +14,20 @@
 
     <link rel="stylesheet" href="./css/global.css">
 
+    <link rel="preload" as="image" href="./assets/images/logo-1.png">
+    <link rel="preload" as="image" href="./assets/images/mascot-pointer.png">
+    <link rel="prefetch" href="./login.html">
+
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html,
+        body {
+            background: #f8f9fa;
         }
 
         body {
@@ -127,7 +136,7 @@
         .signup-mascot {
             position: absolute;
             left: -180px;
-            bottom: -10px;
+            bottom: 40px;
             width: 220px;
         }
 
@@ -159,6 +168,10 @@
             transform: scale(1.05);
         }
 
+        #footer {
+            min-height: 140px;
+        }
+
         @media (max-width: 500px) {
             .signup-container {
                 padding: 1.5rem;
@@ -175,7 +188,7 @@
 <body>
     <header class="top-header">
         <a href="./welcome.html" class="logo-link">
-            <img src="./assets/images/logo-1.png" alt="aduLessons logo">
+            <img src="./assets/images/logo-1.png" alt="aduLessons logo" fetchpriority="high" decoding="sync">
         </a>
     </header>
 
@@ -199,7 +212,8 @@
                 Already have an account? <a href="./login.html">Log in</a>
             </div>
 
-            <img src="./assets/images/mascot-pointer.png" alt="Mascot" class="signup-mascot">
+            <img src="./assets/images/mascot-pointer.png" alt="Mascot" class="signup-mascot" fetchpriority="high"
+                decoding="async">
         </div>
     </main>
 
