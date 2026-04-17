@@ -296,6 +296,54 @@
             padding-left: 0.5rem;
         }
 
+        .completion-message {
+            font-family: var(--font-body);
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: var(--color-text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .status-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-muted);
+            background: #fafafa;
+            font-size: 0.95rem;
+        }
+
+        .status-box.hidden {
+            display: none;
+        }
+
+        .status-box.error {
+            background: #fff2f2;
+            border-color: #f6caca;
+            color: #8c2b2b;
+        }
+
+        .status-actions {
+            margin-top: 0.75rem;
+        }
+
+        .retry-button {
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        .retry-button:hover {
+            background: #f3f4f6;
+        }
+
         .takeaways-list li strong {
             font-weight: 700;
         }
@@ -452,49 +500,10 @@
     <!-- Navigation component loads here -->
     <nav id="navbar">
         <!-- Placeholder navigation - will be replaced by components.js -->
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                aduLessons
-                <!-- bowtie-icon.svg -->
-                <svg class="logo-bowtie" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 8C12 8 8 4 4 2C2 1 0 2 0 4V12C0 14 2 15 4 14C8 12 12 8 12 8Z" fill="#4a6fa5" />
-                    <path d="M12 8C12 8 16 4 20 2C22 1 24 2 24 4V12C24 14 22 15 20 14C16 12 12 8 12 8Z"
-                        fill="#4a6fa5" />
-                    <circle cx="12" cy="8" r="2" fill="#4a6fa5" />
-                </svg>
-            </a>
-
-            <div class="search-container">
-                <div class="search-box">
-                    <input type="text" placeholder="Search">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
-            </div>
-
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="modules.html" class="nav-link">Modules</a>
-            </div>
-
-            <div class="user-section">
-                <a href="profile.html" class="user-avatar-link">
-                    <!-- user-avatar.png -->
-                    <img src="images/user-avatar.png" alt="User Avatar" class="avatar-img"
-                        onerror="this.style.background='#f0e6d3'">
-                    <span class="user-name">Zoey</span>
-                </a>
-                <a href="rewards.html" class="points-badge-link">
-                    <span class="points-text">210 pts</span>
-                </a>
-            </div>
-        </div>
     </nav>
 
     <main>
-        <button class="back-button" onclick="window.location.href='lesson-quiz.html'" aria-label="Go back">
+        <button class="back-button" id="backBtn" aria-label="Go back">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
@@ -502,7 +511,9 @@
         </button>
 
         <div class="takeaways-container">
-            <h1 class="page-title">Key Take Aways</h1>
+            <h1 class="page-title" id="pageTitle">Key Take Aways</h1>
+
+            <div id="pageState" class="status-box hidden" aria-live="polite"></div>
 
             <button class="print-button" onclick="window.print()" aria-label="Print page">
                 <img src="../assets/images/printer-icon.png" alt="Print" style="width: 40px; height: 40px;">
@@ -510,26 +521,13 @@
 
             <div class="content-wrapper">
                 <div class="takeaways-content">
-                    <ol class="takeaways-list">
-                        <li>
-                            <span class="list-number">1.</span> <strong>Taxes</strong> are a yearly process where you
-                            report your income, use simple tools to file, and often get money back if you've overpaid.
-                        </li>
-                        <li>
-                            <span class="list-number">2.</span> <strong>Renting</strong> is about finding a safe place
-                            that fits your budget, understanding your lease, and being a responsible, respectful tenant.
-                        </li>
-                        <li>
-                            <span class="list-number">3.</span> <strong>Managing your money</strong> means budgeting
-                            smartly, building savings, and knowing how to use debit and credit in healthy ways.
-                        </li>
-                    </ol>
+                    <p class="completion-message" id="completionMessage"></p>
 
                     <div class="summary-section">
                         <h2 class="summary-title">Summary</h2>
                         <div class="points-earned">
                             <img src="../assets/images/coin-icon.png" alt="Coin" class="points-coin">
-                            <span class="points-value">+200 points!</span>
+                            <span class="points-value">+10 points!</span>
                         </div>
                     </div>
                 </div>
@@ -542,7 +540,7 @@
             </div>
 
             <div class="button-container">
-                <a href="lesson-list.html" class="module-button">Back to Module</a>
+                <a href="../lesson-list.html" class="module-button" id="moduleButton">Back to Module</a>
             </div>
         </div>
     </main>
@@ -553,6 +551,8 @@
     <!-- Load components -->
     <script src="../js/components.js"></script>
     <script src="../js/hamburger-menu.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/modules/key-takeaways.js"></script>
 </body>
 
 </html>
