@@ -1,5 +1,12 @@
+function isPreLoginPage() {
+    const path = window.location.pathname;
+    return path.endsWith('/login.html') || path.endsWith('/signup.html') || path.endsWith('/welcome.html');
+}
+
 // Apply theme and font size immediately — before DOM renders — to avoid flash
 (function () {
+    if (isPreLoginPage()) return;
+
     // Block transitions during initial theme application to prevent white flash
     var noTransition = document.createElement('style');
     noTransition.id = 'no-transition-init';
@@ -450,10 +457,12 @@ async function loadNavbar() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Apply font size
-    const savedFontSize = localStorage.getItem('aduLessonsFontSize');
-    if (savedFontSize) {
-        document.body.style.zoom = parseInt(savedFontSize) / 100;
+    // Apply font size (only for logged-in pages)
+    if (!isPreLoginPage()) {
+        const savedFontSize = localStorage.getItem('aduLessonsFontSize');
+        if (savedFontSize) {
+            document.body.style.zoom = parseInt(savedFontSize) / 100;
+        }
     }
 
     await loadNavbar();
@@ -464,12 +473,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const mobileLinks = document.querySelectorAll('.mobile-menu a[style*="padding-left"]');
 
     const moduleLinks = [
-        { index: 0, moduleId: 'module1', fallbackHref: '/modules/lesson-list.html' },
-        { index: 1, moduleId: 'module2', fallbackHref: '#' },
-        { index: 2, moduleId: 'module3', fallbackHref: '#' },
-        { index: 3, moduleId: 'module4', fallbackHref: '#' },
-        { index: 4, moduleId: 'module5', fallbackHref: '#' },
-        { index: 5, moduleId: 'module6', fallbackHref: '#' },
+        { index: 0, moduleId: 'module1', fallbackHref: '/lesson-list.html' },
+        { index: 1, moduleId: 'module2', fallbackHref: '/modules/module-intro.html?moduleId=module2' },
+        { index: 2, moduleId: 'module3', fallbackHref: '/modules/module-intro.html?moduleId=module3' },
+        { index: 3, moduleId: 'module4', fallbackHref: '/modules/module-intro.html?moduleId=module4' },
+        { index: 4, moduleId: 'module5', fallbackHref: '/modules/module-intro.html?moduleId=module5' },
+        { index: 5, moduleId: 'module6', fallbackHref: '/modules/module-intro.html?moduleId=module6' },
     ];
 
     for (const { index, moduleId, fallbackHref } of moduleLinks) {
@@ -492,7 +501,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Re-apply preferences when page is restored from bfcache (back/forward navigation)
 window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
+    if (event.persisted && !isPreLoginPage()) {
         const theme = localStorage.getItem('aduLessonsTheme');
         if (theme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
