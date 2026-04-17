@@ -9,9 +9,12 @@
 
   var MASKED_PASSWORD = '••••••••';
   var MIN_PASSWORD_LENGTH = 8;
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   var els = {};
   var originalDisplayName = '';
+  var originalEmail = '';
+  var userInfoEditMode = false;
   var passwordEditMode = false;
 
   // --- Setup ---
@@ -20,6 +23,8 @@
     els.displayName      = document.getElementById('displayName');
     els.displayNameError = document.getElementById('displayNameError');
     els.email            = document.getElementById('email');
+    els.emailError       = document.getElementById('emailError');
+    els.userInfoActions  = document.getElementById('userInfoActions');
     els.sidebarAvatar    = document.getElementById('sidebarAvatar');
     els.profileName      = document.querySelector('.profile-name');
     els.modalCurrentAvatar = document.getElementById('modalCurrentAvatar');
@@ -59,14 +64,17 @@
     var src       = AVATAR_SRCS[avatarIdx];
 
     originalDisplayName = name;
+    originalEmail = email;
 
     if (els.displayName) {
       els.displayName.value    = name;
       els.displayName.disabled = false;
+      els.displayName.readOnly = true;
     }
     if (els.email) {
       els.email.value    = email;
       els.email.disabled = false;
+      els.email.readOnly = true;
     }
     if (els.profileName)      els.profileName.textContent = name;
     if (els.sidebarAvatar) {
@@ -91,8 +99,42 @@
       els.apiError.textContent = 'Failed to load profile. Please refresh to try again.';
       els.apiError.style.display = 'block';
     }
-    if (els.displayName) els.displayName.disabled = false;
-    if (els.email)       els.email.disabled       = false;
+    if (els.displayName) { els.displayName.disabled = false; els.displayName.readOnly = true; }
+    if (els.email)       { els.email.disabled       = false; els.email.readOnly       = true; }
+  }
+
+  // --- User Info helpers ---
+
+  function enableUserInfoEdit(focusInputId) {
+    userInfoEditMode = true;
+    if (els.displayName) {
+      els.displayName.readOnly = false;
+    }
+    if (els.email) {
+      els.email.readOnly = false;
+    }
+    if (els.userInfoActions) {
+      els.userInfoActions.style.display = '';
+    }
+    var target = focusInputId ? document.getElementById(focusInputId) : els.displayName;
+    if (target) target.focus();
+  }
+
+  function lockUserInfoFields() {
+    userInfoEditMode = false;
+    if (els.displayName) {
+      els.displayName.readOnly = true;
+      els.displayName.classList.remove('error');
+    }
+    if (els.email) {
+      els.email.readOnly = true;
+      els.email.classList.remove('error');
+    }
+    if (els.displayNameError) els.displayNameError.classList.remove('show');
+    if (els.emailError)       els.emailError.classList.remove('show');
+    if (els.userInfoActions) {
+      els.userInfoActions.style.display = 'none';
+    }
   }
 
   // --- Password helpers ---
@@ -144,6 +186,7 @@
   function bindEvents() {
     if (els.displayName) {
       els.displayName.addEventListener('blur', function () {
+        if (userInfoEditMode) return;
         if (!this.value.trim()) {
           // Empty — revert to the original name loaded from backend
           this.value = originalDisplayName;
@@ -227,6 +270,74 @@
           alert('Failed to update avatar. Please try again.');
         }
       });
+  };
+
+  // --- User info save/cancel (exposed globally for HTML onclick) ---
+
+  window.saveUserInfo = function () {
+    if (!userInfoEditMode) return;
+
+    var name  = els.displayName ? els.displayName.value.trim() : '';
+    var email = els.email       ? els.email.value.trim()       : '';
+    var hasError = false;
+
+    if (!name) {
+      if (els.displayName)      els.displayName.classList.add('error');
+      if (els.displayNameError) {
+        els.displayNameError.textContent = 'Display name is required';
+        els.displayNameError.classList.add('show');
+      }
+      hasError = true;
+    } else {
+      if (els.displayName)      els.displayName.classList.remove('error');
+      if (els.displayNameError) els.displayNameError.classList.remove('show');
+    }
+
+    if (!email || !EMAIL_RE.test(email)) {
+      if (els.email)      els.email.classList.add('error');
+      if (els.emailError) {
+        els.emailError.textContent = 'Please enter a valid email address';
+        els.emailError.classList.add('show');
+      }
+      hasError = true;
+    } else {
+      if (els.email)      els.email.classList.remove('error');
+      if (els.emailError) els.emailError.classList.remove('show');
+    }
+
+    if (hasError) return;
+
+    AppApi.updateProfile(name, email)
+      .then(function () {
+        originalDisplayName = name;
+        originalEmail = email;
+        if (els.profileName) els.profileName.textContent = name;
+        lockUserInfoFields();
+      })
+      .catch(function (err) {
+        if (AppApi.handleAuthError(err)) return;
+        if (els.apiError) {
+          els.apiError.textContent = err.message || 'Failed to update profile. Please try again.';
+          els.apiError.style.display = 'block';
+        }
+      });
+  };
+
+  window.cancelUserInfo = function () {
+    if (els.displayName) els.displayName.value = originalDisplayName;
+    if (els.email)       els.email.value       = originalEmail;
+    lockUserInfoFields();
+  };
+
+  // --- Override focusInput to enable edit mode for user info fields ---
+
+  window.focusInput = function (inputId) {
+    if (inputId === 'displayName' || inputId === 'email') {
+      enableUserInfoEdit(inputId);
+    } else {
+      var el = document.getElementById(inputId);
+      if (el) el.focus();
+    }
   };
 
   // --- Password save (overrides inline savePassword in profile.html) ---

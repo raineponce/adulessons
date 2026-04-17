@@ -116,6 +116,13 @@
     });
   }
 
+  function updateProfile(displayName, email) {
+    return request("/profile", {
+      method: "PUT",
+      body: { username: displayName, email: email }
+    });
+  }
+
   function updatePassword(currentPassword, newPassword) {
     return request("/profile/password", {
       method: "PUT",
@@ -130,6 +137,7 @@
     getProgress: getProgress,
     updateAvatar: updateAvatar,
     updateAddress: updateAddress,
+    updateProfile: updateProfile,
     getLessons: getLessons,
     getLesson: getLesson,
     completeLesson: completeLesson,

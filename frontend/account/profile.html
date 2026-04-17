@@ -913,7 +913,7 @@
                     <label class="form-label">Display Name</label>
                     <div class="input-wrapper">
                         <input type="text" class="form-input" id="displayName" placeholder="Enter display name"
-                            value="">
+                            value="" readonly>
                         <span class="edit-icon" onclick="focusInput('displayName')">✎</span>
                     </div>
                     <div class="error-message" id="displayNameError">Display name is required</div>
@@ -923,10 +923,15 @@
                     <label class="form-label">Email</label>
                     <div class="input-wrapper">
                         <input type="email" class="form-input" id="email" placeholder="Enter email address"
-                            value="">
+                            value="" readonly>
                         <span class="edit-icon" onclick="focusInput('email')">✎</span>
                     </div>
                     <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+
+                <div class="form-actions" id="userInfoActions" style="display:none;">
+                    <button class="btn btn-cancel" onclick="cancelUserInfo()">Cancel</button>
+                    <button class="btn btn-save" onclick="saveUserInfo()">Save</button>
                 </div>
             </section>
 
