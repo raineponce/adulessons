@@ -30,20 +30,24 @@ router.put('/', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'Username and email are required' });
     }
 
-    const sanitizedUsername = sanitizeInput(username.trim());
-    const sanitizedEmail = sanitizeInput(email.trim().toLowerCase());
+    const trimmedUsername = username.trim();
+    const trimmedEmail = email.trim().toLowerCase();
 
-    if (!isValidUsername(sanitizedUsername)) {
-      return res.status(400).json({ error: 'Username must be 3-20 alphanumeric characters' });
+    if (!isValidUsername(trimmedUsername)) {
+      return res.status(400).json({ error: 'Display name must be 2-50 characters (letters, numbers, spaces, underscores, hyphens)' });
     }
 
-    if (!isValidEmail(sanitizedEmail)) {
+    if (!isValidEmail(trimmedEmail)) {
       return res.status(400).json({ error: 'Invalid email address' });
     }
 
+    // Sanitize email for storage; username is stored as-is since the
+    // validator already restricts it to safe characters
+    const sanitizedEmail = sanitizeInput(trimmedEmail);
+
     const user = await User.findByIdAndUpdate(
       req.session.userId,
-      { username: sanitizedUsername, email: sanitizedEmail },
+      { username: trimmedUsername, email: sanitizedEmail },
       { new: true, runValidators: true }
     ).select('username email');
 
