@@ -35,6 +35,18 @@ router.post('/register', authLimiter, async (req, res) => {
   }
 });
 
+// Helper functions for calendar day streak calculation
+function startOfLocalDay(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function getDayDifference(currentDate, previousDate) {
+  const MS_PER_DAY = 1000 * 60 * 60 * 24;
+  return Math.round(
+    (startOfLocalDay(currentDate) - startOfLocalDay(previousDate)) / MS_PER_DAY
+  );
+}
+
 // POST /auth/login — Authenticate an existing user
 router.post('/login', authLimiter, async (req, res) => {
   try {
@@ -50,21 +62,21 @@ router.post('/login', authLimiter, async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // --- Streak logic ---
+    // --- Streak logic (calendar day-based) ---
     const now = new Date();
-    const lastActive = user.streak.lastActive;
+    const lastActive = user.streak.lastActive ? new Date(user.streak.lastActive) : null;
 
     if (lastActive) {
-      const hoursSinceLast = (now - lastActive) / (1000 * 60 * 60);
+      const dayDifference = getDayDifference(now, lastActive);
 
-      if (hoursSinceLast >= 24 && hoursSinceLast <= 48) {
-        // Logged in within the streak window — increment streak
+      if (dayDifference === 1) {
+        // Logged in exactly one calendar day apart — increment streak
         user.streak.current += 1;
-      } else if (hoursSinceLast > 48) {
-        // More than 48 hours — reset streak
+      } else if (dayDifference > 1) {
+        // More than one day since last login — reset streak
         user.streak.current = 1;
       }
-      // If less than 24 hours, no change (same day login)
+      // If dayDifference === 0 (same day), no change
     } else {
       // First login ever
       user.streak.current = 1;
