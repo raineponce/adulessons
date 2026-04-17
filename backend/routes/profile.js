@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Module = require('../models/Module');
 const { requireAuth } = require('../middleware/authMiddleware');
-const { sanitizeInput } = require('../utils/validators');
+const { sanitizeInput, isValidEmail, isValidUsername } = require('../utils/validators');
 
 // Predefined set of allowed avatar options
 const ALLOWED_AVATARS = [
@@ -26,6 +26,50 @@ router.get('/', requireAuth, async (req, res) => {
 
     res.json(user);
   } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /profile — Update the user's display name and email
+router.put('/', requireAuth, async (req, res) => {
+  try {
+    const { username, email } = req.body;
+
+    if (!username || !email) {
+      return res.status(400).json({ error: 'Username and email are required' });
+    }
+
+    const trimmedUsername = username.trim();
+    const trimmedEmail = email.trim().toLowerCase();
+
+    if (!isValidUsername(trimmedUsername)) {
+      return res.status(400).json({ error: 'Display name must be 2-50 characters (letters, numbers, spaces, underscores, hyphens)' });
+    }
+
+    if (!isValidEmail(trimmedEmail)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    // Sanitize email for storage; username is stored as-is since the
+    // validator already restricts it to safe characters
+    const sanitizedEmail = sanitizeInput(trimmedEmail);
+
+    const user = await User.findByIdAndUpdate(
+      req.session.userId,
+      { username: trimmedUsername, email: sanitizedEmail },
+      { new: true, runValidators: true }
+    ).select('username email');
+
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    res.json({ username: user.username, email: user.email });
+  } catch (err) {
+    if (err.code === 11000) {
+      const field = err.keyPattern && err.keyPattern.email ? 'email' : 'username';
+      return res.status(409).json({ error: `That ${field} is already in use` });
+    }
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -69,6 +113,38 @@ router.put('/address', requireAuth, async (req, res) => {
     ).select('shippingAddress');
 
     res.json({ shippingAddress: user.shippingAddress });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /profile/password — Update the user's password
+router.put('/password', requireAuth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({ error: 'New password must be at least 8 characters' });
+    }
+
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const match = await user.comparePassword(currentPassword);
+    if (!match) {
+      return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }

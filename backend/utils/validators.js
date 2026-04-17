@@ -8,9 +8,9 @@ const isValidPassword = (password) => {
   return typeof password === 'string' && password.length >= 8;
 };
 
-// Username must be alphanumeric and between 3-20 characters
+// Display name must be 2-50 characters: letters, numbers, spaces, underscores, hyphens
 const isValidUsername = (username) => {
-  return /^[a-zA-Z0-9]{3,20}$/.test(username);
+  return /^[a-zA-Z0-9 _\-]{2,50}$/.test(username);
 };
 
 // Basic XSS prevention: encode HTML special characters to prevent injection
