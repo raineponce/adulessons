@@ -473,12 +473,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const mobileLinks = document.querySelectorAll('.mobile-menu a[style*="padding-left"]');
 
     const moduleLinks = [
-        { index: 0, moduleId: 'module1', fallbackHref: '/lesson-list.html' },
-        { index: 1, moduleId: 'module2', fallbackHref: '/modules/module-intro.html?moduleId=module2' },
-        { index: 2, moduleId: 'module3', fallbackHref: '/modules/module-intro.html?moduleId=module3' },
-        { index: 3, moduleId: 'module4', fallbackHref: '/modules/module-intro.html?moduleId=module4' },
-        { index: 4, moduleId: 'module5', fallbackHref: '/modules/module-intro.html?moduleId=module5' },
-        { index: 5, moduleId: 'module6', fallbackHref: '/modules/module-intro.html?moduleId=module6' },
+        { index: 0, moduleId: 'mod1', fallbackHref: '/lesson-list.html' },
+        { index: 1, moduleId: 'mod2', fallbackHref: '/modules/module-intro.html?moduleId=mod2' },
+        { index: 2, moduleId: 'mod3', fallbackHref: '/modules/module-intro.html?moduleId=mod3' },
+        { index: 3, moduleId: 'mod4', fallbackHref: '/modules/module-intro.html?moduleId=mod4' },
+        { index: 4, moduleId: 'mod5', fallbackHref: '/modules/module-intro.html?moduleId=mod5' },
+        { index: 5, moduleId: 'mod6', fallbackHref: '/modules/module-intro.html?moduleId=mod6' },
     ];
 
     for (const { index, moduleId, fallbackHref } of moduleLinks) {
