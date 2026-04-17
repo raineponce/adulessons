@@ -6,13 +6,22 @@ const { requireAuth } = require('../middleware/authMiddleware');
 const { sanitizeInput } = require('../utils/validators');
 
 // Predefined set of allowed avatar options
-const ALLOWED_AVATARS = ['default', 'avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5'];
+const ALLOWED_AVATARS = [
+  'default',
+  'avatar1',
+  'avatar2',
+  'avatar3',
+  'avatar4',
+  'avatar5',
+];
 
 // GET /profile — Return user profile info
 router.get('/', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId)
-      .select('username email avatar points streak completedLessons currentLesson')
+      .select(
+        'username email avatar points streak completedLessons currentLesson usedCodes',
+      )
       .lean();
 
     res.json(user);
@@ -32,7 +41,7 @@ router.put('/avatar', requireAuth, async (req, res) => {
     const user = await User.findByIdAndUpdate(
       req.session.userId,
       { avatar },
-      { new: true }
+      { new: true },
     ).select('avatar');
 
     res.json({ avatar: user.avatar });
@@ -50,13 +59,13 @@ router.put('/address', requireAuth, async (req, res) => {
       street: sanitizeInput(street),
       city: sanitizeInput(city),
       state: sanitizeInput(state),
-      zip: sanitizeInput(zip)
+      zip: sanitizeInput(zip),
     };
 
     const user = await User.findByIdAndUpdate(
       req.session.userId,
       { shippingAddress: sanitized },
-      { new: true }
+      { new: true },
     ).select('shippingAddress');
 
     res.json({ shippingAddress: user.shippingAddress });
@@ -75,9 +84,9 @@ router.get('/progress', requireAuth, async (req, res) => {
     const modules = await Module.find().sort({ order: 1 }).lean();
 
     // Calculate per-module completion
-    const moduleProgress = modules.map(mod => {
-      const completedInModule = (user.completedLessons || []).filter(id =>
-        mod.lessonIds.includes(id)
+    const moduleProgress = modules.map((mod) => {
+      const completedInModule = (user.completedLessons || []).filter((id) =>
+        mod.lessonIds.includes(id),
       ).length;
 
       return {
@@ -85,22 +94,30 @@ router.get('/progress', requireAuth, async (req, res) => {
         title: mod.title,
         totalLessons: mod.lessonIds.length,
         completedLessons: completedInModule,
-        percentComplete: mod.lessonIds.length > 0
-          ? Math.round((completedInModule / mod.lessonIds.length) * 100)
-          : 0
+        percentComplete:
+          mod.lessonIds.length > 0
+            ? Math.round((completedInModule / mod.lessonIds.length) * 100)
+            : 0,
       };
     });
 
-    const totalLessons = modules.reduce((sum, m) => sum + m.lessonIds.length, 0);
-    const completedCount = user.completedLessons ? user.completedLessons.length : 0;
-    const overallPercent = totalLessons > 0
-      ? Math.round((completedCount / totalLessons) * 100)
+    const totalLessons = modules.reduce(
+      (sum, m) => sum + m.lessonIds.length,
+      0,
+    );
+    const completedCount = user.completedLessons
+      ? user.completedLessons.length
       : 0;
+    const overallPercent =
+      totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
     res.json({
       moduleProgress,
       overallPercent,
-      allLessonsComplete: user.allLessonsComplete
+      allLessonsComplete: user.allLessonsComplete,
+      points: user.points,
+      completedLessonsCount: completedCount,
+      totalLessons,
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
