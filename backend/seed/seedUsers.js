@@ -81,8 +81,11 @@ const seed = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    await User.deleteMany({});
-    console.log('Cleared existing users');
+    const existingUsers = await User.countDocuments();
+    if (existingUsers > 0) {
+      console.log('Users already exist, skipping user seed');
+      return;
+    }
 
     for (const userData of fakeUsers) {
       const user = new User(userData);
