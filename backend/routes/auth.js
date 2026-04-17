@@ -49,6 +49,18 @@ router.post("/register", authLimiter, async (req, res) => {
   }
 });
 
+// Helper functions for calendar day streak calculation
+function startOfLocalDay(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function getDayDifference(currentDate, previousDate) {
+  const MS_PER_DAY = 1000 * 60 * 60 * 24;
+  return Math.round(
+    (startOfLocalDay(currentDate) - startOfLocalDay(previousDate)) / MS_PER_DAY
+  );
+}
+
 // POST /auth/login — Authenticate an existing user
 router.post("/login", authLimiter, async (req, res) => {
   try {
