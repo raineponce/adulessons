@@ -235,6 +235,44 @@
 
     <!-- Toggle mobile hamburger menu -->
     <script src="../js/hamburger-menu.js"></script>
+
+    <script>
+        (async function loadModuleData() {
+            const params = new URLSearchParams(window.location.search);
+            const moduleId = params.get('moduleId');
+            if (!moduleId) return;
+
+            try {
+                const res = await fetch(`/lessons/modules/${moduleId}`, { credentials: 'include' });
+                if (!res.ok) return;
+                const mod = await res.json();
+
+                if (mod.title) {
+                    document.title = `Module Intro - ${mod.title}`;
+                    const titleEl = document.querySelector('.module-title');
+                    if (titleEl) titleEl.textContent = mod.title;
+                }
+
+                if (mod.videoId) {
+                    const iframe = document.querySelector('.video-container iframe');
+                    if (iframe) iframe.src = `https://www.youtube.com/embed/${mod.videoId}`;
+                }
+
+                if (mod.transcript) {
+                    const transcriptEl = document.querySelector('.transcript-text');
+                    if (transcriptEl) {
+                        transcriptEl.innerHTML = mod.transcript
+                            .split('\n')
+                            .filter(line => line.trim())
+                            .map(line => `<p>${line}</p>`)
+                            .join('');
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load module data:', e);
+            }
+        })();
+    </script>
 </body>
 
 </html>
