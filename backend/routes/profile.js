@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Module = require('../models/Module');
 const { requireAuth } = require('../middleware/authMiddleware');
-const { sanitizeInput } = require('../utils/validators');
+const { sanitizeInput, isValidEmail, isValidUsername } = require('../utils/validators');
 
 // Predefined set of allowed avatar options
 const ALLOWED_AVATARS = ['default', 'avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5'];
@@ -17,6 +17,46 @@ router.get('/', requireAuth, async (req, res) => {
 
     res.json(user);
   } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /profile — Update the user's display name and email
+router.put('/', requireAuth, async (req, res) => {
+  try {
+    const { username, email } = req.body;
+
+    if (!username || !email) {
+      return res.status(400).json({ error: 'Username and email are required' });
+    }
+
+    const sanitizedUsername = sanitizeInput(username.trim());
+    const sanitizedEmail = sanitizeInput(email.trim().toLowerCase());
+
+    if (!isValidUsername(sanitizedUsername)) {
+      return res.status(400).json({ error: 'Username must be 3-20 alphanumeric characters' });
+    }
+
+    if (!isValidEmail(sanitizedEmail)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.session.userId,
+      { username: sanitizedUsername, email: sanitizedEmail },
+      { new: true, runValidators: true }
+    ).select('username email');
+
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    res.json({ username: user.username, email: user.email });
+  } catch (err) {
+    if (err.code === 11000) {
+      const field = err.keyPattern && err.keyPattern.email ? 'email' : 'username';
+      return res.status(409).json({ error: `That ${field} is already in use` });
+    }
     res.status(500).json({ error: 'Server error' });
   }
 });
