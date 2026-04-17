@@ -130,6 +130,10 @@
     });
   }
 
+  function signOut() {
+    return request("/auth/logout", { method: "POST" });
+  }
+
   window.AppApi = {
     request: request,
     handleAuthError: handleAuthError,
@@ -145,6 +149,7 @@
     redeemPrize: redeemPrize,
     getRedeemedPrizes: getRedeemedPrizes,
     redeemCode: redeemCode,
-    updatePassword: updatePassword
+    updatePassword: updatePassword,
+    signOut: signOut
   };
 })();

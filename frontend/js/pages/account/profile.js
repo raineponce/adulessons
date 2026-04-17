@@ -206,6 +206,23 @@
       };
     }
 
+    // Sign Out button
+    var signOutBtn = document.querySelector('.nav-item.sign-out');
+    if (signOutBtn) {
+      signOutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        AppApi.signOut()
+          .then(function () {
+            window.location.href = '../welcome.html';
+          })
+          .catch(function (err) {
+            if (!AppApi.handleAuthError(err)) {
+              window.location.href = '../welcome.html';
+            }
+          });
+      });
+    }
+
     // Empty-state validation on blur for password fields
     if (els.newPassword) {
       els.newPassword.addEventListener('blur', function () {
