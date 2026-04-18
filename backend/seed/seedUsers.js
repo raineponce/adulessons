@@ -11,10 +11,19 @@ const fakeUsers = [
     password: 'password123',
     avatar: 'cat',
     points: 50,
-    streak: { current: 3, lastActive: new Date(Date.now() - 1000 * 60 * 60 * 25) }, // 25 hrs ago
-    completedLessons: ['mod1-lesson1', 'mod1-lesson2', 'mod1-lesson3', 'mod2-lesson1', 'mod2-lesson2'],
+    streak: {
+      current: 3,
+      lastActive: new Date(Date.now() - 1000 * 60 * 60 * 25),
+    }, // 25 hrs ago
+    completedLessons: [
+      'mod1-lesson1',
+      'mod1-lesson2',
+      'mod1-lesson3',
+      'mod2-lesson1',
+      'mod2-lesson2',
+    ],
     currentLesson: 'mod2-lesson3',
-    allLessonsComplete: false
+    allLessonsComplete: false,
   },
   {
     username: 'testuser',
@@ -25,7 +34,7 @@ const fakeUsers = [
     streak: { current: 0, lastActive: null },
     completedLessons: [],
     currentLesson: null,
-    allLessonsComplete: false
+    allLessonsComplete: false,
   },
   {
     username: 'superlearner',
@@ -33,15 +42,38 @@ const fakeUsers = [
     password: 'password123',
     avatar: 'star',
     points: 220,
-    streak: { current: 15, lastActive: new Date(Date.now() - 1000 * 60 * 60 * 5) }, // 5 hrs ago
+    streak: {
+      current: 15,
+      lastActive: new Date(Date.now() - 1000 * 60 * 60 * 5),
+    }, // 5 hrs ago
     completedLessons: Array.from({ length: 22 }, (_, i) => {
       const mod = Math.floor(i / 4) + 1;
       const lesson = (i % 4) + 1;
       return `mod${mod}-lesson${lesson}`;
     }),
     currentLesson: null,
-    allLessonsComplete: true
-  }
+    allLessonsComplete: true,
+  },
+  {
+    username: 'codechamp',
+    email: 'codechamp@test.com',
+    password: 'password123',
+    avatar: 'book',
+    points: 235,
+    streak: {
+      current: 8,
+      lastActive: new Date(Date.now() - 1000 * 60 * 60 * 3),
+    },
+    completedLessons: Array.from({ length: 22 }, (_, i) => {
+      const mod = Math.floor(i / 4) + 1;
+      const lesson = (i % 4) + 1;
+      return `mod${mod}-lesson${lesson}`;
+    }),
+    currentLesson: null,
+    allLessonsComplete: true,
+    finalPrizeClaimed: false,
+    usedCodes: ['W15E'],
+  },
 ];
 
 const seed = async () => {
@@ -49,8 +81,11 @@ const seed = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    await User.deleteMany({});
-    console.log('Cleared existing users');
+    const existingUsers = await User.countDocuments();
+    if (existingUsers > 0) {
+      console.log('Users already exist, skipping user seed');
+      return;
+    }
 
     for (const userData of fakeUsers) {
       const user = new User(userData);

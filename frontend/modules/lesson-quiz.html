@@ -253,6 +253,13 @@
             margin-bottom: 2rem;
         }
 
+        .quiz-progress {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
         .quiz-question {
             font-family: var(--font-body);
             font-size: 1.25rem;
@@ -260,6 +267,147 @@
             color: var(--color-text-dark);
             margin-bottom: 2.5rem;
             line-height: 1.6;
+        }
+
+        .status-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            margin: 0 auto 1rem;
+            max-width: 900px;
+            color: var(--color-text-muted);
+            background: #fafafa;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .status-box.hidden {
+            display: none;
+        }
+
+        .status-box.error {
+            background: #fff2f2;
+            border-color: #f6caca;
+            color: #8c2b2b;
+        }
+
+        .status-actions {
+            margin-top: 0.75rem;
+        }
+
+        .retry-button,
+        .submit-button,
+        .continue-button {
+            border: none;
+            border-radius: 999px;
+            padding: 0.8rem 1.4rem;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .retry-button {
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: var(--color-text-dark);
+        }
+
+        .retry-button:hover {
+            background: #f3f4f6;
+        }
+
+        .quiz-shell {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .quiz-question-block {
+            margin-bottom: 2rem;
+        }
+
+        .answer-card.selected {
+            outline: 4px solid rgba(74, 111, 165, 0.35);
+            transform: translateY(-3px);
+        }
+
+        .answer-card[disabled] {
+            cursor: not-allowed;
+            opacity: 0.95;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .submit-button {
+            background: var(--color-accent-blue);
+            color: var(--color-white);
+            min-width: 160px;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            background: #3d5d8a;
+        }
+
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .continue-button {
+            background: var(--color-green);
+            color: var(--color-text-dark);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 160px;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .quiz-feedback {
+            margin-top: 1.5rem;
+            border-radius: 18px;
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            display: none;
+        }
+
+        .quiz-feedback.active {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: rgba(184, 212, 168, 0.35);
+        }
+
+        .quiz-feedback.wrong {
+            background: rgba(201, 120, 120, 0.18);
+        }
+
+        .quiz-feedback-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-explanation {
+            margin-top: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .quiz-continue-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
         }
 
         /* Answer Grid */
@@ -485,6 +633,11 @@
                 font-size: 1.5rem;
             }
 
+            .quiz-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
             .mascot-img {
                 width: 80px;
             }
@@ -565,70 +718,37 @@
     </nav>
 
     <main>
-        <button class="back-button" onclick="window.location.href='lesson-taxes.html'" aria-label="Go back">
+        <button class="back-button" id="backBtn" aria-label="Go back">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
         </button>
 
-        <div class="quiz-container">
-            <h1 class="quiz-title">Quiz Question</h1>
-            <p class="quiz-subtitle">Were you paying attention? Let's find out!</p>
+        <div id="pageState" class="status-box hidden" aria-live="polite"></div>
 
-            <p class="quiz-question">
-                1. Let's say you only made a small amount of money this year. Should you still file your taxes?
-            </p>
+        <div class="quiz-container quiz-shell" id="quizShell">
+            <h1 class="quiz-title" id="quizTitle">Quiz Question</h1>
+            <p class="quiz-subtitle" id="quizSubtitle">Were you paying attention? Let's find out!</p>
+            <p class="quiz-progress" id="quizProgressText" aria-live="polite"></p>
 
-            <div class="answers-grid">
-                <button class="answer-card answer-a" onclick="checkAnswer('A')">
-                    A. Yes, because you're legally required to file taxes.
-                </button>
-                <button class="answer-card answer-b" onclick="checkAnswer('B')">
-                    B. No, because nothing will happen if you do.
-                </button>
-                <button class="answer-card answer-c" onclick="checkAnswer('C')">
-                    C. Yes, because you might qualify for a refund.
-                </button>
-                <button class="answer-card answer-d" onclick="checkAnswer('D')">
-                    D. No, because it's too much hassle.
-                </button>
+            <div class="quiz-question-block">
+                <p class="quiz-question" id="quizQuestion"></p>
+            </div>
+
+            <div class="answers-grid" id="answersGrid"></div>
+
+            <div class="quiz-actions">
+                <button type="button" class="submit-button" id="submitBtn" disabled>Submit Answer</button>
+            </div>
+
+            <section class="quiz-feedback" id="quizFeedback" aria-live="polite"></section>
+
+            <div class="quiz-continue-row hidden" id="continueRow">
+                <a href="#" class="continue-button" id="continueBtn">Continue</a>
             </div>
         </div>
     </main>
-
-    <!-- Wrong Answer Modal -->
-    <div class="modal-overlay" id="wrongModal">
-        <div class="modal-box modal-wrong">
-            <button class="close-btn" onclick="closeModal('wrongModal')">×</button>
-            <div class="modal-content">
-                <!-- hamster-mascot-pointer.png -->
-                <img src="images/hamster-mascot-pointer.png" alt="Mascot" class="mascot-img"
-                    onerror="this.outerHTML=''">
-                <span class="modal-text">Nope, try again!</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Correct Answer Modal -->
-    <div class="modal-overlay" id="correctModal">
-        <div class="modal-box modal-correct">
-            <a href="key-takeaways.html" class="next-btn">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
-            </a>
-            <div class="modal-content">
-                <p class="modal-text">
-                    <span class="highlight">That's right!</span> Who wouldn't love some free money?
-                </p>
-                <!-- hamster-mascot-pointer.png -->
-                <img src="images/hamster-mascot-pointer.png" alt="Mascot" class="mascot-img"
-                    onerror="this.outerHTML=''">
-            </div>
-        </div>
-    </div>
 
     <!-- Footer component loads here -->
     <footer id="footer"></footer>
@@ -637,40 +757,8 @@
     <script src="../js/components.js"></script>
     <script src="../js/hamburger-menu.js"></script>
 
-    <!-- Quiz Logic -->
-    <script>
-        const correctAnswer = 'C';
-
-        function checkAnswer(answer) {
-            if (answer === correctAnswer) {
-                document.getElementById('correctModal').classList.add('active');
-            } else {
-                document.getElementById('wrongModal').classList.add('active');
-            }
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function (e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay').forEach(modal => {
-                    modal.classList.remove('active');
-                });
-            }
-        });
-    </script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/modules/lesson-quiz.js"></script>
 </body>
 
 </html>

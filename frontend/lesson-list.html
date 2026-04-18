@@ -295,6 +295,15 @@
             opacity: 0.9;
         }
 
+        .lesson-card.completed {
+            background: #dff5e3;
+            border-color: #6bbf7a;
+        }
+
+        .lesson-card.completed .lesson-title {
+            color: #1f6f3a;
+        }
+
         .lesson-number {
             font-family: var(--font-body);
             font-size: 1.5rem;
@@ -317,6 +326,52 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
+
+        .status-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-muted);
+            background: #fafafa;
+            font-size: 0.95rem;
+        }
+
+        .status-box.hidden {
+            display: none;
+        }
+
+        .status-box.error {
+            background: #fff2f2;
+            border-color: #f6caca;
+            color: #8c2b2b;
+        }
+
+        .status-actions {
+            margin-top: 0.75rem;
+        }
+
+        .retry-button {
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        .retry-button:hover {
+            background: #f3f4f6;
+        }
+
+        .module-progress {
+            margin-left: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
         }
 
         .lock-icon {
@@ -481,6 +536,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -533,56 +589,21 @@
     <!-- Navigation component loads here -->
     <nav id="navbar">
         <!-- Placeholder navigation - will be replaced by components.js -->
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                aduLessons
-                <!-- bowtie-icon.svg -->
-                <svg class="logo-bowtie" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 8C12 8 8 4 4 2C2 1 0 2 0 4V12C0 14 2 15 4 14C8 12 12 8 12 8Z" fill="#4a6fa5"/>
-                    <path d="M12 8C12 8 16 4 20 2C22 1 24 2 24 4V12C24 14 22 15 20 14C16 12 12 8 12 8Z" fill="#4a6fa5"/>
-                    <circle cx="12" cy="8" r="2" fill="#4a6fa5"/>
-                </svg>
-            </a>
-            
-            <div class="search-container">
-                <div class="search-box">
-                    <input type="text" placeholder="Search">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
-            </div>
-
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="modules.html" class="nav-link">Modules</a>
-            </div>
-
-            <div class="user-section">
-                <a href="profile.html" class="user-avatar-link">
-                    <!-- user-avatar.png -->
-                    <img src="../assets/images/user-avatar.png" alt="User Avatar" class="avatar-img">
-                    <span class="user-name">Zoey</span>
-                </a>
-                <a href="rewards.html" class="points-badge-link">
-                    <span class="points-text">210 pts</span>
-                </a>
-            </div>
-        </div>
     </nav>
 
     <main>
         <section class="page-header">
-            <a href="module-list.html" class="back-button" aria-label="Go back">
+            <a href="modules/module-list.html" class="back-button" aria-label="Go back">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
             </a>
             <div style="width: 100%;">
                 <div class="module-header">
                     <!-- finance-icon.png -->
                     <img src="../assets/images/finance-icon.png" alt="Money" class="module-icon">
-                    <h1 class="module-title">Finance 101</h1>
+                    <h1 class="module-title" id="moduleTitle">Finance 101</h1>
                     <!-- mascot-wave.png -->
                     <img src="../assets/images/mascot-wave.png" alt="Mascot" class="mascot-img">
                 </div>
@@ -590,15 +611,19 @@
         </section>
 
         <h2 class="section-label">Lessons</h2>
+        <p class="module-progress" id="moduleProgressText" aria-live="polite"></p>
 
-        <div class="lessons-list">
+        <div id="pageState" class="status-box hidden" aria-live="polite"></div>
+
+        <div class="lessons-list" id="lessonsList">
             <!-- Lesson 1 - Unlocked -->
             <a href="modules/module-intro.html" class="lesson-card">
                 <span class="lesson-number">I.</span>
                 <span class="lesson-title">Taxes</span>
                 <div class="lesson-icons">
                     <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
             </a>
@@ -609,7 +634,8 @@
                 <span class="lesson-title">Rent</span>
                 <div class="lesson-icons">
                     <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
             </a>
@@ -620,11 +646,13 @@
                 <span class="lesson-title">Managing Money</span>
                 <div class="lesson-icons">
                     <svg class="lock-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2" />
+                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
                     </svg>
                     <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
             </a>
@@ -635,11 +663,13 @@
                 <span class="lesson-title">Insurance</span>
                 <div class="lesson-icons">
                     <svg class="lock-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2" />
+                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
                     </svg>
                     <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
             </a>
@@ -650,11 +680,13 @@
                 <span class="lesson-title">Financial Aid</span>
                 <div class="lesson-icons">
                     <svg class="lock-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2" />
+                        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
                     </svg>
                     <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 5.14v14.72a1 1 0 001.55.83l11-7.36a1 1 0 000-1.66l-11-7.36A1 1 0 008 5.14z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
             </a>
@@ -664,59 +696,12 @@
     <!-- Footer component loads here -->
     <footer id="footer"></footer>
 
-    <!-- Locked Lesson Modal -->
-    <div class="modal-overlay" id="lockedModal">
-        <div class="modal">
-            <svg class="modal-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-                <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <h3 class="modal-title">Lesson Locked</h3>
-            <p class="modal-message">Complete the previous lessons to unlock this one!</p>
-            <button class="modal-button" onclick="closeModal()">Got it!</button>
-        </div>
-    </div>
-
     <!-- Load components -->
     <script src="./js/components.js"></script>
     <script src="./js/hamburger-menu.js"></script>
 
-    <!-- Modal Script -->
-    <script>
-        function openModal() {
-            var modal = document.getElementById('lockedModal');
-            if (modal) {
-                modal.classList.add('active');
-            }
-        }
-
-        function closeModal() {
-            var modal = document.getElementById('lockedModal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var modal = document.getElementById('lockedModal');
-
-            // Close modal when clicking outside
-            if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        closeModal();
-                    }
-                });
-            }
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
-        });
-    </script>
+    <script src="./js/api.js"></script>
+    <script src="./js/pages/modules/lesson-list.js"></script>
 </body>
 
 </html>

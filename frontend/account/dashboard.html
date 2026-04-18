@@ -115,7 +115,7 @@
         }
 
         .module-card.insurance {
-            background:  #fff0b5;
+            background: #fff0b5;
             box-shadow: 8px 8px 0px 0px #FED18A;
         }
 
@@ -245,6 +245,36 @@
             background: var(--text-dark);
         }
 
+        .module-card.is-disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            filter: grayscale(100%);
+        }
+
+        .module-card.is-disabled:hover {
+            transform: none;
+        }
+
+        .module-card.placeholder {
+            background: #e9edf1;
+            box-shadow: 8px 8px 0px 0px #c7d0d8;
+        }
+
+        .module-note {
+            font-size: 0.9rem;
+            margin-bottom: 0.9rem;
+            color: rgba(44, 62, 80, 0.9);
+        }
+
+        .continue-btn[disabled] {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .carousel-btn.is-hidden {
+            display: none;
+        }
+
         /* Streak Section */
         .streak-section {
             background: white;
@@ -306,7 +336,7 @@
             filter: grayscale(100%);
             opacity: 0.4;
         }
-        
+
         .day-icon img {
             width: 100%;
             height: 100%;
@@ -511,7 +541,7 @@
             height: 100%;
             background: linear-gradient(90deg, #8bc34a 0%, #a4d65e 100%);
             border-radius: 10px;
-            width: 33%;
+            width: 0%;
             transition: width 0.3s ease;
         }
 
@@ -629,6 +659,21 @@
             transform: translateY(-2px);
         }
 
+        #dashboardError {
+            display: none;
+            background: #fde8e8;
+            color: #b00020;
+            border: 1px solid #f5b5b5;
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        #dashboardError.is-visible {
+            display: block;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             main {
@@ -706,10 +751,12 @@
     <nav id="navbar"></nav>
 
     <main>
+        <div id="dashboardError"></div>
+
         <!-- Welcome Section -->
         <section class="welcome-section">
             <div class="welcome-header">
-                <h1>Welcome back, Zoey!</h1>
+                <h1 id="welcomeTitle">Welcome!</h1>
                 <img src="../assets/images/mascot-pointer.png" alt="Mr. Wise mascot" class="welcome-mascot">
             </div>
             <h2 class="modules-title">My Modules</h2>
@@ -719,85 +766,51 @@
         <section class="carousel-container">
             <button class="carousel-btn prev" aria-label="Previous module">&#8249;</button>
             <div class="carousel-wrapper">
-                <div class="carousel">
-                    <div class="module-card insurance">
-                        <span class="module-progress">Finance 101</span>
-                        <div class="module-content">
-                            <h3><img src="../assets/images/finance-icon.png" alt="Insurance icon" class="module-icon"> Insurance</h3>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 60%;"></div>
-                            </div>
-                            <button class="continue-btn">Continue</button>
-                        </div>
-                    </div>
-                    <div class="module-card taxes">
-                        <span class="module-progress">Finance 101</span>
-                        <div class="module-content">
-                            <h3><img src="../assets/images/finance-icon.png" alt="Taxes icon" class="module-icon"> Taxes</h3>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 40%;"></div>
-                            </div>
-                            <button class="continue-btn">Continue</button>
-                        </div>
-                    </div>
-                    <div class="module-card managing-money">
-                        <span class="module-progress">Finance 101</span>
-                        <div class="module-content">
-                            <h3><img src="../assets/images/finance-icon.png" alt="Managing Money icon" class="module-icon"> Managing Money</h3>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 75%;"></div>
-                            </div>
-                            <button class="continue-btn">Continue</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="carousel" id="modulesCarousel" aria-live="polite"></div>
             </div>
             <button class="carousel-btn next" aria-label="Next module">&#8250;</button>
-            <div class="carousel-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-            </div>
+            <div class="carousel-dots" id="modulesDots"></div>
         </section>
 
         <!-- Streak Section -->
         <section class="streak-section">
             <div class="streak-header">
                 <img src="../assets/images/streak-icon.png" alt="Streak" class="streak-icon">
-                <h2>19 day Streak! Keep the Wheel Spinning</h2>
+                <h2 id="streakText">0 day Streak! Keep the Wheel Spinning.</h2>
             </div>
-            <div class="streak-days">
+            <div class="streak-days" id="streakDays">
                 <div class="day-item">
                     <div class="day-label">M</div>
-                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
                 <div class="day-item">
                     <div class="day-label">T</div>
-                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
                 <div class="day-item">
                     <div class="day-label">W</div>
-                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
                 <div class="day-item">
                     <div class="day-label">Th</div>
-                    <img src="../assets/images/streak-icon.png" alt="Active" class="day-icon active">
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
                 <div class="day-item">
                     <div class="day-label">F</div>
-                    <div class="day-icon inactive">⚪</div>
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
                 <div class="day-item">
                     <div class="day-label">S</div>
-                    <div class="day-icon inactive">⚪</div>
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
                 <div class="day-item">
                     <div class="day-label">Su</div>
-                    <div class="day-icon inactive">⚪</div>
+                    <img src="../assets/images/streak-icon.png" alt="Inactive" class="day-icon inactive">
                 </div>
             </div>
             <div class="streak-points">
                 <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
-                <span>+5 points</span>
+                <span id="streakRewardText">See you tomorrow for your reward.</span>
             </div>
         </section>
 
@@ -807,7 +820,7 @@
                 <h2>Earned Points</h2>
                 <div class="points-total">
                     <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
-                    <span>210 pts</span>
+                    <span id="pointsTotal">0 pts</span>
                 </div>
             </div>
             <button class="activity-tab">Recent Activity</button>
@@ -848,10 +861,10 @@
         <!-- Prize Store Section -->
         <section class="prize-store-section">
             <h2 class="prize-store-title">Prize Store</h2>
-            
+
             <div class="rewards-container">
                 <h3 class="rewards-title">Rewards</h3>
-                
+
                 <div class="reward-card">
                     <div class="reward-left">
                         <img src="../assets/images/money-coupon.png" alt="$ Coupon" class="reward-icon">
@@ -869,7 +882,8 @@
                             <h3>20% off next purchase at AutoZone</h3>
                         </div>
                     </div>
-                    <button class="see-details-btn" onclick="openCouponModal('20% off next purchase at AutoZone')">See Details</button>
+                    <button class="see-details-btn" onclick="openCouponModal('20% off next purchase at AutoZone')">See
+                        Details</button>
                 </div>
 
                 <!-- Collectable Section -->
@@ -879,19 +893,21 @@
                         <div class="progress-section">
                             <h3>Progress</h3>
                             <div class="progress-bar-container">
-                                <div class="progress-bar-fill"></div>
+                                <div id="progressBar" class="progress-bar-fill" style="width: 0%;"></div>
                             </div>
                             <p class="collectable-description">
-                                After you complete all of the modules, you'll earn your very own Mr. Wise figurine! 
-                                This collectible represents all the skills you've learned and mastered throughout 
+                                After you complete all of the modules, you'll earn your very own Mr. Wise figurine!
+                                This collectible represents all the skills you've learned and mastered throughout
                                 the lessons. Display him proudly and celebrate your achievements!
                             </p>
                         </div>
                         <div class="divider-line"></div>
                         <div class="mascot-section">
-                            <img src="../assets/images/mascot-wave.png" alt="Mr. Wise collectible figurine" class="mascot-image">
+                            <img src="../assets/images/mascot-wave.png" alt="Mr. Wise collectible figurine"
+                                class="mascot-image">
                             <button class="collect-btn">
-                                Collect Now <img src="../assets/images/lock-icon.png" alt="Locked" style="width: 16px; height: 16px; display: inline-block;">
+                                Collect Now <img src="../assets/images/lock-icon.png" alt="Locked"
+                                    style="width: 16px; height: 16px; display: inline-block;">
                             </button>
                         </div>
                     </div>
@@ -919,9 +935,11 @@
     <!-- Load components -->
     <script src="../js/components.js"></script>
     <script src="../js/hamburger-menu.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/account/dashboard.js"></script>
 
     <!-- Carousel functionality -->
-    <script>
+    <!-- <script>
         // Carousel functionality
         const carousel = document.querySelector('.carousel');
         const prevBtn = document.querySelector('.carousel-btn.prev');
@@ -930,10 +948,12 @@
         let currentIndex = 0;
 
         function updateCarousel() {
-            const cardWidth = document.querySelector('.module-card').offsetWidth;
+            const card = document.querySelector('.module-card');
+            if (!card) return;
+            const cardWidth = card.offsetWidth;
             const gap = 24; // 1.5rem in pixels
             carousel.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
-            
+
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentIndex);
             });
@@ -963,7 +983,7 @@
 
         // Responsive carousel update
         window.addEventListener('resize', updateCarousel);
-    </script>
+    </script> -->
 
     <!-- Coupon Modal Functions -->
     <script>
@@ -985,7 +1005,7 @@
         }
 
         // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
                 closeCouponModal();
             }
