@@ -1904,6 +1904,57 @@ const users = [
   }
 ];
 
+const prizes = [
+  {
+    "name": "$10 Walmart Coupon",
+    "description": "Redeemable coupon for Walmart purchases.",
+    "type": "coupon",
+    "cost": 25,
+    "couponCode": "WALMART10",
+    "available": true
+  },
+  {
+    "name": "Budget Tracker Printable",
+    "description": "A downloadable budget tracker PDF.",
+    "type": "printable",
+    "cost": 50,
+    "fileUrl": "/assets/images/printables/budget-tracker-printable.pdf",
+    "available": true
+  },
+  {
+    "name": "20% off next purchase at AutoZone",
+    "description": "AutoZone discount coupon for your next purchase.",
+    "type": "coupon",
+    "cost": 25,
+    "couponCode": "AUTO20",
+    "available": true
+  },
+  {
+    "name": "Publix Coupon for fresh produce",
+    "description": "Fresh produce coupon for Publix shoppers.",
+    "type": "coupon",
+    "cost": 25,
+    "couponCode": "PUBLIXFRESH",
+    "available": true
+  },
+  {
+    "name": "Calendar Printable",
+    "description": "A downloadable monthly calendar PDF.",
+    "type": "printable",
+    "cost": 50,
+    "fileUrl": "/assets/images/printables/calendar-printable.pdf",
+    "available": true
+  },
+  {
+    "name": "To-Do Printable",
+    "description": "A downloadable to-do list PDF.",
+    "type": "printable",
+    "cost": 50,
+    "fileUrl": "/assets/images/printables/to-do-printable.pdf",
+    "available": true
+  }
+];
+
 const secretCodes = [
   {
     "code": "W15E",
@@ -1950,6 +2001,13 @@ if (appDb.users.countDocuments() === 0) {
   print('Initialized users');
 } else {
   print('Users already exist, skipping init');
+}
+
+if (appDb.prizes.countDocuments() === 0) {
+  appDb.prizes.insertMany(prizes);
+  print('Initialized prizes');
+} else {
+  print('Prizes already exist, skipping init');
 }
 
 if (appDb.secretcodes.countDocuments() === 0) {
