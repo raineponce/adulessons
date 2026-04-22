@@ -148,10 +148,7 @@
         }
 
         .module-icon {
-            width: 30px;
-            height: 30px;
-            margin-right: 0.5rem;
-            flex-shrink: 0;
+            display: none;
         }
 
         .module-card h3 {
@@ -386,14 +383,32 @@
         }
 
         .activity-tab {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: var(--primary-blue);
             color: white;
-            border: none;
             padding: 0.75rem 1.5rem;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             margin-bottom: 1.5rem;
+            text-decoration: none;
+        }
+
+        .activity-helper-text {
+            margin-top: 0.85rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #4f6b82;
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .activity-tab:hover,
+        .activity-tab:focus-visible {
+            background: var(--primary-blue-dark, #3a6888);
+            color: white;
+            text-decoration: none;
         }
 
         .activity-list {
@@ -413,6 +428,15 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
+
+        .activity-section,
+        .activity-tab,
+        .activity-list,
+        .activity-item,
+        .activity-left,
+        .activity-points {
+            font-family: 'Nunito Sans', sans-serif;
         }
 
         .activity-avatar {
@@ -490,6 +514,12 @@
             border-radius: 8px;
             font-size: 0.875rem;
             cursor: pointer;
+        }
+
+        .see-details-btn[data-coupon-state="locked"] {
+            background: #9f9f9f;
+            cursor: not-allowed;
+            opacity: 0.9;
         }
 
         /* Collectable Section */
@@ -824,36 +854,42 @@
                     <span id="pointsTotal">0 pts</span>
                 </div>
             </div>
-            <button class="activity-tab">Recent Activity</button>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
-                        <span>Complete a lesson from any module</span>
+            <div class="activity-section">
+                <a class="activity-tab" href="./rewards.html">See Recent Activity</a>
+                <p class="activity-helper-text">Ways to Earn Points:</p>
+
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
+                            <span>Complete a Lesson from Any Module</span>
+                        </div>
+                        <div class="activity-points">
+                            <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                            <span>+10 pts</span>
+                        </div>
                     </div>
-                    <div class="activity-points">
-                        <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
-                        <span>+200 pts</span>
+
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
+                            <span>Daily Login Streak</span>
+                        </div>
+                        <div class="activity-points">
+                            <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                            <span>+5 pts</span>
+                        </div>
                     </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
-                        <span>Take a quiz</span>
-                    </div>
-                    <div class="activity-points">
-                        <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
-                        <span>+5 pts</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
-                        <span>Login for more than 1 day</span>
-                    </div>
-                    <div class="activity-points">
-                        <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
-                        <span>+5 pts</span>
+
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="../assets/images/profile-pic.png" alt="Zoey avatar" class="activity-avatar">
+                            <span>Enter a Secret Code</span>
+                        </div>
+                        <div class="activity-points">
+                            <img src="../assets/images/coin-icon.png" alt="Coin" class="coin-icon">
+                            <span>+? pts</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -873,7 +909,8 @@
                             <h3>$10 Walmart Coupon</h3>
                         </div>
                     </div>
-                    <button class="see-details-btn" onclick="openCouponModal('$10 Walmart Coupon')">See Details</button>
+                    <button class="see-details-btn" data-prize-key="walmart" data-coupon-state="locked"
+                        disabled>Locked</button>
                 </div>
 
                 <div class="reward-card">
@@ -883,8 +920,8 @@
                             <h3>20% off next purchase at AutoZone</h3>
                         </div>
                     </div>
-                    <button class="see-details-btn" onclick="openCouponModal('20% off next purchase at AutoZone')">See
-                        Details</button>
+                    <button class="see-details-btn" data-prize-key="autozone" data-coupon-state="locked"
+                        disabled>Locked</button>
                 </div>
 
                 <!-- Collectable Section -->

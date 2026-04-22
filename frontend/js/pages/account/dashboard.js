@@ -22,6 +22,7 @@
     dom.prevBtn = document.querySelector(".carousel-btn.prev");
     dom.nextBtn = document.querySelector(".carousel-btn.next");
     dom.dotsContainer = document.getElementById("modulesDots") || document.querySelector(".carousel-dots");
+    dom.prizeButtons = document.querySelectorAll(".see-details-btn[data-prize-key]");
   }
 
   function initPage() {
@@ -45,6 +46,7 @@
       renderProfile(profile);
       renderProgress(progress);
       renderModuleCards(profile, progress);
+      await renderPrizeStore(profile);
     } catch (err) {
       if (window.AppApi.handleAuthError(err)) return;
       renderError(err && err.message ? err.message : "Failed to load dashboard.");
@@ -103,21 +105,37 @@
   }
 
   function getActiveStreakDays(streakCount, lastActive) {
-    var activeDays = [];
+  var activeDays = [];
 
-    if (!streakCount || !lastActive || isNaN(lastActive.getTime())) {
-      return activeDays;
-    }
-
-    var cappedStreak = Math.min(streakCount, 7);
-    var lastActiveIndex = (lastActive.getDay() + 6) % 7;
-
-    for (var offset = 0; offset < cappedStreak; offset++) {
-      activeDays.push((lastActiveIndex - offset + 7) % 7);
-    }
-
+  if (!streakCount || !lastActive || isNaN(lastActive.getTime())) {
     return activeDays;
   }
+
+  var today = new Date();
+  var dayOfWeek = today.getDay();
+  var daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  var mondayOfThisWeek = new Date(today);
+  mondayOfThisWeek.setDate(today.getDate() - daysSinceMonday);
+  mondayOfThisWeek.setHours(0, 0, 0, 0);
+
+  if (lastActive < mondayOfThisWeek) {
+    return activeDays;
+  }
+
+  var daysActiveThisWeek = 0;
+  var currentCheckDate = new Date(lastActive);
+
+  for (var i = 0; i < streakCount && i < 7; i++) {
+    if (currentCheckDate >= mondayOfThisWeek) {
+      var dayIndex = (currentCheckDate.getDay() + 6) % 7;
+      activeDays.push(dayIndex);
+      daysActiveThisWeek++;
+    }
+    currentCheckDate.setDate(currentCheckDate.getDate() - 1);
+  }
+
+  return activeDays;
+}
 
   function renderProgress(progress) {
     var overallPercent = progress && typeof progress.overallPercent === "number"
@@ -378,6 +396,7 @@
 
     dom.carousel.style.transform = "translateX(-" + offset + "px)";
 
+
     if (dom.dotsContainer) {
       var dots = dom.dotsContainer.querySelectorAll(".dot");
       for (var i = 0; i < dots.length; i++) {
@@ -387,12 +406,115 @@
   }
 
   function renderLoading(isLoading) {
-    state.isLoading = isLoading;
+  state.isLoading = isLoading;
 
-    if (dom.main) {
-      dom.main.classList.toggle("loading-state", isLoading);
+  if (dom.main) {
+    dom.main.classList.toggle("loading-state", isLoading);
+  }
+
+  if (!dom.prizeButtons || !dom.prizeButtons.length) {
+    return;
+  }
+
+  if (isLoading) {
+    for (var i = 0; i < dom.prizeButtons.length; i++) {
+      var btn = dom.prizeButtons[i];
+      btn.disabled = true;
+      btn.textContent = "Loading...";
     }
   }
+}
+  async function renderPrizeStore(profile) {
+  if (!dom.prizeButtons || !dom.prizeButtons.length) return;
+
+  try {
+    var results = await Promise.allSettled([
+      window.AppApi.getPrizes(),
+      window.AppApi.getRedeemedPrizes()
+    ]);
+
+    var prizes = results[0].status === "fulfilled" && Array.isArray(results[0].value)
+      ? results[0].value
+      : [];
+    var redeemedPrizes = results[1].status === "fulfilled" && Array.isArray(results[1].value)
+      ? results[1].value
+      : [];
+
+    var points = Number((profile && profile.points) || 0);
+    var redeemedSet = getRedeemedPrizeIdSet(redeemedPrizes);
+
+    for (var i = 0; i < dom.prizeButtons.length; i++) {
+      var button = dom.prizeButtons[i];
+      var prizeKey = button.getAttribute("data-prize-key") || "";
+      var prize = findCouponPrizeByKey(prizes, prizeKey);
+
+      if (!prize) {
+        button.disabled = true;
+        button.textContent = "Locked";
+        button.setAttribute("data-coupon-state", "locked");
+        button.onclick = null;
+        continue;
+      }
+
+      var prizeId = String(prize._id || prize.id || "");
+      var isRedeemed = redeemedSet.has(prizeId);
+      var enoughPoints = points >= Number(prize.cost || 0);
+
+      var canViewDetails = isRedeemed || enoughPoints;
+      button.disabled = !canViewDetails;
+      button.textContent = canViewDetails ? "See Details" : "Locked";
+      button.setAttribute("data-coupon-state", canViewDetails ? "details" : "locked");
+      button.onclick = canViewDetails ? createPrizeModalHandler(prize.name || "Coupon Details") : null;
+    }
+  } catch (err) {
+    for (var j = 0; j < dom.prizeButtons.length; j++) {
+      dom.prizeButtons[j].disabled = true;
+      dom.prizeButtons[j].textContent = "Locked";
+      dom.prizeButtons[j].setAttribute("data-coupon-state", "locked");
+      dom.prizeButtons[j].onclick = null;
+    }
+  }
+}
+
+function findCouponPrizeByKey(prizes, prizeKey) {
+  if (!Array.isArray(prizes) || !prizeKey) return null;
+
+  var key = String(prizeKey).toLowerCase();
+
+  for (var i = 0; i < prizes.length; i++) {
+    var prize = prizes[i];
+    if (!prize || prize.type !== "coupon") continue;
+
+    var name = String(prize.name || "").toLowerCase();
+
+    if (key === "walmart" && name.indexOf("walmart") !== -1) return prize;
+    if (key === "autozone" && name.indexOf("autozone") !== -1) return prize;
+  }
+
+  return null;
+}
+
+function getRedeemedPrizeIdSet(redeemedPrizes) {
+  var set = new Set();
+
+  if (!Array.isArray(redeemedPrizes)) return set;
+
+  for (var i = 0; i < redeemedPrizes.length; i++) {
+    var item = redeemedPrizes[i];
+    var prizeId = item && item.prizeId ? (item.prizeId._id || item.prizeId) : null;
+    if (prizeId) set.add(String(prizeId));
+  }
+
+  return set;
+}
+
+function createPrizeModalHandler(prizeName) {
+  return function () {
+    if (typeof window.openCouponModal === "function") {
+      window.openCouponModal(prizeName);
+    }
+  };
+}
 
   function renderError(message) {
     if (!dom.dashboardError) return;
