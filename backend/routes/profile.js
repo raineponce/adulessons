@@ -230,10 +230,17 @@ router.delete('/', requireAuth, async (req, res) => {
   try {
     const userId = req.session.userId;
 
-    await User.findByIdAndDelete(userId);
-
-    req.session.destroy(() => {
-      res.json({ success: true });
+    // Destroy the session first; if user deletion fails the user can log back in
+    req.session.destroy(async (sessionErr) => {
+      if (sessionErr) {
+        return res.status(500).json({ error: 'Server error' });
+      }
+      try {
+        await User.findByIdAndDelete(userId);
+        res.json({ success: true });
+      } catch (err) {
+        res.status(500).json({ error: 'Server error' });
+      }
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });

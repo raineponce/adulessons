@@ -77,7 +77,7 @@
     AppApi.deleteAccount()
       .then(function () {
         closeDeactivateModal();
-        window.location.href = '../welcome.html';
+        window.location.href = '/welcome.html';
       })
       .catch(function (err) {
         if (!AppApi.handleAuthError(err)) {
