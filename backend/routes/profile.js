@@ -200,4 +200,51 @@ router.get('/progress', requireAuth, async (req, res) => {
   }
 });
 
+// POST /profile/reset-progress — Reset all user progress to new-account state
+router.post('/reset-progress', requireAuth, async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(
+      req.session.userId,
+      {
+        completedLessons: [],
+        currentLesson: null,
+        points: 0,
+        'streak.current': 0,
+        'streak.lastActive': null,
+        redeemedPrizes: [],
+        allLessonsComplete: false,
+        finalPrizeClaimed: false,
+        usedCodes: [],
+      },
+      { new: true }
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// DELETE /profile — Permanently delete the user's account and destroy the session
+router.delete('/', requireAuth, async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    // Destroy the session first; if user deletion fails the user can log back in
+    req.session.destroy(async (sessionErr) => {
+      if (sessionErr) {
+        return res.status(500).json({ error: 'Server error' });
+      }
+      try {
+        await User.findByIdAndDelete(userId);
+        res.json({ success: true });
+      } catch (err) {
+        res.status(500).json({ error: 'Server error' });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 module.exports = router;
