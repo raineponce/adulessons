@@ -142,7 +142,7 @@
 		}
 
 		if (refs.quizSubtitle) {
-			refs.quizSubtitle.textContent = "Select one answer, then submit to check your understanding.";
+			refs.quizSubtitle.textContent = "Were you paying attention? Let's find out!";
 		}
 
 		if (refs.quizQuestion) {
