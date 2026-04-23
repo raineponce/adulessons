@@ -204,7 +204,7 @@
         main {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 5rem;
             position: relative;
         }
 
@@ -241,7 +241,6 @@
             font-family: var(--font-display);
             font-size: 2.5rem;
             font-weight: 700;
-            font-style: italic;
             color: var(--color-text-dark);
             margin-bottom: 1rem;
         }
@@ -257,12 +256,12 @@
             font-family: var(--font-body);
             font-size: 0.95rem;
             color: var(--color-text-muted);
-            margin-bottom: 1.5rem;
+            margin-bottom: 4.5rem;
         }
 
         .quiz-question {
             font-family: var(--font-body);
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--color-text-dark);
             margin-bottom: 2.5rem;
@@ -304,6 +303,7 @@
             cursor: pointer;
             font-family: var(--font-display);
             font-weight: 700;
+            font-size: 1.3rem;
             transition: all 0.2s ease;
         }
 
@@ -347,7 +347,8 @@
         .submit-button {
             background: var(--color-accent-blue);
             color: var(--color-white);
-            min-width: 160px;
+            min-width: 250px;
+            min-height: 70px
         }
 
         .submit-button:hover:not(:disabled) {
@@ -456,129 +457,148 @@
             background: var(--color-light-blue);
         }
 
-        /* Modal Overlay */
-        .modal-overlay {
+        /* Result Modal */
+        .result-modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
+            inset: 0;
+            background: rgba(26, 25, 32, 0.72);
+            z-index: 3000;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
-        .modal-overlay.active {
+        .result-modal-overlay.active {
             display: flex;
         }
 
-        /* Modal Box */
-        .modal-box {
-            background: var(--color-white);
-            border-radius: 24px;
-            padding: 3rem 4rem;
-            max-width: 700px;
-            width: 100%;
+        .result-modal-card {
+            width: 65vw;
+            max-width: 1200px;
+            min-height: 333px;
+            background: #f6f6f7;
+            border-radius: 42px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
             position: relative;
-            animation: modalSlideIn 0.3s ease;
+            padding: 1.5rem 4.5rem;
+            animation: modalSlideIn 0.28s ease;
+            overflow: hidden;
+        }
+
+        .result-modal-next,
+        .result-modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .result-modal-next {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            background: #c8dfb2;
+            color: #2d2d2d;
+        }
+
+        .result-modal-next:hover,
+        .result-modal-close:hover {
+            transform: scale(1.05);
+        }
+
+        .result-modal-next svg {
+            width: 42px;
+            height: 42px;
+        }
+
+        .result-modal-close {
+            width: 62px;
+            height: 62px;
+            border-radius: 12px;
+            background: transparent;
+            color: #171717;
+            font-size: 4rem;
+            line-height: 1;
+        }
+
+        .result-modal-body {
+            height: 100%;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .result-modal-body.wrong-layout .result-modal-mascot {
+            order: 1;
+        }
+
+        .result-modal-body.wrong-layout .result-modal-copy {
+            order: 2;
+            text-align: left;
+        }
+
+        .result-modal-copy {
+            text-align: center;
+            max-width: 680px;
+        }
+
+        .result-modal-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.7rem;
+        }
+
+        .result-modal-message {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            line-height: 1.22;
+            color: #1f1f1f;
+            margin: 0;
+        }
+
+        .result-modal-mascot {
+            width: auto;
+            height: 190px;
+            flex: 0 0 auto;
+        }
+
+        .result-modal-overlay.correct .result-modal-title {
+            color: var(--color-correct-green);
+        }
+
+        .result-modal-overlay.wrong .result-modal-title {
+            color: var(--color-wrong-red);
+        }
+
+        .result-modal-overlay.wrong .result-modal-body {
+            justify-content: center;
+        }
+
+        .result-modal-overlay.wrong .result-modal-copy {
+            max-width: none;
         }
 
         @keyframes modalSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(16px);
             }
 
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* Wrong Modal */
-        .modal-wrong .modal-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .modal-wrong .modal-text {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--color-wrong-red);
-        }
-
-        .modal-wrong .close-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--color-text-dark);
-            font-size: 2rem;
-            line-height: 1;
-            transition: transform 0.2s ease;
-        }
-
-        .modal-wrong .close-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Correct Modal */
-        .modal-correct .modal-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .modal-correct .modal-text {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-text-dark);
-        }
-
-        .modal-correct .modal-text .highlight {
-            color: var(--color-correct-green);
-        }
-
-        .modal-correct .next-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--color-green);
-            border: none;
-            border-radius: 12px;
-            width: 48px;
-            height: 48px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .modal-correct .next-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .modal-correct .next-btn svg {
-            width: 24px;
-            height: 24px;
-            color: var(--color-text-dark);
-        }
-
-        .mascot-img {
-            width: 120px;
-            height: auto;
         }
 
         /* Responsive Styles */
@@ -621,25 +641,55 @@
                 font-size: 1rem;
             }
 
-            .modal-box {
-                padding: 2rem;
+            .result-modal-overlay {
+                padding: 1rem;
             }
 
-            .modal-wrong .modal-text {
-                font-size: 1.75rem;
+            .result-modal-card {
+                width: 100%;
+                min-height: 333px;
+                border-radius: 28px;
+                padding: 3.4rem 1.4rem 2.2rem;
             }
 
-            .modal-correct .modal-text {
-                font-size: 1.5rem;
+            .result-modal-next,
+            .result-modal-close {
+                top: 1rem;
+                right: 1rem;
             }
 
-            .quiz-actions {
-                flex-direction: column;
-                align-items: stretch;
+            .result-modal-next {
+                width: 56px;
+                height: 56px;
             }
 
-            .mascot-img {
-                width: 80px;
+            .result-modal-next svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .result-modal-close {
+                width: 48px;
+                height: 48px;
+                font-size: 3rem;
+            }
+
+            .result-modal-body {
+                min-height: 260px;
+                gap: 1rem;
+            }
+
+            .result-modal-title {
+                font-size: 2.8rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .result-modal-message {
+                font-size: 1.65rem;
+            }
+
+            .result-modal-mascot {
+                height: 140px;
             }
         }
 
@@ -662,10 +712,28 @@
                 font-size: 1.75rem;
             }
 
-            .modal-wrong .modal-content,
-            .modal-correct .modal-content {
+            .result-modal-card {
+                min-height: 320px;
+                padding-top: 3rem;
+            }
+
+            .result-modal-body,
+            .result-modal-overlay.wrong .result-modal-body {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .result-modal-copy,
+            .result-modal-overlay.wrong .result-modal-copy {
+                text-align: center;
+            }
+
+            .result-modal-message {
+                font-size: 1.35rem;
+            }
+
+            .result-modal-mascot {
+                height: 108px;
             }
         }
     </style>
@@ -718,12 +786,6 @@
     </nav>
 
     <main>
-        <button class="back-button" id="backBtn" aria-label="Go back">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
 
         <div id="pageState" class="status-box hidden" aria-live="polite"></div>
 
@@ -744,14 +806,36 @@
 
             <section class="quiz-feedback" id="quizFeedback" aria-live="polite"></section>
 
-            <div class="quiz-continue-row hidden" id="continueRow">
-                <a href="#" class="continue-button" id="continueBtn">Continue</a>
-            </div>
         </div>
     </main>
 
     <!-- Footer component loads here -->
     <footer id="footer"></footer>
+
+    <div class="result-modal-overlay" id="quizResultModal" role="dialog" aria-modal="true"
+        aria-labelledby="resultModalTitle">
+        <div class="result-modal-card">
+            <button type="button" class="result-modal-next" id="resultModalNext" aria-label="Continue to key takeaways">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+
+            <button type="button" class="result-modal-close" id="resultModalClose"
+                aria-label="Close wrong answer modal">&times;</button>
+
+            <div class="result-modal-body" id="resultModalBody">
+                <div class="result-modal-copy">
+                    <h2 class="result-modal-title" id="resultModalTitle"></h2>
+                    <p class="result-modal-message" id="resultModalMessage"></p>
+                </div>
+
+                <img class="result-modal-mascot" src="../assets/images/mascot-pointer.png" alt="Mascot pointer"
+                    loading="lazy">
+            </div>
+        </div>
+    </div>
 
     <!-- Load components -->
     <script src="../js/components.js"></script>

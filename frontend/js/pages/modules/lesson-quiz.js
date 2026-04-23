@@ -23,9 +23,13 @@
 		answersGrid: null,
 		submitBtn: null,
 		quizFeedback: null,
-		continueRow: null,
-		continueBtn: null,
-		pageState: null
+		pageState: null,
+		resultModal: null,
+		resultModalBody: null,
+		resultModalTitle: null,
+		resultModalMessage: null,
+		resultModalNext: null,
+		resultModalClose: null
 	};
 
 	function cacheDom() {
@@ -37,9 +41,13 @@
 		refs.answersGrid = document.getElementById("answersGrid");
 		refs.submitBtn = document.getElementById("submitBtn");
 		refs.quizFeedback = document.getElementById("quizFeedback");
-		refs.continueRow = document.getElementById("continueRow");
-		refs.continueBtn = document.getElementById("continueBtn");
 		refs.pageState = document.getElementById("pageState");
+		refs.resultModal = document.getElementById("quizResultModal");
+		refs.resultModalBody = document.getElementById("resultModalBody");
+		refs.resultModalTitle = document.getElementById("resultModalTitle");
+		refs.resultModalMessage = document.getElementById("resultModalMessage");
+		refs.resultModalNext = document.getElementById("resultModalNext");
+		refs.resultModalClose = document.getElementById("resultModalClose");
 	}
 
 	function initFromQuery() {
@@ -57,12 +65,19 @@
 			refs.submitBtn.addEventListener("click", handleSubmit);
 		}
 
-		if (refs.continueBtn) {
-			refs.continueBtn.addEventListener("click", function (event) {
-				event.preventDefault();
-				continueForward();
-			});
+		if (refs.resultModalNext) {
+			refs.resultModalNext.addEventListener("click", continueForward);
 		}
+
+		if (refs.resultModalClose) {
+			refs.resultModalClose.addEventListener("click", closeWrongModal);
+		}
+
+		document.addEventListener("keydown", function (event) {
+			if (event.key === "Escape" && refs.resultModal && refs.resultModal.classList.contains("active") && refs.resultModal.classList.contains("wrong")) {
+				closeWrongModal();
+			}
+		});
 
 		if (refs.answersGrid) {
 			refs.answersGrid.addEventListener("click", function (event) {
@@ -123,12 +138,6 @@
 			refs.quizFeedback.className = "quiz-feedback active";
 			refs.quizFeedback.innerHTML = "<p class='quiz-feedback-title'>Quiz unavailable</p>";
 		}
-		if (refs.continueRow) {
-			refs.continueRow.classList.remove("hidden");
-		}
-		if (refs.continueBtn) {
-			refs.continueBtn.href = buildContinueUrl();
-		}
 	}
 
 	function renderQuiz() {
@@ -142,7 +151,7 @@
 		}
 
 		if (refs.quizSubtitle) {
-			refs.quizSubtitle.textContent = "Select one answer, then submit to check your understanding.";
+			refs.quizSubtitle.textContent = "Were you paying attention? Let's find out!";
 		}
 
 		if (refs.quizQuestion) {
@@ -167,11 +176,8 @@
 			refs.quizFeedback.innerHTML = "";
 		}
 
-		if (refs.continueRow) {
-			refs.continueRow.classList.add("hidden");
-		}
-
 		updatePointsLabel();
+		hideResultModal();
 		hideState();
 	}
 
@@ -230,32 +236,50 @@
 	}
 
 	function showResult(isCorrect) {
-		if (!refs.quizFeedback) {
+		if (!refs.resultModal) {
 			return;
 		}
 
-		var title = isCorrect ? "Correct" : "Not quite";
-		var body = isCorrect
-			? "You picked the right answer."
-			: "That answer is not correct, but you can still review the explanation below.";
+		refs.resultModal.className = "result-modal-overlay active " + (isCorrect ? "correct" : "wrong");
 
-		refs.quizFeedback.className = "quiz-feedback active " + (isCorrect ? "correct" : "wrong");
-		refs.quizFeedback.innerHTML =
-			"<p class='quiz-feedback-title'>" +
-			escapeHtml(title) +
-			"</p><p>" +
-			escapeHtml(body) +
-			"</p><p class='quiz-explanation'><strong>Explanation:</strong> " +
-			escapeHtml(state.quiz.explanation || "") +
-			"</p>";
-
-		if (refs.continueRow) {
-			refs.continueRow.classList.remove("hidden");
+		if (refs.resultModalTitle) {
+			refs.resultModalTitle.textContent = isCorrect ? "That's right!" : "Nope, try again!";
 		}
 
-		if (refs.continueBtn) {
-			refs.continueBtn.href = buildContinueUrl();
+		if (refs.resultModalMessage) {
+			refs.resultModalMessage.textContent = isCorrect ? (state.quiz.explanation || "") : "";
+			refs.resultModalMessage.style.display = isCorrect ? "block" : "none";
 		}
+
+		if (refs.resultModalBody) {
+			refs.resultModalBody.classList.toggle("wrong-layout", !isCorrect);
+		}
+
+		if (refs.resultModalNext) {
+			refs.resultModalNext.style.display = isCorrect ? "inline-flex" : "none";
+		}
+
+		if (refs.resultModalClose) {
+			refs.resultModalClose.style.display = isCorrect ? "none" : "inline-flex";
+		}
+
+		document.body.style.overflow = "hidden";
+	}
+
+	function hideResultModal() {
+		if (!refs.resultModal) {
+			return;
+		}
+
+		refs.resultModal.className = "result-modal-overlay";
+		document.body.style.overflow = "";
+	}
+
+	function closeWrongModal() {
+		hideResultModal();
+		state.submitted = false;
+		state.selectedIndex = null;
+		renderQuiz();
 	}
 
 	function buildContinueUrl() {

@@ -15,6 +15,7 @@
 		pageTitle: null,
 		pageState: null,
 		completionMessage: null,
+		keyTakeawaysList: null,
 		moduleButton: null
 	};
 
@@ -23,6 +24,7 @@
 		refs.pageTitle = document.getElementById("pageTitle");
 		refs.pageState = document.getElementById("pageState");
 		refs.completionMessage = document.getElementById("completionMessage");
+		refs.keyTakeawaysList = document.getElementById("keyTakeawaysList");
 		refs.moduleButton = document.getElementById("moduleButton");
 	}
 
@@ -76,7 +78,7 @@
 		refs.pageState.innerHTML = "";
 	}
 
-	function renderCompletion() {
+	function renderCompletion(lesson) {
 		if (refs.pageTitle) {
 			refs.pageTitle.textContent = "Key Take Aways";
 		}
@@ -89,6 +91,30 @@
 		if (refs.moduleButton) {
 			refs.moduleButton.href = "../lesson-list.html?moduleId=" + encodeURIComponent(state.moduleId);
 		}
+
+		renderTakeawaysList(lesson);
+	}
+
+	function renderTakeawaysList(lesson) {
+		if (!refs.keyTakeawaysList) {
+			return;
+		}
+
+		var takeaways = lesson && Array.isArray(lesson.keyTakeaways) ? lesson.keyTakeaways : [];
+		refs.keyTakeawaysList.innerHTML = "";
+
+		if (!takeaways.length) {
+			refs.keyTakeawaysList.classList.add("hidden");
+			return;
+		}
+
+		for (var i = 0; i < takeaways.length; i += 1) {
+			var item = document.createElement("li");
+			item.textContent = String(takeaways[i] || "");
+			refs.keyTakeawaysList.appendChild(item);
+		}
+
+		refs.keyTakeawaysList.classList.remove("hidden");
 	}
 
 	async function loadPage() {
@@ -110,7 +136,7 @@
 
 			state.lessonTitle = lesson && lesson.title ? lesson.title : "this lesson";
 
-			renderCompletion();
+			renderCompletion(lesson);
 			hideState();
 		} catch (err) {
 			if (window.AppApi.handleAuthError(err)) {
