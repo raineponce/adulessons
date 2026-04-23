@@ -6,6 +6,7 @@
 
 	var refs = {
 		moduleTitle: null,
+		moduleDescription: null,
 		lessonsList: null,
 		pageState: null,
 		progressText: null
@@ -13,6 +14,7 @@
 
 	function cacheDom() {
 		refs.moduleTitle = document.getElementById("moduleTitle");
+		refs.moduleDescription = document.getElementById("moduleDescription");
 		refs.lessonsList = document.getElementById("lessonsList");
 		refs.pageState = document.getElementById("pageState");
 		refs.progressText = document.getElementById("moduleProgressText");
@@ -101,6 +103,22 @@
 			}) ||
 			modules[0]
 		);
+	}
+
+	function getModuleHeaderDescription(module) {
+		if (!module || !module.introPage || !Array.isArray(module.introPage.blocks)) {
+			return module && module.description ? module.description : "";
+		}
+
+		var textBlock = module.introPage.blocks.find(function (block) {
+			return block && block.type === "text" && typeof block.body === "string";
+		});
+
+		if (textBlock && textBlock.body) {
+			return textBlock.body;
+		}
+
+		return module.description || "";
 	}
 
 	async function fetchLessonDetails(lessonIds) {
@@ -294,6 +312,10 @@
 
 			if (refs.moduleTitle) {
 				refs.moduleTitle.textContent = activeModule.title || "Lessons";
+			}
+
+			if (refs.moduleDescription) {
+				refs.moduleDescription.textContent = getModuleHeaderDescription(activeModule);
 			}
 
 			renderProgress(progressResponse, activeModule.moduleId);
