@@ -251,28 +251,20 @@ const lessons = [
   {
     "lessonId": "mod1-lesson1",
     "moduleId": "mod1",
-    "title": "Budgeting 101",
+    "title": "Taxes",
     "order": 1,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "What Is a Budget?"
+            "type": "image",
+            "src": "/assets/images/banners/finance-taxes.png",
+            "alt": "Tax lesson banner"
           },
           {
             "type": "text",
-            "body": "A budget is a plan that helps you decide how to spend and save your money each month. By tracking what comes in (income) and what goes out (expenses), you can make sure you have enough for what matters most."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/coin-icon.png",
-            "alt": "Coin icon"
-          },
-          {
-            "type": "callout",
-            "body": "A budget is a plan for your money — not a restriction!"
+            "body": "Taxes ... the one thing nobody really teaches you, but everybody has to deal with. Between the weird form names, the April deadlines, and the fear of \"doing it wrong,\" it's easy to feel totally lost. But here's the truth: taxes are way more manageable than they seem, and once you know the basics, you'll be filing like a pro (or at least like a functional adult)."
           }
         ]
       },
@@ -281,21 +273,20 @@ const lessons = [
         "blocks": [
           {
             "type": "video",
-            "videoId": "U9nv4kRPBz4"
+            "videoId": "LYsqkGRpv_k"
+          },
+          {
+            "type": "text",
+            "body": "Let's dip our toes into the world of tax with this fun explainer video. This video covers:"
           },
           {
             "type": "list",
             "items": [
-              "Track your income",
-              "List your expenses",
-              "Find where you can save"
+              "The Who, What, When, Where, Why, & How of Taxes",
+              "Simple concept explanations",
+              "Important vocab (audits, brackets, deductions, & more!)"
             ],
             "ordered": false
-          },
-          {
-            "type": "link",
-            "href": "https://www.consumerfinance.gov/",
-            "linkText": "Consumer Financial Protection Bureau"
           }
         ]
       },
@@ -304,28 +295,131 @@ const lessons = [
         "blocks": [
           {
             "type": "heading",
-            "body": "Quick Budget Tip"
+            "body": "Taxes (The Very Basics)"
           },
           {
             "type": "text",
-            "body": "Try the 50/30/20 method: 50% for needs, 30% for wants, and 20% for savings or debt. It is a simple way to start balancing your money."
+            "body": "Welcome to the magical land of taxes, where you get mail you didn't ask for and forms with names like \"1099-misc.\" But don't panic! When you get down to it, taxes aren't as scary as they sound."
+          },
+          {
+            "type": "heading",
+            "body": "So what are taxes?"
+          },
+          {
+            "type": "text",
+            "body": "Taxes are basically the way we all chip in to keep things running: roads, schools, libraries, emergency services, all that good stuff. When you earn money, buy stuff, or own certain things, a small piece of that goes toward public services."
+          },
+          {
+            "type": "heading",
+            "body": "When do you file?"
+          },
+          {
+            "type": "text",
+            "body": "Most people file taxes once a year, usually between January and April. The big day to remember is Tax Day, typically around April 15 (unless the government changes it for some reason ... don't worry, a quick internet search can let you know)."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Who Should File?"
+          },
+          {
+            "type": "text",
+            "body": "Short answer: Almost everyone. Even if you made only a little money last year, it's usually worth filing because:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "You might get some of your money back (we love tax refunds)",
+              "It helps you stay in good standing with the IRS",
+              "It's great practice for being a Responsible Adult(TM)"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "heading",
+            "body": "What Should You Expect?"
+          },
+          {
+            "type": "text",
+            "body": "When tax season comes around, you'll get documents from places that paid you (like your job, school, or bank)."
+          },
+          {
+            "type": "text",
+            "body": "These forms tell the IRS how much money you earned so they can compare it to what you report."
+          },
+          {
+            "type": "text",
+            "body": "Your job is just to plug those numbers into your tax filing service and let the software do the heavy lifting."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Tax Filing Services"
+          },
+          {
+            "type": "text",
+            "body": "Good news: you don't really have to do any math. Tax software exists and helps make tax filing a breeze :)"
+          },
+          {
+            "type": "text",
+            "body": "Popular Online Filing Services"
+          },
+          {
+            "type": "list",
+            "items": [
+              "These can walk you through everything step-by-step:",
+              "TurboTax - very user-friendly, but not always free",
+              "H&R Block Online - solid option with clear explanations",
+              "Cash App Taxes - often free for federal and state returns"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "text",
+            "body": "Free Filing Options"
+          },
+          {
+            "type": "text",
+            "body": "If your budget just covers rent and ramen, take a look at these free options:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "IRS Free File",
+              "Available to many taxpayers (usually based on income limits)",
+              "Check it out: https://www.irs.gov/filing/free-file-do-your-federal-taxes-for-free",
+              "FreeTaxUSA",
+              "Free for federal returns",
+              "State filing usually has a small fee",
+              "Easy to navigate and beginner-friendly",
+              "Check it out: https://www.freetaxusa.com/"
+            ],
+            "ordered": false
           },
           {
             "type": "callout",
-            "body": "Small changes can make a big difference over time."
+            "body": "Taxes feel intimidating at first, but once you've filed once, everything starts clicking. Think of it like laundry: confusing when you're new, but eventually you can do it while half-asleep."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is the main purpose of a budget?",
+      "question": "Let's say you only made a small amount of money this year. Should you still file your taxes?",
       "options": [
-        "To restrict spending",
-        "To plan how you use your money",
-        "To increase your income",
-        "To avoid paying taxes"
+        "Yes, because you're legally required to file taxes.",
+        "No, because nothing will happen if you do.",
+        "Yes, because you might qualify for a refund.",
+        "No, because it’s too much hassle."
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "explanation": "A budget helps you plan and control how your money is spent — it's a tool, not a punishment."
     },
     "keyTakeaways": [
@@ -835,21 +929,13 @@ const lessons = [
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Managing Your Time"
+            "type": "image",
+            "src": "/assets/images/banners/productivity-time-management.png",
+            "alt": "Time management banner"
           },
           {
             "type": "text",
-            "body": "Time management helps you plan your day, finish priorities, and feel less stressed."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/productivity-icon.png",
-            "alt": "Time management icon"
-          },
-          {
-            "type": "callout",
-            "body": "Plan first, then act."
+            "body": "Time management is the ability to plan and organize how you use your time. When your time is structured, tasks feel more manageable and days feel less chaotic. In this lesson, you'll learn practical tools to plan your schedule, prioritize tasks, and stay focused so you can use your time more effectively in school, work, and everyday life."
           }
         ]
       },
@@ -857,69 +943,118 @@ const lessons = [
         "pageNumber": 2,
         "blocks": [
           {
-            "type": "video",
-            "videoId": "iONDebHX9qk"
+            "type": "image",
+            "src": "/assets/images/infographics/mod3-lesson1.png",
+            "alt": "Time management infographic"
           },
           {
             "type": "list",
             "items": [
-              "List top 3 tasks",
-              "Use a timer",
-              "Review your day"
+              "Planning your time helps you stay organized.",
+              "Prioritizing tasks prevents last-minute stress.",
+              "Writing tasks down improves focus and follow-through.",
+              "Small-time habits can lead to better productivity."
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Understanding How You Use Time"
           },
           {
-            "type": "link",
-            "href": "https://todoist.com/productivity-methods",
-            "linkText": "Productivity Methods"
+            "type": "text",
+            "body": "Time management starts with awareness. Many people feel busy but don't always know where their time goes."
+          },
+          {
+            "type": "text",
+            "body": "A helpful first step is paying attention to how you spend your day, including work, classes, studying, and free time. Tracking your activities for a short period can reveal patterns and highlight areas where time could be used more intentionally."
+          },
+          {
+            "type": "text",
+            "body": "The goal is not to eliminate free time, but to understand your schedule so you can make informed choices and plan your day more effectively."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Planning and Prioritizing Tasks"
+          },
+          {
+            "type": "text",
+            "body": "Planning helps turn responsibilities into clear, manageable steps. Start by writing down everything you need to do, then decide which tasks are most important or time-sensitive."
+          },
+          {
+            "type": "text",
+            "body": "Breaking large tasks into smaller pieces makes them easier to start and complete. Using planners, calendars, or digital tools can help you stay organized and keep track of deadlines. When tasks are prioritized, it becomes easier to focus on what matters most instead of feeling overwhelmed by everything at once."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Staying Focused and Using Time Efficiently"
+          },
+          {
+            "type": "text",
+            "body": "Using time well also means protecting your focus. Distractions like notifications, multitasking, or cluttered spaces can make tasks take longer than necessary. Creating a simple routine, setting time limits for tasks, or working in short sessions can help improve efficiency."
+          },
+          {
+            "type": "text",
+            "body": "Taking short, planned pauses between tasks helps maintain attention and productivity. When your time is structured and distractions are limited, it becomes easier to complete tasks consistently and stay on track throughout the day."
+          },
+          {
+            "type": "callout",
+            "heading": "Respect Your Time",
+            "body": "Time management is a practical skill that improves with practice. With planning, prioritization, and focus, you can take control of your schedule and use your time more effectively."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is the main benefit of effective time management?",
+      "question": "Alexis feels busy all day but still forgets assignments and deadlines. They often rush to finish tasks at the last minute and feel overwhelmed by everything they need to do. What is the best first step Alex can take to improve time management?",
       "options": [
-        "Working longer hours",
-        "Doing more tasks in the same amount of time and reducing stress",
-        "Never taking breaks",
-        "Multitasking constantly"
+        "Try to multitask more to get things done faster",
+        "Ignore planning and work when tasks feel urgent",
+        "Track daily activities and write tasks down",
+        "Stop doing non-school activities completely"
       ],
-      "correctIndex": 1,
-      "explanation": "Effective time management helps you accomplish more in less time while reducing stress and improving work-life balance."
+      "correctIndex": 2,
+      "explanation": "The first step to better time management is tracking your activities and writing tasks down. This creates awareness of how you spend your time and helps you plan more effectively."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Understanding how you use time helps you plan better",
+      "Prioritizing tasks makes responsibilities more manageable",
+      "Reducing distractions improves focus and efficiency"
     ],
     "pointsAwarded": 10
   },
   {
     "lessonId": "mod3-lesson2",
     "moduleId": "mod3",
-    "title": "Goal Setting",
+    "title": "Work/Life Balance",
     "order": 2,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Set Clear Goals"
+            "type": "image",
+            "src": "/assets/images/banners/productivity-work-life-balance.png",
+            "alt": "Work/life balance banner"
           },
           {
             "type": "text",
-            "body": "Clear goals help you stay focused and track progress toward what matters most."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/productivity-icon.png",
-            "alt": "Goal setting icon"
-          },
-          {
-            "type": "callout",
-            "body": "Make goals specific and realistic."
+            "body": "Work/life balance is about making space for your responsibilities while also making time for the things that matter to you. School and work are important, but they should not take over your entire life. In this lesson, you'll learn how to set boundaries, step back when needed, and create balance so you can stay productive while still enjoying your personal time."
           }
         ]
       },
@@ -927,69 +1062,118 @@ const lessons = [
         "pageNumber": 2,
         "blocks": [
           {
-            "type": "video",
-            "videoId": "lRtV-ugIT0k"
+            "type": "image",
+            "src": "/assets/images/infographics/mod3-lesson2.png",
+            "alt": "Work/life balance infographic"
           },
           {
             "type": "list",
             "items": [
-              "Write the goal",
-              "Pick a deadline",
-              "Track progress weekly"
+              "Balance helps prevent overcommitment",
+              "Personal time is an important part of a healthy routine",
+              "Setting boundaries improves focus and motivation",
+              "Time away from work helps you stay engaged long-term"
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Understanding Work/Life Balance"
           },
           {
-            "type": "link",
-            "href": "https://www.mindtools.com/a4wo118/smart-goals",
-            "linkText": "SMART Goals Guide"
+            "type": "text",
+            "body": "Work/life balance does not mean avoiding school or work. It means understanding when to focus on responsibilities and when to step back. Many young adults juggle classes, jobs, and social commitments at the same time, which can make everything feel overwhelming."
+          },
+          {
+            "type": "text",
+            "body": "Balance starts with recognizing that both work and personal life matter. When you allow time for both, you are more likely to stay motivated and consistent. A balanced routine helps you show up fully for your responsibilities without feeling like they take away from who you are."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Setting Boundaries and Learning to Say No"
+          },
+          {
+            "type": "text",
+            "body": "One of the biggest challenges in maintaining balance is taking on too much. Saying yes to everything can leave little time for yourself. Setting boundaries means knowing your limits and respecting them."
+          },
+          {
+            "type": "text",
+            "body": "This might look like turning down extra commitments, setting a clear end time for work, or protecting certain times of the day for personal activities."
+          },
+          {
+            "type": "text",
+            "body": "Saying no does not mean you don't care; it means you are choosing what you can realistically handle. Boundaries help you stay focused and protect your time."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Making Time for Yourself Without Guilt"
+          },
+          {
+            "type": "text",
+            "body": "Personal time is not a reward; it is a necessary part of a balanced life. After spending time on school or work, it is important to allow yourself space to relax, socialize, or do things you enjoy. This time should not feel guilty or unproductive."
+          },
+          {
+            "type": "text",
+            "body": "Just as work and school are part of who you are, so are your interests, relationships, and downtime. When personal time is planned intentionally, it becomes easier to enjoy it fully and return to responsibilities feeling refreshed and motivated."
+          },
+          {
+            "type": "callout",
+            "heading": "Create Balance",
+            "body": "Work/life balance is about respecting both your responsibilities and yourself. When balance is intentional, it becomes easier to stay productive while still enjoying your life."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What makes a goal SMART?",
+      "question": "Jorge works part-time, goes to school full-time, and often says yes to extra responsibilities. They rarely make time for themselves and feel guilty when they do. What action would best help Jorge improve work/life balance?",
       "options": [
-        "Just a vague idea of what you want",
-        "Specific, Measurable, Achievable, Relevant, and Time-bound",
-        "Something you might accomplish eventually",
-        "Only financial goals"
+        "Continue saying yes to avoid disappointing others",
+        "Set boundaries and schedule personal time",
+        "Focus only on work and school",
+        "Use free time only for catching up on tasks"
       ],
       "correctIndex": 1,
-      "explanation": "SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound—this framework makes your goals clear and attainable."
+      "explanation": "Setting boundaries and intentionally scheduling personal time helps prevent burnout, protects your energy, and supports long-term productivity."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Work and school are important, but they should not take over your life.",
+      "Setting boundaries helps protect your time and energy.",
+      "Personal time is necessary and should not come with guilt."
     ],
     "pointsAwarded": 10
   },
   {
     "lessonId": "mod3-lesson3",
     "moduleId": "mod3",
-    "title": "Organization & Planning",
+    "title": "Mental Health",
     "order": 3,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Stay Organized"
+            "type": "image",
+            "src": "/assets/images/banners/productivity-mental-health.png",
+            "alt": "Mental health banner"
           },
           {
             "type": "text",
-            "body": "Organization makes it easier to find what you need and keep your tasks on track."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/productivity-icon.png",
-            "alt": "Organization icon"
-          },
-          {
-            "type": "callout",
-            "body": "A tidy system saves time."
+            "body": "Mental health affects how we think, feel, and function every day. It plays a major role in motivation, focus, and overall well-being. Burnout and lack of sleep can slowly impact mental health, especially when responsibilities pile up. In this lesson, you'll learn what burnout is, how to recognize early signs, and why healthy sleep habits are essential for protecting your mental health."
           }
         ]
       },
@@ -997,69 +1181,118 @@ const lessons = [
         "pageNumber": 2,
         "blocks": [
           {
-            "type": "video",
-            "videoId": "NEm6X0NrdY0"
+            "type": "image",
+            "src": "/assets/images/infographics/mod3-lesson3.png",
+            "alt": "Mental health infographic"
           },
           {
             "type": "list",
             "items": [
-              "Use one to-do list",
-              "Keep a calendar",
-              "Review plans each week"
+              "Mental health influences mood, focus, and motivation",
+              "Burnout develops over time when mental energy is drained",
+              "Lack of sleep can increase stress and emotional exhaustion",
+              "Consistent sleep schedules support mental clarity and balance"
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Understanding Mental Health & Burnout"
           },
           {
-            "type": "link",
-            "href": "https://www.atlassian.com/blog/productivity",
-            "linkText": "Planning Tips"
+            "type": "text",
+            "body": "Mental health is not just about emotions; it affects how you think, react, and handle daily responsibilities."
+          },
+          {
+            "type": "text",
+            "body": "Burnout is a state of mental and emotional exhaustion that can happen when stress continues for too long without enough rest. It often starts quietly, showing up as a lack of motivation, difficulty focusing, or feeling overwhelmed by tasks that once felt manageable."
+          },
+          {
+            "type": "text",
+            "body": "Recognizing burnout early is important. Knowing your limits and paying attention to changes in how you feel can help you slow down before burnout becomes more serious."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Preventing Burnout Through Awareness"
+          },
+          {
+            "type": "text",
+            "body": "Preventing burnout begins with self-awareness. Everyone has different limits, and understanding what you can realistically handle is key. When responsibilities start to feel heavier than usual, it may be a sign to pause and reassess."
+          },
+          {
+            "type": "text",
+            "body": "Slowing down does not mean giving up; it means adjusting before things become unmanageable. Taking time to check in with yourself and allowing space to reset helps protect mental health. It's also important to remember that many people struggle with similar pressures, and you are not alone in feeling this way."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Sleep Schedules and Mental Health"
+          },
+          {
+            "type": "text",
+            "body": "Sleep plays a major role in mental health. Poor or inconsistent sleep can affect mood, focus, and emotional control. It's not only about how many hours you sleep, but also about having a consistent sleep schedule. Going to bed and waking up at similar times helps your body and mind stay balanced."
+          },
+          {
+            "type": "text",
+            "body": "Simple habits, such as limiting screen time before bed and creating a calming nighttime routine, can improve sleep quality. Even with busy schedules, prioritizing sleep supports mental clarity and overall well-being."
+          },
+          {
+            "type": "callout",
+            "heading": "Listen to Your Body",
+            "body": "Taking care of your mental health means knowing yourself and recognizing when to slow down. By understanding burnout and supporting healthy sleep habits, you can protect your well-being and stay balanced long-term."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "Why is organization important for productivity?",
+      "question": "Sofia has been feeling mentally exhausted, has trouble focusing, and feels unmotivated even when tasks are not difficult. They also stay up late most nights and sleep at different times each day. What is the most helpful step Sofia can take to support their mental health?",
       "options": [
-        "It's not important—you can find things later",
-        "It helps you find what you need quickly and reduces wasted time",
-        "Only if you're very busy",
-        "It's just about making things look neat"
+        "Push through and work harder",
+        "Ignore sleep and focus on productivity",
+        "Recognize burnout signs and create a consistent sleep schedule",
+        "Take on fewer responsibilities without rest"
       ],
       "correctIndex": 1,
-      "explanation": "Organization helps you locate resources, information, and tasks quickly, saving time and reducing mental clutter."
+      "explanation": "Recognizing burnout signs and creating a consistent sleep schedule are the most helpful steps because they address both mental exhaustion and the sleep habits affecting Sofia's well-being."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Mental health affects how you think, feel, and function.",
+      "Burnout can develop slowly and should be addressed early.",
+      "Consistent sleep schedules support emotional and mental balance."
     ],
     "pointsAwarded": 10
   },
   {
     "lessonId": "mod3-lesson4",
     "moduleId": "mod3",
-    "title": "Overcoming Procrastination",
+    "title": "Physical Health",
     "order": 4,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Beat Procrastination"
+            "type": "image",
+            "src": "/assets/images/banners/productivity-physical-health.png",
+            "alt": "Physical health banner"
           },
           {
             "type": "text",
-            "body": "Procrastination often fades when you begin with one small step instead of waiting for perfect motivation."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/productivity-icon.png",
-            "alt": "Procrastination icon"
-          },
-          {
-            "type": "callout",
-            "body": "Start tiny, then keep going."
+            "body": "Physical health supports energy, focus, and daily performance. When your body is cared for, it becomes easier to stay productive and consistent in everyday life. This lesson focuses on simple physical health habits that fit into busy schedules and support long-term productivity. Taking care of your body is not about perfection; it's about meeting its needs so you can show up fully in what you do."
           }
         ]
       },
@@ -1067,41 +1300,94 @@ const lessons = [
         "pageNumber": 2,
         "blocks": [
           {
-            "type": "video",
-            "videoId": "arj7oStGLkU"
+            "type": "image",
+            "src": "/assets/images/infographics/mod3-lesson4.png",
+            "alt": "Physical health infographic"
           },
           {
             "type": "list",
             "items": [
-              "Use the 5-minute rule",
-              "Break tasks into steps",
-              "Remove distractions"
+              "Physical health affects energy and focus throughout the day",
+              "Regular movement supports stamina and performance",
+              "Long periods of sitting can impact the body if not balanced with movement",
+              "Rest and recovery are important parts of physical health"
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Physical Health and Daily Energy"
           },
           {
-            "type": "link",
-            "href": "https://www.apa.org/topics/procrastination",
-            "linkText": "Understanding Procrastination"
+            "type": "text",
+            "body": "Physical health plays a major role in how you feel throughout the day. When your body is supported, tasks feel more manageable, and focus improves. Energy levels are influenced by movement, posture, and physical rest. Long days of sitting, studying, or working can lead to fatigue if the body is not given care."
+          },
+          {
+            "type": "text",
+            "body": "Simple habits, such as standing up regularly or moving between tasks, help maintain physical energy. Taking care of your body allows you to stay engaged and productive without feeling physically drained."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Movement and Body Care"
+          },
+          {
+            "type": "text",
+            "body": "Movement does not have to be intense or time-consuming to be effective. Small actions, like stretching, walking, or changing positions, help support circulation and reduce stiffness. Paying attention to posture during long work or study sessions can also prevent discomfort. Physical health is about consistency, not perfection."
+          },
+          {
+            "type": "text",
+            "body": "Finding simple ways to move your body throughout the day helps support strength and endurance over time. These habits make it easier to stay comfortable and focused during daily responsibilities."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Rest, Recovery and Listening To Your Body"
+          },
+          {
+            "type": "text",
+            "body": "Rest and recovery are essential parts of physical health. Pushing through exhaustion can reduce performance and energy over time. Listening to your body and recognizing when it needs rest helps prevent physical fatigue."
+          },
+          {
+            "type": "text",
+            "body": "Taking breaks, allowing time to recover, and respecting physical limits support long-term productivity. Caring for your body also supports your mind, as physical well-being and mental clarity are closely connected. Meeting your body's needs allows you to stay balanced and consistent."
+          },
+          {
+            "type": "callout",
+            "heading": "Support Your Body",
+            "body": "Physical health supports productivity by giving your body the energy it needs to function well. When you take care of your body, you also support focus, balance, and overall well-being."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is an effective strategy to overcome procrastination?",
+      "question": "Taylor spends long hours studying and working at a desk. By the end of the day, they feel physically drained and uncomfortable, even though they did not do any heavy activity. Which habit would best support Taylor's physical health and productivity?",
       "options": [
-        "Waiting until you feel motivated",
-        "Breaking tasks into smaller steps and starting immediately",
-        "Only working on easy tasks first",
-        "Thinking about how hard the task is"
+        "Sitting for long periods without breaks",
+        "Avoiding rest to finish tasks faster",
+        "Moving regularly and taking breaks from sitting",
+        "Staying in the same position to stay focused"
       ],
       "correctIndex": 1,
-      "explanation": "Breaking tasks into smaller, manageable steps and starting immediately—even with just 5 minutes of work—helps overcome procrastination."
+      "explanation": "Moving regularly and taking breaks from sitting are the best choices because physical health supports energy, comfort, and productivity during long periods of study or work."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Physical health supports energy, focus, and daily performance.",
+      "Small movement and body care habits make a difference over time.",
+      "Rest and recovery are essential for long-term productivity."
     ],
     "pointsAwarded": 10
   },
