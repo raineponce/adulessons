@@ -854,6 +854,169 @@
             animation-delay: 0.3s;
         }
     </style>
+
+    <!-- Apply theme and font size — localStorage first (no flash), then sync from API -->
+    <script src="./js/api.js"></script>
+    <script>
+        (function () {
+            // Block transitions during initial theme application to prevent white flash
+            var noTransition = document.createElement('style');
+            noTransition.id = 'no-transition-init';
+            noTransition.textContent = '* { transition: none !important; }';
+            document.head.appendChild(noTransition);
+
+            // Apply immediately from localStorage to avoid flash
+            if (localStorage.getItem('aduLessonsTheme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+
+            // Re-enable transitions after first paint
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    var el = document.getElementById('no-transition-init');
+                    if (el) el.remove();
+                });
+            });
+
+            var style = document.createElement('style');
+            style.textContent = `
+                [data-theme="dark"] body {
+                    background-color: #1a1a2e !important;
+                    color: #e8e8f0 !important;
+                }
+                [data-theme="dark"] header,
+                [data-theme="dark"] nav,
+                [data-theme="dark"] footer,
+                [data-theme="dark"] .sidebar {
+                    background-color: #2d2d44 !important;
+                    border-color: #4a4a6a !important;
+                }
+                [data-theme="dark"] .card,
+                [data-theme="dark"] .panel,
+                [data-theme="dark"] .modal,
+                [data-theme="dark"] .settings-card,
+                [data-theme="dark"] .profile-section {
+                    background-color: #2d2d44 !important;
+                    border-color: #4a4a6a !important;
+                }
+                [data-theme="dark"] h1,
+                [data-theme="dark"] h2,
+                [data-theme="dark"] h3,
+                [data-theme="dark"] h4,
+                [data-theme="dark"] h5,
+                [data-theme="dark"] h6,
+                [data-theme="dark"] p,
+                [data-theme="dark"] span,
+                [data-theme="dark"] label,
+                [data-theme="dark"] li,
+                [data-theme="dark"] .setting-label,
+                [data-theme="dark"] .profile-name,
+                [data-theme="dark"] .page-title {
+                    color: #e8e8f0 !important;
+                }
+                [data-theme="dark"] a {
+                    color: #7eaadb !important;
+                }
+                [data-theme="dark"] input,
+                [data-theme="dark"] textarea,
+                [data-theme="dark"] select {
+                    background-color: #2d2d44 !important;
+                    color: #e8e8f0 !important;
+                    border-color: #4a4a6a !important;
+                }
+                [data-theme="dark"] hr,
+                [data-theme="dark"] .divider-line,
+                [data-theme="dark"] .setting-item {
+                    border-color: #4a4a6a !important;
+                }
+                [data-theme="dark"] .text-muted,
+                [data-theme="dark"] .subtitle {
+                    color: #b0b0c0 !important;
+                }
+                [data-theme="dark"] .nav-item {
+                    color: #ffffff !important;
+                }
+                [data-theme="dark"] .nav-item:hover {
+                    background: transparent !important;
+                }
+                [data-theme="dark"] .logo-bowtie {
+                    content: url('../assets/images/darkmode-logo (updated).png');
+                }
+                [data-theme="dark"] .policy-modal {
+                    background: white !important;
+                }
+                [data-theme="dark"] .policy-modal h2,
+                [data-theme="dark"] .policy-modal p,
+                [data-theme="dark"] .policy-modal li,
+                [data-theme="dark"] .policy-modal span,
+                [data-theme="dark"] .policy-section-title,
+                [data-theme="dark"] .policy-modal-title {
+                    color: #2c3e50 !important;
+                }
+                [data-theme="dark"] .password-section-title,
+                [data-theme="dark"] .password-hint {
+                    color: #ffffff !important;
+                }
+                [data-theme="dark"] .back-button {
+                    color: #ffffff !important;
+                    background-color: transparent !important;
+                    border: none !important;
+                }
+                body { transition: background-color 0.3s ease, color 0.3s ease; }
+            `;
+            document.head.appendChild(style);
+
+            document.addEventListener('DOMContentLoaded', async function () {
+                var savedFontSize = localStorage.getItem('aduLessonsFontSize');
+                var savedTheme = localStorage.getItem('aduLessonsTheme');
+
+                // Apply font size from localStorage immediately
+                if (savedFontSize) {
+                    document.body.style.zoom = parseInt(savedFontSize) / 100;
+                }
+
+                // Re-apply on bfcache restore (back/forward navigation)
+                window.addEventListener('pageshow', (event) => {
+                    if (event.persisted) {
+                        const theme = localStorage.getItem('aduLessonsTheme');
+                        if (theme === 'dark') {
+                            document.documentElement.setAttribute('data-theme', 'dark');
+                        } else {
+                            document.documentElement.removeAttribute('data-theme');
+                        }
+                        const fontSize = localStorage.getItem('aduLessonsFontSize');
+                        if (fontSize) {
+                            document.body.style.zoom = parseInt(fontSize) / 100;
+                        }
+                    }
+                });
+
+                // Only fetch from API if localStorage has no preferences yet
+                // (e.g. first login or cleared storage). Once localStorage has
+                // values, trust them — settings.html keeps both in sync.
+                if (!savedFontSize && savedTheme === null) {
+                    try {
+                        const prefs = await AppApi.getPreferences();
+
+                        const isDark = prefs.darkMode;
+                        if (isDark) {
+                            document.documentElement.setAttribute('data-theme', 'dark');
+                        } else {
+                            document.documentElement.removeAttribute('data-theme');
+                        }
+                        localStorage.setItem('aduLessonsTheme', isDark ? 'dark' : 'light');
+
+                        if (prefs.fontSize) {
+                            document.body.style.zoom = prefs.fontSize / 100;
+                            localStorage.setItem('aduLessonsFontSize', prefs.fontSize);
+                        }
+                    } catch (e) {
+                        // API unavailable — nothing to apply
+                    }
+                }
+            });
+        })();
+    </script>
 </head>
 
 <body>

@@ -85,6 +85,10 @@
     return request("/lessons");
   }
 
+  function getModule(moduleId) {
+    return request("/lessons/modules/" + encodeURIComponent(moduleId));
+  }
+
   function getLesson(lessonId) {
     return request("/lessons/" + encodeURIComponent(lessonId));
   }
@@ -116,6 +120,17 @@
     });
   }
 
+  function getPreferences() {
+    return request("/profile/preferences");
+  }
+
+  function updatePreferences(preferences) {
+    return request("/profile/preferences", {
+      method: "PUT",
+      body: preferences
+    });
+  }
+
   function updateProfile(displayName, email) {
     return request("/profile", {
       method: "PUT",
@@ -143,12 +158,15 @@
     updateAddress: updateAddress,
     updateProfile: updateProfile,
     getLessons: getLessons,
+    getModule: getModule,
     getLesson: getLesson,
     completeLesson: completeLesson,
     getPrizes: getPrizes,
     redeemPrize: redeemPrize,
     getRedeemedPrizes: getRedeemedPrizes,
     redeemCode: redeemCode,
+    getPreferences: getPreferences,
+    updatePreferences: updatePreferences
     updatePassword: updatePassword,
     signOut: signOut
   };
