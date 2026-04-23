@@ -236,7 +236,6 @@
             font-family: var(--font-display);
             font-size: 2.5rem;
             font-weight: 700;
-            font-style: italic;
             color: var(--color-text-dark);
             text-align: center;
             margin-bottom: 2rem;
@@ -283,19 +282,6 @@
             color: var(--color-text-dark);
         }
 
-        .takeaways-list {
-            list-style: none;
-            margin-bottom: 2.5rem;
-        }
-
-        .takeaways-list li {
-            font-family: var(--font-body);
-            font-size: 1.125rem;
-            line-height: 1.7;
-            margin-bottom: 1.25rem;
-            padding-left: 0.5rem;
-        }
-
         .completion-message {
             font-family: var(--font-body);
             font-size: 1.4rem;
@@ -303,6 +289,23 @@
             color: var(--color-text-dark);
             margin-bottom: 2rem;
             text-align: center;
+        }
+
+        .takeaways-list {
+            margin: 0 0 2.5rem 1.5rem;
+            padding: 0;
+        }
+
+        .takeaways-list li {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 0.9rem;
+            color: var(--color-text-dark);
+        }
+
+        .takeaways-list.hidden {
+            display: none;
         }
 
         .status-box {
@@ -370,7 +373,6 @@
             font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
-            font-style: italic;
             color: var(--color-text-dark);
             margin-bottom: 1rem;
         }
@@ -522,6 +524,7 @@
             <div class="content-wrapper">
                 <div class="takeaways-content">
                     <p class="completion-message" id="completionMessage"></p>
+                    <ol class="takeaways-list hidden" id="keyTakeawaysList" aria-live="polite"></ol>
 
                     <div class="summary-section">
                         <h2 class="summary-title">Summary</h2>

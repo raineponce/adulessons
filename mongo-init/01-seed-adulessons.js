@@ -331,6 +331,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "A budget helps you plan and control how your money is spent — it's a tool, not a punishment."
     },
+    "keyTakeaways": [
+      "Taxes are how we all contribute to public services, and filing them is something almost everyone needs to do, even if you didn't earn much.",
+      "You don't have to do this alone or from scratch. Tax software like TurboTax, H&R Block, and free options like IRS Free File exist specifically to walk you through it.",
+      "Filing your taxes (even when you're not sure you have to) can actually put money back in your pocket through refunds, so it's almost always worth it."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -396,6 +401,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Automatic transfers make saving easy and consistent."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -461,6 +471,11 @@ const lessons = [
       "correctIndex": 2,
       "explanation": "On-time payments are one of the biggest factors in your credit score."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -526,6 +541,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Checking accounts are designed for regular purchases and paying bills."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -591,6 +611,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Active listening and understanding others is key to effective communication and building strong relationships."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -656,6 +681,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Strong relationships are built on trust, honesty, and mutual respect—qualities that develop through consistent positive interactions."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -721,6 +751,11 @@ const lessons = [
       "correctIndex": 2,
       "explanation": "Healthy conflict resolution involves listening to the other person, understanding their perspective, and working together to find a solution."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -786,6 +821,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Confidence in social situations comes from preparation, authenticity, and practice—the more you engage, the more comfortable you become."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -851,6 +891,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Effective time management helps you accomplish more in less time while reducing stress and improving work-life balance."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -916,6 +961,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound—this framework makes your goals clear and attainable."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -981,6 +1031,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Organization helps you locate resources, information, and tasks quickly, saving time and reducing mental clutter."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1046,6 +1101,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Breaking tasks into smaller, manageable steps and starting immediately—even with just 5 minutes of work—helps overcome procrastination."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1111,6 +1171,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Kitchen safety includes maintaining cleanliness, handling knives and heat properly, and being aware of food safety practices."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1176,6 +1241,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Sautéing is a quick cooking method that uses a small amount of fat over medium-high heat to cook food while keeping it tender."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1241,6 +1311,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Reading through the entire recipe first helps you gather all ingredients, understand the process, and cook more efficiently."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1306,6 +1381,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "A balanced meal includes protein, vegetables, whole grains, and healthy fats to provide proper nutrition and sustained energy."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1371,6 +1451,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Regular cleaning routines and addressing spills immediately help maintain a clean home and prevent deep cleaning emergencies."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1436,6 +1521,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Decluttering reduces mental clutter, saves physical space, makes it easier to find what you need, and creates a more peaceful home."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1501,6 +1591,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Sorting clothes prevents color transfer, protects delicate fabrics, and ensures each load is washed appropriately for best results."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1566,6 +1661,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Knowing basic home repairs allows you to fix small issues immediately, prevent them from becoming bigger problems, and save money."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1631,6 +1731,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Choosing the right transportation method involves considering multiple factors: cost, travel time, reliability, environmental impact, and accessibility."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1696,6 +1801,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Vehicle safety requires wearing a seatbelt, following traffic rules, staying focused, and avoiding distractions while driving."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1761,6 +1871,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "Regular maintenance prevents expensive breakdowns, extends your vehicle's lifespan, and ensures your safety on the road."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   },
   {
@@ -1826,6 +1941,11 @@ const lessons = [
       "correctIndex": 1,
       "explanation": "A comprehensive decision about buying a car includes evaluating total costs (purchase, insurance, fuel, maintenance) and frequency of use."
     },
+    "keyTakeaways": [
+      "Placeholder takeaway 1 for this lesson.",
+      "Placeholder takeaway 2 for this lesson.",
+      "Placeholder takeaway 3 for this lesson."
+    ],
     "pointsAwarded": 10
   }
 ];
