@@ -23,7 +23,7 @@
             --color-text: #2d2d2d;
             --color-muted: #6b7280;
             --color-white: #ffffff;
-            --color-button: #243755;
+            --color-button: #345A7A;
             --color-button-hover: #1b2a44;
             --font-display: 'Fredoka', sans-serif;
             --font-body: 'Nunito Sans', sans-serif;
@@ -108,6 +108,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.35rem;
+            align-items: center;
         }
 
         .intro-row {
@@ -147,6 +148,45 @@
             gap: 1rem;
         }
 
+        .status-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1rem;
+            color: var(--color-muted);
+            background: #fafafa;
+            font-size: 0.95rem;
+        }
+
+        .status-box.hidden {
+            display: none;
+        }
+
+        .status-box.error {
+            background: #fff2f2;
+            border-color: #f6caca;
+            color: #8c2b2b;
+        }
+
+        .status-actions {
+            margin-top: 0.75rem;
+        }
+
+        .retry-button {
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .retry-button:hover {
+            background: #f3f4f6;
+        }
+
         .module-card {
             --card-bg: #ffffff;
             --card-border: #d1d5db;
@@ -158,7 +198,7 @@
             padding: 0.9rem 1.2rem;
             border-radius: 16px;
             background: var(--card-bg);
-            border: 2px solid var(--card-border);
+            border: 1px solid var(--card-border);
             box-shadow: 6px 6px 0 var(--card-shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
@@ -205,22 +245,6 @@
             justify-content: center;
         }
 
-        .details-button--locked {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .details-button--locked svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .details-button--static {
-            pointer-events: none;
-            user-select: none;
-        }
-
         .details-button:hover {
             background: var(--color-button-hover);
             transform: translateY(-1px);
@@ -232,50 +256,40 @@
             outline-offset: 2px;
         }
 
-        .note {
-            margin-top: 1rem;
-            font-size: 0.95rem;
-            color: var(--color-muted);
-        }
-
         .module-card--finance {
-            --card-bg: #f9d1dc;
-            --card-border: #e5a8b8;
-            --card-shadow: #c88597;
-        }
-
-        .module-card--modal {
-            cursor: pointer;
+            --card-bg: #FFDBE9;
+            --card-border: #000000;
+            --card-shadow: #ffaad1;
         }
 
         .module-card--social {
-            --card-bg: #f7b7b1;
-            --card-border: #e59a95;
-            --card-shadow: #c57872;
+            --card-bg: #F8CDCA;
+            --card-border: #000000;
+            --card-shadow: #FF938C;
         }
 
         .module-card--productivity {
-            --card-bg: #f4e19b;
-            --card-border: #dfc878;
-            --card-shadow: #c4a85c;
+            --card-bg: #F3E29F;
+            --card-border: #000000;
+            --card-shadow: #FED18A;
         }
 
         .module-card--cooking {
-            --card-bg: #f5d09a;
-            --card-border: #e3b778;
-            --card-shadow: #c39455;
+            --card-bg: #F9D599;
+            --card-border: #000000;
+            --card-shadow: #FAB43B;
         }
 
         .module-card--household {
-            --card-bg: #cbe2a8;
-            --card-border: #aaca86;
-            --card-shadow: #88a86a;
+            --card-bg: #C5E2AA;
+            --card-border: #000000;
+            --card-shadow: #7FC042;
         }
 
         .module-card--transport {
-            --card-bg: #c8d3fb;
-            --card-border: #a4b6ef;
-            --card-shadow: #7c91d1;
+            --card-bg: #BADCFF;
+            --card-border: #000000;
+            --card-shadow: #C2D0FE;
         }
 
         .modal-overlay {
@@ -309,6 +323,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -393,6 +408,18 @@
             display: none;
         }
 
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
         body.modal-open {
             overflow: hidden;
         }
@@ -459,7 +486,8 @@
         <section class="page-header">
             <a class="back-button" href="../index.html" aria-label="Back to home">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
             </a>
             <div class="intro-block">
@@ -473,121 +501,8 @@
         </section>
 
         <section class="modules-section" aria-labelledby="modules-heading">
-            <ul class="modules-list">
-                <li>
-                    <article class="module-card module-card--finance module-card--link" role="link" tabindex="0"
-                        aria-label="Open Finance 101 lessons" data-link="../lesson-list.html">
-                        <!-- finance-icon.png -->
-                        <img src="../assets/images/finance-icon.png" alt="Finance icon">
-                        <h3 class="module-title">Finance 101</h3>
-                        <button class="details-button" type="button">
-                            See Details
-                        </button>
-                    </article>
-                </li>
-                <li>
-                    <article class="module-card module-card--social module-card--modal" role="button" tabindex="0"
-                        aria-haspopup="dialog"
-                        aria-label="View Social Skills details"
-                        data-title="Social Skills"
-                        data-description="Practice communication, boundaries, teamwork, and everyday confidence."
-                        data-icon="../assets/images/social-icon.png"
-                        data-icon-alt="Social skills icon">
-                        <!-- social-icon.png -->
-                        <img src="../assets/images/social-icon.png" alt="Social skills icon">
-                        <h3 class="module-title">Social Skills</h3>
-                        <span class="details-button details-button--locked details-button--static" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="11" width="16" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            See Details
-                        </span>
-                    </article>
-                </li>
-                <li>
-                    <article class="module-card module-card--productivity module-card--modal" role="button" tabindex="0"
-                        aria-haspopup="dialog"
-                        aria-label="View Productivity details"
-                        data-title="Productivity"
-                        data-description="Build routines, manage time, and set realistic goals you can stick with."
-                        data-icon="../assets/images/productivity-icon.png"
-                        data-icon-alt="Productivity icon">
-                        <!-- productivity-icon.png -->
-                        <img src="../assets/images/productivity-icon.png" alt="Productivity icon">
-                        <h3 class="module-title">Productivity</h3>
-                        <span class="details-button details-button--locked details-button--static" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="11" width="16" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            See Details
-                        </span>
-                    </article>
-                </li>
-                <li>
-                    <article class="module-card module-card--cooking module-card--modal" role="button" tabindex="0"
-                        aria-haspopup="dialog"
-                        aria-label="View Cooking 101 details"
-                        data-title="Cooking 101"
-                        data-description="Learn kitchen safety, simple recipes, and grocery planning basics."
-                        data-icon="../assets/images/cooking-icon.png"
-                        data-icon-alt="Cooking icon">
-                        <!-- cooking-icon.png -->
-                        <img src="../assets/images/cooking-icon.png" alt="Cooking icon">
-                        <h3 class="module-title">Cooking 101</h3>
-                        <span class="details-button details-button--locked details-button--static" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="11" width="16" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            See Details
-                        </span>
-                    </article>
-                </li>
-                <li>
-                    <article class="module-card module-card--household module-card--modal" role="button" tabindex="0"
-                        aria-haspopup="dialog"
-                        aria-label="View Household Basics details"
-                        data-title="Household Basics"
-                        data-description="Cover cleaning, laundry, and simple home care routines."
-                        data-icon="../assets/images/home-icon.png"
-                        data-icon-alt="Household basics icon">
-                        <!-- home-icon.png -->
-                        <img src="../assets/images/home-icon.png" alt="Household basics icon">
-                        <h3 class="module-title">Household Basics</h3>
-                        <span class="details-button details-button--locked details-button--static" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="11" width="16" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            See Details
-                        </span>
-                    </article>
-                </li>
-                <li>
-                    <article class="module-card module-card--transport module-card--modal" role="button" tabindex="0"
-                        aria-haspopup="dialog"
-                        aria-label="View Transportation details"
-                        data-title="Transportation"
-                        data-description="Navigate public transit, car care, and planning safer trips."
-                        data-icon="../assets/images/transportation-icon.png"
-                        data-icon-alt="Transportation icon">
-                        <!-- transportation-icon.png -->
-                        <img src="../assets/images/transportation-icon.png" alt="Transportation icon">
-                        <h3 class="module-title">Transportation</h3>
-                        <span class="details-button details-button--locked details-button--static" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="11" width="16" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            See Details
-                        </span>
-                    </article>
-                </li>
-            </ul>
-
-            <p class="note">Complete the previous module to unlock the next one.</p>
+            <div id="pageState" class="status-box hidden" aria-live="polite"></div>
+            <ul class="modules-list" id="modulesList" aria-live="polite"></ul>
         </section>
     </main>
 
@@ -601,8 +516,9 @@
                 <img class="modal-icon" id="modalIcon" src="../assets/images/finance-icon.png" alt="Module icon">
                 <h2 class="modal-title" id="modalTitle">Finance 101</h2>
             </div>
-            <p class="modal-text" id="modalDesc">Learn the money basics: budgeting, banking, rent, and saving for goals.</p>
-            <p class="modal-note">Complete the previous module to unlock the next one.</p>
+            <p class="modal-text" id="modalDesc">Learn the money basics: budgeting, banking, rent, and saving for goals.
+            </p>
+            <p class="modal-note" id="modalNote">Choose Continue to open this module's lesson list.</p>
             <div class="modal-actions">
                 <a class="modal-button" id="modalContinue" href="../lesson-list.html">Continue</a>
                 <button class="modal-button" type="button" id="modalConfirm">Got it</button>
@@ -613,92 +529,8 @@
     <!-- Load components -->
     <script src="../js/components.js"></script>
     <script src="../js/hamburger-menu.js"></script>
-
-    <script>
-        const overlay = document.getElementById('detailsOverlay');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDesc = document.getElementById('modalDesc');
-        const modalIcon = document.getElementById('modalIcon');
-        const modalClose = document.getElementById('modalClose');
-        const modalConfirm = document.getElementById('modalConfirm');
-        const modalContinue = document.getElementById('modalContinue');
-
-        function openModal(source) {
-            const title = source.getAttribute('data-title');
-            const description = source.getAttribute('data-description');
-            const icon = source.getAttribute('data-icon');
-            const iconAlt = source.getAttribute('data-icon-alt');
-            const continueLink = source.getAttribute('data-continue-link');
-            const continueLabel = source.getAttribute('data-continue-label');
-
-            modalTitle.textContent = title;
-            modalDesc.textContent = description;
-            modalIcon.src = icon;
-            modalIcon.alt = iconAlt || 'Module icon';
-
-            if (continueLink) {
-                modalContinue.href = continueLink;
-                modalContinue.textContent = continueLabel || 'Continue';
-                modalContinue.style.display = 'inline-flex';
-            } else {
-                modalContinue.style.display = 'none';
-            }
-
-            overlay.classList.add('active');
-            overlay.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('modal-open');
-        }
-
-        function closeModal() {
-            overlay.classList.remove('active');
-            overlay.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('modal-open');
-        }
-
-        document.querySelectorAll('.module-card--modal').forEach((card) => {
-            card.addEventListener('click', () => openModal(card));
-
-            card.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    openModal(card);
-                }
-            });
-        });
-
-        modalClose.addEventListener('click', closeModal);
-        modalConfirm.addEventListener('click', closeModal);
-
-        overlay.addEventListener('click', (event) => {
-            if (event.target === overlay) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        document.querySelectorAll('.module-card--link').forEach((card) => {
-            const link = card.getAttribute('data-link');
-            card.addEventListener('click', () => {
-                if (link) {
-                    window.location.href = link;
-                }
-            });
-
-            card.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    if (link) {
-                        window.location.href = link;
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/modules/module-list.js"></script>
 </body>
 
 </html>
