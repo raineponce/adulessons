@@ -3,20 +3,73 @@ const router = express.Router();
 const User = require('../models/User');
 const Module = require('../models/Module');
 const { requireAuth } = require('../middleware/authMiddleware');
-const { sanitizeInput } = require('../utils/validators');
+const { sanitizeInput, isValidEmail, isValidUsername } = require('../utils/validators');
 
 // Predefined set of allowed avatar options
-const ALLOWED_AVATARS = ['default', 'avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5'];
+const ALLOWED_AVATARS = [
+  'default',
+  'avatar1',
+  'avatar2',
+  'avatar3',
+  'avatar4',
+  'avatar5',
+];
 
 // GET /profile — Return user profile info
 router.get('/', requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId)
-      .select('username email avatar points streak completedLessons currentLesson')
+      .select(
+        'username email avatar points streak completedLessons currentLesson usedCodes',
+      )
       .lean();
 
     res.json(user);
   } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /profile — Update the user's display name and email
+router.put('/', requireAuth, async (req, res) => {
+  try {
+    const { username, email } = req.body;
+
+    if (!username || !email) {
+      return res.status(400).json({ error: 'Username and email are required' });
+    }
+
+    const trimmedUsername = username.trim();
+    const trimmedEmail = email.trim().toLowerCase();
+
+    if (!isValidUsername(trimmedUsername)) {
+      return res.status(400).json({ error: 'Display name must be 2-50 characters (letters, numbers, spaces, underscores, hyphens)' });
+    }
+
+    if (!isValidEmail(trimmedEmail)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    // Sanitize email for storage; username is stored as-is since the
+    // validator already restricts it to safe characters
+    const sanitizedEmail = sanitizeInput(trimmedEmail);
+
+    const user = await User.findByIdAndUpdate(
+      req.session.userId,
+      { username: trimmedUsername, email: sanitizedEmail },
+      { new: true, runValidators: true }
+    ).select('username email');
+
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    res.json({ username: user.username, email: user.email });
+  } catch (err) {
+    if (err.code === 11000) {
+      const field = err.keyPattern && err.keyPattern.email ? 'email' : 'username';
+      return res.status(409).json({ error: `That ${field} is already in use` });
+    }
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -32,7 +85,7 @@ router.put('/avatar', requireAuth, async (req, res) => {
     const user = await User.findByIdAndUpdate(
       req.session.userId,
       { avatar },
-      { new: true }
+      { new: true },
     ).select('avatar');
 
     res.json({ avatar: user.avatar });
@@ -50,13 +103,13 @@ router.put('/address', requireAuth, async (req, res) => {
       street: sanitizeInput(street),
       city: sanitizeInput(city),
       state: sanitizeInput(state),
-      zip: sanitizeInput(zip)
+      zip: sanitizeInput(zip),
     };
 
     const user = await User.findByIdAndUpdate(
       req.session.userId,
       { shippingAddress: sanitized },
-      { new: true }
+      { new: true },
     ).select('shippingAddress');
 
     res.json({ shippingAddress: user.shippingAddress });
@@ -105,6 +158,33 @@ router.put('/preferences', requireAuth, async (req, res) => {
     ).select('preferences');
 
     res.json(user.preferences);
+// PUT /profile/password — Update the user's password
+router.put('/password', requireAuth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({ error: 'New password must be at least 8 characters' });
+    }
+
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const match = await user.comparePassword(currentPassword);
+    if (!match) {
+      return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -120,9 +200,9 @@ router.get('/progress', requireAuth, async (req, res) => {
     const modules = await Module.find().sort({ order: 1 }).lean();
 
     // Calculate per-module completion
-    const moduleProgress = modules.map(mod => {
-      const completedInModule = (user.completedLessons || []).filter(id =>
-        mod.lessonIds.includes(id)
+    const moduleProgress = modules.map((mod) => {
+      const completedInModule = (user.completedLessons || []).filter((id) =>
+        mod.lessonIds.includes(id),
       ).length;
 
       return {
@@ -130,22 +210,30 @@ router.get('/progress', requireAuth, async (req, res) => {
         title: mod.title,
         totalLessons: mod.lessonIds.length,
         completedLessons: completedInModule,
-        percentComplete: mod.lessonIds.length > 0
-          ? Math.round((completedInModule / mod.lessonIds.length) * 100)
-          : 0
+        percentComplete:
+          mod.lessonIds.length > 0
+            ? Math.round((completedInModule / mod.lessonIds.length) * 100)
+            : 0,
       };
     });
 
-    const totalLessons = modules.reduce((sum, m) => sum + m.lessonIds.length, 0);
-    const completedCount = user.completedLessons ? user.completedLessons.length : 0;
-    const overallPercent = totalLessons > 0
-      ? Math.round((completedCount / totalLessons) * 100)
+    const totalLessons = modules.reduce(
+      (sum, m) => sum + m.lessonIds.length,
+      0,
+    );
+    const completedCount = user.completedLessons
+      ? user.completedLessons.length
       : 0;
+    const overallPercent =
+      totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
     res.json({
       moduleProgress,
       overallPercent,
-      allLessonsComplete: user.allLessonsComplete
+      allLessonsComplete: user.allLessonsComplete,
+      points: user.points,
+      completedLessonsCount: completedCount,
+      totalLessons,
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });

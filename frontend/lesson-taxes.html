@@ -275,11 +275,70 @@
             display: block;
         }
 
+        .status-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            margin: 0 auto 1rem;
+            max-width: 700px;
+            color: var(--color-text-muted);
+            background: #fafafa;
+            font-size: 0.95rem;
+        }
+
+        .status-box.hidden {
+            display: none;
+        }
+
+        .status-box.error {
+            background: #fff2f2;
+            border-color: #f6caca;
+            color: #8c2b2b;
+        }
+
+        .status-actions {
+            margin-top: 0.75rem;
+        }
+
+        .retry-button {
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        .retry-button:hover {
+            background: #f3f4f6;
+        }
+
+        .lesson-image {
+            display: block;
+            width: 100%;
+            max-width: 540px;
+            border-radius: 14px;
+            margin: 1rem auto 1.5rem;
+        }
+
+        .video-frame {
+            width: 100%;
+            max-width: 640px;
+            aspect-ratio: 16 / 9;
+            border: 0;
+            border-radius: 14px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateX(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -465,180 +524,28 @@
     <!-- Navigation component loads here -->
     <nav id="navbar">
         <!-- Placeholder navigation - will be replaced by components.js -->
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                aduLessons
-                <!-- bowtie-icon.svg -->
-                <svg class="logo-bowtie" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 8C12 8 8 4 4 2C2 1 0 2 0 4V12C0 14 2 15 4 14C8 12 12 8 12 8Z" fill="#4a6fa5"/>
-                    <path d="M12 8C12 8 16 4 20 2C22 1 24 2 24 4V12C24 14 22 15 20 14C16 12 12 8 12 8Z" fill="#4a6fa5"/>
-                    <circle cx="12" cy="8" r="2" fill="#4a6fa5"/>
-                </svg>
-            </a>
-            
-            <div class="search-container">
-                <div class="search-box">
-                    <input type="text" placeholder="Search">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
-            </div>
-
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="modules.html" class="nav-link">Modules</a>
-            </div>
-
-            <div class="user-section">
-                <a href="profile.html" class="user-avatar-link">
-                    <!-- user-avatar.png -->
-                    <img src="images/user-avatar.png" alt="User Avatar" class="avatar-img" onerror="this.style.background='#f0e6d3'">
-                    <span class="user-name">Zoey</span>
-                </a>
-                <a href="rewards.html" class="points-badge-link">
-                    <span class="points-text">210 pts</span>
-                </a>
-            </div>
-        </div>
     </nav>
 
     <main>
         <!-- Navigation Row with Back and Next buttons -->
         <div class="nav-row">
-            <button class="back-button" onclick="goBack()" aria-label="Go back">
+            <button class="back-button" id="backBtn" aria-label="Go back">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
             </button>
-            
-            <button class="nav-arrow" id="nextBtn" onclick="changePage(1)" aria-label="Next page">
+
+            <button class="nav-arrow" id="nextBtn" aria-label="Next page">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
             </button>
         </div>
 
-        <!-- Page 1: The Very Basics -->
-        <section class="lesson-page active" id="page1">
-            <div class="lesson-content">
-                <h1 class="lesson-title">Taxes (The Very Basics)</h1>
-                
-                <p class="lesson-text">
-                    Welcome to the magical land of taxes, where you get mail you didn't ask for and forms with names like "1099-misc." But don't panic! When you get down to it, taxes aren't as scary as they sound.
-                </p>
-
-                <h2 class="section-heading">So what are taxes?</h2>
-                
-                <p class="lesson-text">
-                    Taxes are basically the way we all chip in to keep things running: roads, schools, libraries, emergency services, all that good stuff.
-                </p>
-                
-                <p class="lesson-text">
-                    When you earn money, buy stuff, or own certain things, a small piece of that goes toward public services.
-                </p>
-
-                <h2 class="section-heading">When do you file?</h2>
-                
-                <p class="lesson-text">
-                    Most people file taxes once a year, usually between January and April.
-                </p>
-                
-                <p class="lesson-text">
-                    The big day to remember is Tax Day, typically around April 15 (unless the government changes it for some reason ... don't worry, a quick internet search can let you know).
-                </p>
-            </div>
-        </section>
-
-        <!-- Page 2: Who Should File -->
-        <section class="lesson-page" id="page2">
-            <div class="lesson-content">
-                <h2 class="section-heading" style="margin-top: 0;">Who Should File?</h2>
-                
-                <p class="lesson-text">
-                    Short answer: Almost everyone.<br>
-                    Even if you made only a little money last year, it's usually worth filing because:
-                </p>
-                
-                <ul class="lesson-list">
-                    <li>You might get some of your money back (we love tax refunds)</li>
-                    <li>It helps you stay in good standing with the IRS</li>
-                    <li>It's great practice for being a Responsible Adult™</li>
-                </ul>
-
-                <h2 class="section-heading">What Should You Expect?</h2>
-                
-                <p class="lesson-text">
-                    When tax season comes around, you'll get documents from places that paid you (like your job, school, or bank).
-                </p>
-                
-                <p class="lesson-text">
-                    These forms tell the IRS how much money you earned so they can compare it to what you report.
-                </p>
-                
-                <p class="lesson-text">
-                    Your job is just to plug those numbers into your tax filing service and let the software do the heavy lifting.
-                </p>
-            </div>
-        </section>
-
-        <!-- Page 3: Tax Filing Services -->
-        <section class="lesson-page" id="page3">
-            <div class="lesson-content">
-                <h2 class="section-heading" style="margin-top: 0;">Tax Filing Services</h2>
-                
-                <p class="lesson-text">
-                    Good news: you don't really have to do any math. Tax software exists and helps make tax filing a breeze :)
-                </p>
-
-                <h3 class="section-heading">Popular Online Filing Services</h3>
-                
-                <ul class="lesson-list">
-                    <li>These can walk you through everything step-by-step:</li>
-                    <li><strong>TurboTax</strong> - very user-friendly, but not always free</li>
-                    <li><strong>H&R Block Online</strong> - solid option with clear explanations</li>
-                    <li><strong>Cash App Taxes</strong> - often free for federal and state returns</li>
-                </ul>
-
-                <h3 class="section-heading">Free Filing Options</h3>
-                
-                <ul class="lesson-list">
-                    <li>If your budget just covers rent and ramen, take a look at these free options:</li>
-                    <li>
-                        <strong>IRS Free File</strong>
-                        <ul class="nested-list">
-                            <li>Available to many taxpayers (usually based on income limits)</li>
-                            <li>Check it out: <a href="https://www.irs.gov/filing/free-file-do-your-federal-taxes-for-free" class="lesson-link" target="_blank" rel="noopener">https://www.irs.gov/filing/free-file-do-your-federal-taxes-for-free</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>FreeTaxUSA</strong>
-                        <ul class="nested-list">
-                            <li>Free for federal returns</li>
-                            <li>State filing usually has a small fee</li>
-                            <li>Easy to navigate and beginner-friendly</li>
-                            <li>Check it out: <a href="https://www.freetaxusa.com/" class="lesson-link" target="_blank" rel="noopener">https://www.freetaxusa.com/</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <div class="conclusion-box">
-                    <h3 class="section-heading">Conclusion</h3>
-                    
-                    <p class="lesson-text" style="margin-bottom: 1rem;">
-                        Taxes feel intimidating at first, but once you've filed once, everything starts clicking.
-                    </p>
-                    
-                    <p class="lesson-text" style="margin-bottom: 0;">
-                        Think of it like laundry: confusing when you're new, but eventually you can do it while half-asleep.
-                    </p>
-                </div>
-
-                <div class="quiz-button-container">
-                    <a href="lesson-quiz.html" class="quiz-button">Quiz Question</a>
-                </div>
-            </div>
-        </section>
+        <div id="pageState" class="status-box hidden" aria-live="polite"></div>
+        <div id="lessonPages"></div>
     </main>
 
     <!-- Footer component loads here -->
@@ -694,6 +601,10 @@
         // Initialize button states
         updateNavButtons();
     </script>
+    <script src="./js/components.js"></script>
+    <script src="./js/hamburger-menu.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/pages/lessons/lesson-taxes.js"></script>
 </body>
 
 </html>

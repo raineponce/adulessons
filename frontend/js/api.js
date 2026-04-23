@@ -131,6 +131,24 @@
     });
   }
 
+  function updateProfile(displayName, email) {
+    return request("/profile", {
+      method: "PUT",
+      body: { username: displayName, email: email }
+    });
+  }
+
+  function updatePassword(currentPassword, newPassword) {
+    return request("/profile/password", {
+      method: "PUT",
+      body: { currentPassword: currentPassword, newPassword: newPassword }
+    });
+  }
+
+  function signOut() {
+    return request("/auth/logout", { method: "POST" });
+  }
+
   window.AppApi = {
     request: request,
     handleAuthError: handleAuthError,
@@ -138,6 +156,7 @@
     getProgress: getProgress,
     updateAvatar: updateAvatar,
     updateAddress: updateAddress,
+    updateProfile: updateProfile,
     getLessons: getLessons,
     getModule: getModule,
     getLesson: getLesson,
@@ -148,5 +167,7 @@
     redeemCode: redeemCode,
     getPreferences: getPreferences,
     updatePreferences: updatePreferences
+    updatePassword: updatePassword,
+    signOut: signOut
   };
 })();
