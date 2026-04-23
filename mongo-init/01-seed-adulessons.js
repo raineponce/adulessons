@@ -80,8 +80,7 @@ const modules = [
     "lessonIds": [
       "mod2-lesson1",
       "mod2-lesson2",
-      "mod2-lesson3",
-      "mod2-lesson4"
+      "mod2-lesson3"
     ]
   },
   {
@@ -243,9 +242,7 @@ const modules = [
     },
     "lessonIds": [
       "mod6-lesson1",
-      "mod6-lesson2",
-      "mod6-lesson3",
-      "mod6-lesson4"
+      "mod6-lesson2"
     ]
   }
 ];
