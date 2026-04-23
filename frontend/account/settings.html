@@ -144,7 +144,6 @@
             font-size: 32px;
             color: #2d2d2d;
             cursor: pointer;
-            margin-bottom: 20px;
             padding: 0;
             display: inline-flex;
             align-items: center;
@@ -155,11 +154,17 @@
             transform: translateX(-5px);
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
         h1 {
             font-family: 'Fredoka', sans-serif;
             font-size: 56px;
             font-weight: 700;
-            margin-bottom: 50px;
             color: #2d2d2d;
         }
 
@@ -599,14 +604,14 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <span class="logo-bowtie"><img class="logo-bowtie" src="../assets/images/logo-1.png"></span>
+                <span class="logo-bowtie"><a href="dashboard.html"><img class="logo-bowtie" src="../assets/images/logo-1.png"></a></span>
             </div>
 
             <div class="profile-section">
                 <div class="profile-avatar">
-                    <img src="../assets/images/profile-pic.png" alt="Zoey profile avatar">
+                    <img src="../assets/images/profile-pic.png" alt="profile avatar" id="sidebarAvatar">
                 </div>
-                <div class="profile-name"></div>
+                <div class="profile-name" id="sidebarName"></div>
             </div>
 
             <nav class="sidebar-nav">
@@ -745,6 +750,7 @@
         </div>
     </div>
 
+    <script src="../js/api.js"></script>
     <script>
         // Modal Functions
         function openResetModal() {
@@ -929,6 +935,7 @@
             }
         });
     </script>
+    <script src="../js/pages/account/settings.js"></script>
 </body>
 
 </html>

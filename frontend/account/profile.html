@@ -119,6 +119,13 @@
             color: #2d2d2d;
         }
 
+        .profile-edit-label {
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+            margin-bottom: 4px;
+        }
+
         .sidebar-nav {
             display: flex;
             flex-direction: column;
@@ -270,8 +277,15 @@
         }
 
         .settings-icon {
-            font-size: 32px;
+            width: 32px;
+            height: 32px;
             color: #888;
+        }
+
+        .settings-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .settings-text {
@@ -871,13 +885,14 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <span class="logo-bowtie"><img class="logo-bowtie" src="../assets/images/logo-1.png"></span>
+                <span class="logo-bowtie"><a href="dashboard.html"><img class="logo-bowtie" src="../assets/images/logo-1.png"></a></span>
             </div>
 
             <div class="profile-section">
                 <div class="profile-avatar" onclick="openEditAvatarModal()">
                     <img src="../assets/images/profile-pic.png" alt="profile avatar" id="sidebarAvatar">
                 </div>
+                <div class="profile-edit-label" onclick="openEditAvatarModal()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openEditAvatarModal()">Edit</div>
                 <div class="profile-name"></div>
             </div>
 
@@ -898,7 +913,7 @@
                     <h1>Profile</h1>
                 </div>
                 <a href="settings.html" class="settings-link">
-                    <div class="settings-icon">⚙</div>
+                    <div class="settings-icon"><img src="../assets/images/settings-icon.png" alt="Settings"></div>
                     <div class="settings-text">Settings</div>
                 </a>
             </div>
