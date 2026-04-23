@@ -34,6 +34,7 @@
       })
       .catch(function (err) {
         if (AppApi.handleAuthError(err)) return;
+        console.error('Failed to load user profile for settings page:', err);
       });
   }
 
