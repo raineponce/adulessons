@@ -1505,11 +1505,11 @@
 
     <script src="../js/api.js"></script>
     <script>
-        // Avatar paths array
+        // Avatar paths array (must match AVATAR_SRCS in profile.js)
         const avatarPaths = [
-            './images/avatar-1.png',
-            './images/avatar-2.png',
-            './images/avatar-3.png'
+            '../assets/images/profile-pic.png',
+            '../assets/images/profile-pic2.png',
+            '../assets/images/profile-pic3.png'
         ];
 
         let selectedAvatarIndex = 0;
@@ -1547,14 +1547,7 @@
         }
 
         function saveAvatar() {
-            // Update sidebar avatar
-            document.getElementById('sidebarAvatar').src = avatarPaths[selectedAvatarIndex];
-
-            // Show success message
-            alert('Profile picture updated successfully!');
-
-            // Close modal
-            closeEditAvatarModal();
+            // Overridden by profile.js — calls the backend and updates the sidebar
         }
 
         // Close modal when clicking outside
