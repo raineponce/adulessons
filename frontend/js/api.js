@@ -134,6 +134,14 @@
     return request("/auth/logout", { method: "POST" });
   }
 
+  function resetProgress() {
+    return request("/profile/reset-progress", { method: "POST" });
+  }
+
+  function deleteAccount() {
+    return request("/profile", { method: "DELETE" });
+  }
+
   window.AppApi = {
     request: request,
     handleAuthError: handleAuthError,
@@ -150,6 +158,8 @@
     getRedeemedPrizes: getRedeemedPrizes,
     redeemCode: redeemCode,
     updatePassword: updatePassword,
-    signOut: signOut
+    signOut: signOut,
+    resetProgress: resetProgress,
+    deleteAccount: deleteAccount
   };
 })();

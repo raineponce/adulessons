@@ -280,6 +280,7 @@
       .then(function () {
         if (els.sidebarAvatar)      els.sidebarAvatar.src      = src;
         if (els.modalCurrentAvatar) els.modalCurrentAvatar.src = src;
+        localStorage.setItem('userAvatarSrc', src);
         closeEditAvatarModal();
       })
       .catch(function (err) {
