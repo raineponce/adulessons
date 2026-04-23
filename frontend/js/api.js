@@ -166,7 +166,7 @@
     getRedeemedPrizes: getRedeemedPrizes,
     redeemCode: redeemCode,
     getPreferences: getPreferences,
-    updatePreferences: updatePreferences
+    updatePreferences: updatePreferences,
     updatePassword: updatePassword,
     signOut: signOut
   };

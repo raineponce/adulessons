@@ -158,6 +158,11 @@ router.put('/preferences', requireAuth, async (req, res) => {
     ).select('preferences');
 
     res.json(user.preferences);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // PUT /profile/password — Update the user's password
 router.put('/password', requireAuth, async (req, res) => {
   try {
