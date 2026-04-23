@@ -41,8 +41,8 @@ async function getAuthState() {
 function getAvatarSrc(avatar) {
     const avatarMap = {
         default: '/assets/images/profile-pic.png',
-        avatar1: '/assets/images/profile-pic.png',
-        avatar2: '/assets/images/profile-pic.png',
+        avatar1: '/assets/images/profile-pic2.png',
+        avatar2: '/assets/images/profile-pic3.png',
         avatar3: '/assets/images/profile-pic.png',
         avatar4: '/assets/images/profile-pic.png',
         avatar5: '/assets/images/profile-pic.png'
