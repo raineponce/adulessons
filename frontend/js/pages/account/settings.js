@@ -57,6 +57,36 @@
     }
   }
 
+  // Override confirmReset to call the backend reset-progress endpoint
+  window.confirmReset = function () {
+    AppApi.resetProgress()
+      .then(function () {
+        closeResetModal();
+        alert('Your progress has been reset successfully.');
+      })
+      .catch(function (err) {
+        if (!AppApi.handleAuthError(err)) {
+          alert('Failed to reset progress. Please try again.');
+        }
+        closeResetModal();
+      });
+  };
+
+  // Override confirmDeactivate to permanently delete the account
+  window.confirmDeactivate = function () {
+    AppApi.deleteAccount()
+      .then(function () {
+        closeDeactivateModal();
+        window.location.href = '/welcome.html';
+      })
+      .catch(function (err) {
+        if (!AppApi.handleAuthError(err)) {
+          alert('Failed to delete account. Please try again.');
+        }
+        closeDeactivateModal();
+      });
+  };
+
   document.addEventListener('DOMContentLoaded', function () {
     loadUserInfo();
     bindSignOut();
