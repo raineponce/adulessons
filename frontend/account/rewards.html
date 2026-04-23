@@ -98,18 +98,18 @@
       }
 
       .state-pill.locked {
-        background: rgba(153, 153, 153, 0.2);
-        color: #2c3e50;
+        background: rgba(255, 255, 255, 0.18);
+        color: #e8f2ff;
       }
 
       .state-pill.available {
-        background: rgba(121, 188, 74, 0.18);
-        color: #2f6b18;
+        background: #1F4D3A;
+        color: #b8ef9f;
       }
 
       .state-pill.claimed {
-        background: rgba(74, 124, 168, 0.18);
-        color: #244d6b;
+        background: #1F4D3A;
+        color: #b8ef9f;
       }
 
       .earned-points-card,
@@ -409,6 +409,16 @@
         font-weight: 700;
       }
 
+      .coupon-button[data-coupon-state="redeem"] {
+        background: #f4d03f;
+        color: #3a2b00;
+        box-shadow: 0 8px 18px rgba(244, 208, 63, 0.28);
+      }
+
+      .coupon-button[data-coupon-state="redeem"]:hover {
+        background: #e4bd1c;
+      }
+
       .coupon-button[data-coupon-state="details"] {
         background: #4f82ad;
       }
@@ -449,7 +459,7 @@
 
       .collectable-card {
         background: linear-gradient(135deg, #4a7ca8 0%, #355d7f 100%);
-        padding: 30px;
+        padding: 24px 26px;
         color: white;
         margin-top: 22px;
       }
@@ -489,53 +499,87 @@
       }
 
       .collectable-content {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+        gap: 26px;
+        align-items: stretch;
+        margin-top: 18px;
       }
 
       .collectable-text {
-        flex: 1;
-        font-size: 0.95rem;
+        font-size: 0.98rem;
+        line-height: 1.65;
+        text-align: left;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+      }
+
+      .collectable-visual {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        min-height: 100%;
+        border-left: 4px solid rgba(255, 255, 255, 0.2);
+        padding-left: 26px;
       }
 
       .collectable-image {
-        width: 140px;
-        height: 140px;
-        background: rgba(255, 255, 255, 0.12);
-        border-radius: 18px;
+        width: min(100%, 260px);
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
       }
 
       .collectable-image img {
-        max-width: 130px;
-        max-height: 130px;
+        width: min(100%, 225px);
+        max-height: 255px;
+        object-fit: contain;
       }
 
       .collect-button {
-        margin-top: 16px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
         background: rgba(255, 255, 255, 0.2);
         color: white;
-        padding: 12px 20px;
+        padding: 12px 26px;
         border-radius: 22px;
         font-size: 0.95rem;
         font-weight: 800;
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        min-width: 200px;
+      }
+
+      .collect-button .lock-icon img {
+        width: 16px;
+        height: 16px;
       }
 
       .collect-button.is-claimed {
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.28);
+        color: #f7fdff;
+        border-color: rgba(255, 255, 255, 0.5);
       }
 
       .collect-button:hover {
         background: rgba(255, 255, 255, 0.3);
+      }
+
+      #collectableMessage.section-message.is-muted {
+        color: #f2f8ff;
+      }
+
+      #collectableMessage.section-message.is-success {
+        color: #b8ef9f;
+      }
+
+      #collectableMessage {
+        margin-top: 26px;
       }
 
       .printables-section {
@@ -623,7 +667,11 @@
       }
 
       .unlock-message {
-        margin-top: 16px;
+        margin-top: 44px;
+      }
+
+      #printablesMessage {
+        margin-top: 44px;
       }
 
       .secret-code-section {
@@ -658,6 +706,10 @@
         border-radius: 24px;
         font-size: 1rem;
         white-space: nowrap;
+      }
+
+      #secretCodeMessage {
+        margin-top: 18px;
       }
 
       .coupon-overlay {
@@ -708,7 +760,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 14%;
+        padding: 7%;
       }
 
       .coupon-qr-inner {
@@ -727,6 +779,8 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transform: scale(1.1);
+        transform-origin: center;
       }
 
       .coupon-qr-fallback {
@@ -796,10 +850,20 @@
         }
 
         .coupon-item,
-        .code-input-wrapper,
-        .collectable-content {
+        .code-input-wrapper {
           flex-direction: column;
           align-items: stretch;
+        }
+
+        .collectable-content {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .collectable-visual {
+          border-left: none;
+          padding-left: 0;
+          padding-top: 8px;
         }
 
         .activity-item {
@@ -820,8 +884,10 @@
 
         .collectable-image {
           width: 100%;
-          height: auto;
-          min-height: 140px;
+        }
+
+        .collectable-image img {
+          width: min(100%, 240px);
         }
 
         .printables-grid {
@@ -910,24 +976,26 @@
             learned and mastered throughout the lessons. Display him proudly and
             celebrate your achievements!
           </div>
-          <div class="collectable-image">
-            <img
-              src="../assets/images/mascot-wave.png"
-              alt="Mr. Wise Figurine"
-            />
+          <div class="collectable-visual">
+            <div class="collectable-image">
+              <img
+                src="../assets/images/mascot-wave.png"
+                alt="Mr. Wise Figurine"
+              />
+            </div>
+
+            <button
+              id="collectableActionButton"
+              class="collect-button"
+              type="button"
+            >
+              Collect Now
+              <span class="lock-icon">
+                <img src="../assets/images/lock-icon.png" alt="Lock" />
+              </span>
+            </button>
           </div>
         </div>
-
-        <button
-          id="collectableActionButton"
-          class="collect-button"
-          type="button"
-        >
-          Collect Now
-          <span class="lock-icon">
-            <img src="../assets/images/lock-icon.png" alt="Lock" />
-          </span>
-        </button>
 
         <p
           id="collectableMessage"

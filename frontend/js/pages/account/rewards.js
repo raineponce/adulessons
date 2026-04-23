@@ -351,6 +351,8 @@
       elements.collectableProgressFill.style.width = "0%";
       elements.collectableActionButton.disabled = true;
       elements.collectableActionButton.classList.remove("is-claimed");
+      elements.collectableActionButton.innerHTML =
+        'Collect Now <span class="lock-icon"><img src="../assets/images/lock-icon.png" alt="Locked" /></span>';
       setSectionMessage(
         elements.collectableMessage,
         "Your progress couldn't be loaded.",
@@ -368,8 +370,14 @@
       "is-claimed",
       status === "claimed",
     );
-    elements.collectableActionButton.textContent =
-      status === "claimed" ? "Collected" : "Collect Now";
+    if (status === "claimed") {
+      elements.collectableActionButton.textContent = "Collected";
+    } else if (status === "locked") {
+      elements.collectableActionButton.innerHTML =
+        'Collect Now <span class="lock-icon"><img src="../assets/images/lock-icon.png" alt="Locked" /></span>';
+    } else {
+      elements.collectableActionButton.textContent = "Collect Now";
+    }
     setSectionMessage(
       elements.collectableMessage,
       getCollectableMessage(),
@@ -495,6 +503,8 @@
             escapeHtml(prizeId) +
             '" data-prize-action="' +
             escapeHtml(action) +
+            '" data-coupon-state="' +
+            escapeHtml(action) +
             '"' +
             (buttonDisabled ? " disabled" : "") +
             ">" +
@@ -528,6 +538,8 @@
           '  <button class="coupon-button" type="button" data-prize-id="' +
             escapeHtml(prizeId) +
             '" data-prize-action="' +
+            escapeHtml(action) +
+            '" data-coupon-state="' +
             escapeHtml(action) +
             '"' +
             (buttonDisabled ? " disabled" : "") +
@@ -575,37 +587,6 @@
       if (!printableDownloadUrl) {
         openPrizeModal(prize, true);
         return;
-      }
-
-      // First download redeems the printable (deduct points); later downloads are free.
-      if (prize.type === "printable" && !isPrizeRedeemed(prizeId)) {
-        setPrizeButtonBusy(prizeId, true);
-        try {
-          var printableResult = await AppApi.redeemPrize(prizeId);
-          if (typeof printableResult.points === "number") {
-            state.points = printableResult.points;
-          }
-          await refreshRedeemedPrizes();
-          setSectionMessage(
-            elements.printablesMessage,
-            "Printable unlocked. Your points total has been updated.",
-            "success",
-          );
-          renderAll();
-        } catch (error) {
-          if (AppApi.handleAuthError(error)) {
-            return;
-          }
-
-          setSectionMessage(
-            elements.printablesMessage,
-            getPrizeRedeemErrorMessage(error, prize),
-            "error",
-          );
-          return;
-        } finally {
-          setPrizeButtonBusy(prizeId, false);
-        }
       }
 
       triggerFileDownload(printableDownloadUrl, getPrintableDownloadFilename(prize));
@@ -719,9 +700,6 @@
     }
 
     if (enoughPoints) {
-      if (prize.type === "printable" && getPrintableDownloadFile(prize)) {
-        return "download";
-      }
       return "redeem";
     }
 
@@ -744,9 +722,6 @@
     }
 
     if (enoughPoints) {
-      if (prize.type === "printable" && getPrintableDownloadFile(prize)) {
-        return getPrintableDownloadButtonLabel(prize);
-      }
       return "Unlock";
     }
 
@@ -822,7 +797,7 @@
   }
 
   function getPrintableDownloadButtonLabel(prize) {
-    return getPrintableMeta(prize).buttonLabel;
+    return "Download";
   }
 
   function getPrintableDownloadFile(prize) {
