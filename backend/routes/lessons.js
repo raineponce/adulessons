@@ -9,6 +9,21 @@ const { requireAuth } = require('../middleware/authMiddleware');
 // TODO: Update this to the actual lesson count once all content is loaded.
 const TOTAL_LESSONS = 22; // Approximate: 6 modules × ~3.5 lessons average
 
+// GET /lessons/modules/:moduleId — Return a single module's content
+router.get('/modules/:moduleId', requireAuth, async (req, res) => {
+  try {
+    const module = await Module.findOne({ moduleId: req.params.moduleId })
+      .select('moduleId title description order lessonIds')
+      .lean();
+    if (!module) {
+      return res.status(404).json({ error: 'Module not found' });
+    }
+    res.json(module);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // GET /lessons — Return all modules sorted by order with user progress
 router.get('/', requireAuth, async (req, res) => {
   try {
