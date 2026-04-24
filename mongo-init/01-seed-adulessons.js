@@ -1266,7 +1266,7 @@ const lessons = [
         "Recognize burnout signs and create a consistent sleep schedule",
         "Take on fewer responsibilities without rest"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "explanation": "Recognizing burnout signs and creating a consistent sleep schedule are the most helpful steps because they address both mental exhaustion and the sleep habits affecting Sofia's well-being."
     },
     "keyTakeaways": [
@@ -1381,7 +1381,7 @@ const lessons = [
         "Moving regularly and taking breaks from sitting",
         "Staying in the same position to stay focused"
       ],
-      "correctIndex": 1,
+      "correctIndex": 2,
       "explanation": "Moving regularly and taking breaks from sitting are the best choices because physical health supports energy, comfort, and productivity during long periods of study or work."
     },
     "keyTakeaways": [
