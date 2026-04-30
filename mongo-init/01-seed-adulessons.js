@@ -645,28 +645,20 @@ const lessons = [
   {
     "lessonId": "mod1-lesson3",
     "moduleId": "mod1",
-    "title": "Understanding Credit",
+    "title": "Budgeting",
     "order": 3,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "What Is Credit?"
+            "type": "image",
+            "src": "/assets/images/banners/finance-budgeting.png",
+            "alt": "Budgeting lesson banner"
           },
           {
             "type": "text",
-            "body": "Credit lets you borrow money now and pay it back later. Lenders use your history to decide if you are a safe borrower."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/finance-icon.png",
-            "alt": "Credit icon"
-          },
-          {
-            "type": "callout",
-            "body": "Paying bills on time helps build good credit."
+            "body": "Nobody hands you a money manual when you turn 18, and yet suddenly you're expected to budget, save, build credit, and plan for retirement all at once. No pressure, right? The truth is, managing your money doesn't have to be complicated. It's less about being perfect and more about being intentional, and starting with even the smallest habits can make a bigger difference than you'd think."
           }
         ]
       },
@@ -675,40 +667,240 @@ const lessons = [
         "blocks": [
           {
             "type": "video",
-            "videoId": "2nB4nQfaj3Q"
+            "videoId": "4KheDqLROdA"
           },
           {
             "type": "list",
             "items": [
-              "Pay on time",
-              "Keep balances low",
-              "Check your credit report"
+              "Budgeting isn't about restricting yourself; it's about knowing where your money goes so you can spend on what actually matters to you, without the stress.",
+              "Saving doesn't have to start big. Even a small emergency fund can protect you from debt when life throws you a curveball, and it only grows from there.",
+              "Credit and debit each have their place. When used responsibly, a credit card can build your financial future, but understanding the difference between the two is key to staying out of trouble."
+            ],
+            "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Managing Money"
+          },
+          {
+            "type": "text",
+            "body": "Money doesn't grow on trees, and it definitely doesn't come with a user manual. If you're looking for a good starting point, you're in the right place!"
+          },
+          {
+            "type": "heading",
+            "body": "Balancing Your Budget"
+          },
+          {
+            "type": "text",
+            "body": "Budgeting isn't about restricting yourself; it's about knowing where your money is going so you feel in control instead of stressed."
+          },
+          {
+            "type": "text",
+            "body": "A simple way to start is breaking your expenses into needs and wants."
+          },
+          {
+            "type": "heading",
+            "body": "Needs - Things necessary to, y'know, live."
+          },
+          {
+            "type": "list",
+            "items": [
+              "Rent",
+              "Groceries",
+              "Utilities",
+              "Transportation",
+              "Minimum loan payments",
+              "Essential healthcare"
             ],
             "ordered": false
           },
           {
+            "type": "heading",
+            "body": "Wants - Things that are fun (in moderation)"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Eating takeout",
+              "Streaming services",
+              "Upgraded phone plans",
+              "New clothes \"just because\"",
+              "Entertainment"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "text",
+            "body": "A lot of people use the 50/30/20 rule as a starting point:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "50% needs",
+              "30% wants",
+              "20% savings/debt payoff"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "text",
+            "body": "It doesn't have to be perfect, your goal is simply to spend intentionally."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Savings Basics"
+          },
+          {
+            "type": "heading",
+            "body": "Emergency Savings"
+          },
+          {
+            "type": "text",
+            "body": "Life is unpredictable. Flat tires happen. So do surprise bills."
+          },
+          {
+            "type": "text",
+            "body": "Having a small emergency fund (even $300 - $500 at first) can keep you from going into debt when something unexpected pops up."
+          },
+          {
+            "type": "text",
+            "body": "Eventually, aim for 3-6 months of essential expenses, but don't stress, building it takes time."
+          },
+          {
+            "type": "heading",
+            "body": "Compound Interest (aka Money Growing on Its Own)"
+          },
+          {
+            "type": "text",
+            "body": "Compound interest is when the money you save earns interest… and then that interest earns interest."
+          },
+          {
+            "type": "text",
+            "body": "Even small amounts can grow surprisingly fast if you leave them alone. Think of it like planting a seed: tiny now, but it becomes a tree if you don't dig it up every few months."
+          },
+          {
+            "type": "heading",
+            "body": "High-Yield Savings Accounts (HYSAs)"
+          },
+          {
+            "type": "text",
+            "body": "Regular savings accounts grow very slowly."
+          },
+          {
+            "type": "text",
+            "body": "High-yield savings accounts (usually online banks) offer much better interest rates, often several times higher."
+          },
+          {
+            "type": "text",
+            "body": "They're great for:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Emergency funds",
+              "Short-term goals",
+              "Money you want safe and accessible"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "text",
+            "body": "And unlike investing, HYSAs don't risk losing your balance."
+          },
+          {
+            "type": "heading",
+            "body": "Roth IRAs & 401(k)s"
+          },
+          {
+            "type": "text",
+            "body": "These are long-term retirement savings accounts."
+          },
+          {
+            "type": "text",
+            "body": "You don't need to be an \"expert\" to open one, just set money aside and let time + compound interest work their magic!"
+          },
+          {
             "type": "link",
-            "href": "https://www.annualcreditreport.com/",
-            "linkText": "Annual Credit Report"
+            "href": "https://www.fidelity.com/learning-center/smart-money/roth-ira-vs-401k",
+            "linkText": "Roth IRA vs 401(k) breakdown"
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Credit vs. Debit"
+          },
+          {
+            "type": "text",
+            "body": "Debit is safer for day-to-day spending; credit is amazing for building financial strength if you use it responsibly."
+          },
+          {
+            "type": "heading",
+            "body": "Debit Cards"
+          },
+          {
+            "type": "text",
+            "body": "Debit cards pull money directly from your bank account."
+          },
+          {
+            "type": "text",
+            "body": "Pros: Harder to overspend, no interest, good for everyday purchases."
+          },
+          {
+            "type": "text",
+            "body": "Cons: Doesn't build credit, less protection for some purchases, and if someone steals your info, money can still leave your account."
+          },
+          {
+            "type": "heading",
+            "body": "Credit Cards"
+          },
+          {
+            "type": "text",
+            "body": "Credit cards let you borrow money temporarily and pay it off later."
+          },
+          {
+            "type": "text",
+            "body": "Pros: Builds your credit score, strong fraud protection, and rewards (like cash back or travel points)."
+          },
+          {
+            "type": "text",
+            "body": "Cons: Easy to overspend, charges interest if you don't pay the full balance, and missing payments could hurt your credit."
+          },
+          {
+            "type": "callout",
+            "body": "You don't need to have everything figured out at once. Healthy money habits grow slowly (just like savings, credit, and confidence). Every small step you take builds your financial future, and you're already on the right track just by learning this stuff."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "Which habit helps improve your credit score?",
+      "question": "You're looking for a smart way to handle your money. What should you do?",
       "options": [
-        "Missing payments often",
-        "Keeping credit card balances very high",
-        "Paying bills on time",
-        "Closing every account quickly"
+        "Let your money grow in a high-yield savings account.",
+        "Keep track of purchases made with your credit card.",
+        "Start saving for retirement early.",
+        "Do everything listed above."
       ],
-      "correctIndex": 2,
-      "explanation": "On-time payments are one of the biggest factors in your credit score."
+      "correctIndex": 3,
+      "explanation": "Smart money management combines all of these habits — growing savings, tracking spending, and starting retirement early."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Budgeting isn't about restricting yourself; it's about knowing where your money goes so you can spend on what actually matters to you, without the stress.",
+      "Saving doesn't have to start big. Even a small emergency fund can protect you from debt when life throws you a curveball, and it only grows from there.",
+      "Credit and debit each have their place. When used responsibly, a credit card can build your financial future, but understanding the difference between the two is key to staying out of trouble."
     ],
     "pointsAwarded": 10
   },
@@ -785,28 +977,20 @@ const lessons = [
   {
     "lessonId": "mod2-lesson1",
     "moduleId": "mod2",
-    "title": "Effective Communication",
+    "title": "Roommates",
     "order": 1,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Communication Basics"
+            "type": "image",
+            "src": "/assets/images/banners/social-roommates.png",
+            "alt": "Roommates lesson banner"
           },
           {
             "type": "text",
-            "body": "Good communication means speaking clearly and listening carefully so both people feel understood."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/social-icon.png",
-            "alt": "Communication icon"
-          },
-          {
-            "type": "callout",
-            "body": "Listen first, then respond."
+            "body": "Living with roommates can be one of the most exciting and challenging parts of adulthood. In this aduLessons module, we'll explore how to set expectations early, communicate clearly, divide responsibilities fairly, manage shared finances, and handle conflict in a mature way. By the end of this lesson, you'll feel more confident navigating shared living situation."
           }
         ]
       },
@@ -815,40 +999,107 @@ const lessons = [
         "blocks": [
           {
             "type": "video",
-            "videoId": "HAnw168huqA"
+            "videoId": "oT9CcBgGGXY"
           },
           {
             "type": "list",
             "items": [
-              "Make eye contact",
-              "Ask clarifying questions",
-              "Repeat key points"
+              "Living with roommates can be difficult. Conflicts can begin over shared responsibilities, such as cleaning, taking out the trash, or replacing household items like toilet paper. Has this ever been your experience?",
+              "Arguments may start from small misunderstandings, such as accusations about eating someone else's food or using their belongings. Noise and respect for shared space are common issues.",
+              "Overall, this video exaggerates but shows that communication and clear boundaries are important for maintaining a peaceful living environment."
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Finding Roommates"
+          },
+          {
+            "type": "text",
+            "body": "Finding the right roommate is an important step when preparing to live with others. A good place to start is by asking friends, classmates, or coworkers if they know anyone who is also looking for housing."
+          },
+          {
+            "type": "text",
+            "body": "Many people also use online roommate-matching websites or social media groups to connect with potential roommates. When searching online, it is helpful to create a profile that describes your lifestyle, budget, and living preferences so you can find someone compatible."
+          },
+          {
+            "type": "text",
+            "body": "Before committing to live together, talk with potential roommates about expectations like cleanliness, schedules, and shared expenses. Taking time to communicate early can help prevent misunderstandings and lead to a more comfortable living situation."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Etiquette"
+          },
+          {
+            "type": "text",
+            "body": "Roommate etiquette refers to the basic behaviors that help people live respectfully in shared spaces. Good etiquette includes cleaning up after yourself, respecting shared areas, and contributing fairly to household responsibilities. For example, roommates should divide chores like taking out the trash, washing dishes, or cleaning common areas to prevent one person from doing all the work."
+          },
+          {
+            "type": "text",
+            "body": "It is also important to respect personal belongings and ask permission before borrowing anything. Being mindful of noise levels, especially during late hours, helps maintain a comfortable living environment for everyone."
+          },
+          {
+            "type": "text",
+            "body": "Practicing courtesy and responsibility helps build trust and prevents unnecessary conflicts between roommates."
           },
           {
             "type": "link",
-            "href": "https://www.skillsyouneed.com/ips/communication-skills.html",
-            "linkText": "Communication Skills"
+            "href": "https://www.cookman.edu/studentexperience/for-new-students/roommate-etiquette.html",
+            "linkText": "Roommate Etiquette (Cookman)"
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Communication"
+          },
+          {
+            "type": "text",
+            "body": "Communication is one of the most important factors in maintaining a positive roommate relationship. Roommates should discuss expectations early, including topics such as cleaning schedules, guests, shared expenses, and quiet hours. Addressing concerns directly and respectfully helps prevent misunderstandings from growing into larger conflicts."
+          },
+          {
+            "type": "text",
+            "body": "Experts recommend speaking privately about issues, using clear language, and expressing concerns with \"I\" statements rather than blaming the other person. Active listening is also essential, as it shows respect and helps both roommates understand each other's perspectives."
+          },
+          {
+            "type": "text",
+            "body": "Regular check-ins or conversations about household responsibilities can help maintain transparency and keep the living environment comfortable for everyone."
+          },
+          {
+            "type": "callout",
+            "body": "Living with roommates requires respect, clear expectations, and open communication. Practicing good etiquette and addressing issues early can help roommates create a comfortable and cooperative living environment."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is the most important element of effective communication?",
+      "question": "What is one of the most important ways to prevent conflicts when living with roommates?",
       "options": [
-        "Speaking loudly and clearly",
-        "Listening actively and understanding the other person",
-        "Using complex vocabulary",
-        "Talking more than others"
+        "Avoid talking about problems",
+        "Communicate expectations clearly",
+        "Ignore shared responsibilities",
+        "Keep concerns to yourself"
       ],
       "correctIndex": 1,
-      "explanation": "Active listening and understanding others is key to effective communication and building strong relationships."
+      "explanation": "Clear communication about expectations prevents small misunderstandings from turning into larger conflicts."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Respect shared spaces, personal belongings, and household responsibilities.",
+      "Communicate expectations and concerns clearly and respectfully.",
+      "Address small issues early to prevent larger roommate conflicts."
     ],
     "pointsAwarded": 10
   },
@@ -1537,28 +1788,20 @@ const lessons = [
   {
     "lessonId": "mod4-lesson1",
     "moduleId": "mod4",
-    "title": "Kitchen Basics & Safety",
+    "title": "Groceries",
     "order": 1,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Kitchen Safety Basics"
+            "type": "image",
+            "src": "/assets/images/banners/cooking-groceries.png",
+            "alt": "Groceries lesson banner"
           },
           {
             "type": "text",
-            "body": "Safe cooking starts with clean hands, a tidy workspace, and careful use of heat and knives."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/cooking-icon.png",
-            "alt": "Kitchen safety icon"
-          },
-          {
-            "type": "callout",
-            "body": "Clean as you cook to stay safe."
+            "body": "Getting groceries can feel incredibly stressful and leave you wandering around aimlessly if you don't have a plan. Knowing what ingredients you need ahead of time not only saves time but also helps you stay within budget and avoid unnecessary purchases. In this module, you'll learn how to shop efficiently by creating a simple grocery list, understanding basic ingredients, and preparing for the recipes you plan to make."
           }
         ]
       },
@@ -1566,41 +1809,142 @@ const lessons = [
         "pageNumber": 2,
         "blocks": [
           {
-            "type": "video",
-            "videoId": "Qw4I7QyR8RU"
+            "type": "image",
+            "src": "/assets/images/infographics/mod4-lesson1.png",
+            "alt": "Groceries infographic"
           },
           {
             "type": "list",
             "items": [
-              "Wash hands before cooking",
-              "Keep raw meat separate",
-              "Turn pot handles inward"
+              "Plan before you shop. Check your kitchen first, plan meals for the week, and make a grocery list so you only buy what you actually need.",
+              "Look for the best prices. Compare unit prices, check store sales or discounts, and consider store-brand products to save money.",
+              "Use nutrition labels to choose healthier foods. Reading food labels helps you select items lower in added sugar, sodium, and unhealthy fats.",
+              "Stick to your shopping list. Following your list helps avoid impulse purchases and keeps your grocery spending under control."
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Where to Shop"
+          },
+          {
+            "type": "text",
+            "body": "Choosing where to shop for groceries can affect both your budget and the quality of food you buy."
+          },
+          {
+            "type": "text",
+            "body": "Many people shop at supermarkets because they offer a wide variety of products and competitive prices."
+          },
+          {
+            "type": "text",
+            "body": "Discount grocery stores and store brands can help reduce food costs while still providing nutritious options."
+          },
+          {
+            "type": "text",
+            "body": "Local farmers markets are another option and often provide fresh fruits and vegetables that are grown nearby."
+          },
+          {
+            "type": "text",
+            "body": "Some communities also have warehouse clubs or bulk stores where certain items can be purchased in larger quantities at lower prices per unit."
+          },
+          {
+            "type": "text",
+            "body": "Comparing prices, checking weekly store ads, and selecting the store that fits your budget and needs can help you grocery shop more efficiently."
           },
           {
             "type": "link",
-            "href": "https://www.foodsafety.gov/",
-            "linkText": "Food Safety Basics"
+            "href": "https://www.usda.gov/about-usda/news/blog/healthy-eating-budget",
+            "linkText": "Healthy Eating on a Budget (USDA)"
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Quality Checking"
+          },
+          {
+            "type": "text",
+            "body": "Checking the quality of food while grocery shopping helps ensure you purchase fresh and safe items."
+          },
+          {
+            "type": "text",
+            "body": "When selecting fruits and vegetables, look for produce that is firm, brightly colored, and free of bruises or mold."
+          },
+          {
+            "type": "text",
+            "body": "Meat and dairy products should always be checked for expiration dates and kept cold in the store."
+          },
+          {
+            "type": "text",
+            "body": "Packaging should also be inspected to make sure it is not damaged, leaking, or open."
+          },
+          {
+            "type": "text",
+            "body": "In addition, reading nutrition labels can help you make healthier choices by comparing ingredients, sodium levels, and added sugars."
+          },
+          {
+            "type": "text",
+            "body": "Paying attention to these details can help you avoid spoiled products and select foods that support a balanced diet. Remember to trust your instincts and use your 5 senses to analyze before you buy!"
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Food Storage"
+          },
+          {
+            "type": "text",
+            "body": "Proper food storage is important for maintaining food quality and preventing foodborne illness."
+          },
+          {
+            "type": "text",
+            "body": "Perishable foods such as meat, dairy, and fresh produce should be refrigerated as soon as possible after shopping. Refrigerators should typically be kept at or below 40°F (4°C) to slow bacterial growth."
+          },
+          {
+            "type": "text",
+            "body": "Many foods also have recommended storage times, so checking labels and guidelines can help prevent waste."
+          },
+          {
+            "type": "text",
+            "body": "Dry foods like rice, pasta, and canned goods should be stored in a cool, dry place."
+          },
+          {
+            "type": "text",
+            "body": "Organizing food by expiration dates and using older items first can also reduce food waste and ensure food stays safe to eat. (Centers for Disease Control and Prevention)"
+          },
+          {
+            "type": "callout",
+            "body": "Learning how to shop for groceries wisely can help people save money and maintain a healthy diet. By choosing the right stores, checking food quality, and storing groceries properly, shoppers can make better decisions and reduce food waste."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is the most important safety practice in the kitchen?",
+      "question": "Which action helps prevent food from spoiling too quickly?",
       "options": [
-        "Cooking as fast as possible",
-        "Keeping your workspace clean and handling knives and heat carefully",
-        "Not washing your hands",
-        "Ignoring expiration dates"
+        "Leaving groceries on the counter for several hours",
+        "Refrigerating perishable foods soon after shopping",
+        "Ignoring expiration dates",
+        "Storing meat at room temperature"
       ],
       "correctIndex": 1,
-      "explanation": "Kitchen safety includes maintaining cleanliness, handling knives and heat properly, and being aware of food safety practices."
+      "explanation": "Refrigerating perishable foods soon after shopping slows bacterial growth and keeps food safe to eat longer."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Choose grocery stores that offer affordable prices, special deals, and fresh food options.",
+      "Check produce, packaging, and expiration dates to ensure food quality.",
+      "Store groceries properly to keep food fresh and safe to eat."
     ],
     "pointsAwarded": 10
   },
@@ -1817,28 +2161,20 @@ const lessons = [
   {
     "lessonId": "mod5-lesson1",
     "moduleId": "mod5",
-    "title": "Cleaning & Maintenance",
+    "title": "Housing: On and Off Campus",
     "order": 1,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Cleaning Routine"
+            "type": "image",
+            "src": "/assets/images/banners/household-finding-housing.png",
+            "alt": "Finding housing lesson banner"
           },
           {
             "type": "text",
-            "body": "A simple routine keeps your home cleaner and makes chores feel more manageable."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/household-icon.png",
-            "alt": "Cleaning icon"
-          },
-          {
-            "type": "callout",
-            "body": "Do a little each day."
+            "body": "Where you live during college has a real impact on your budget, your routine, and your overall experience. Whether you're staying in the dorms or signing your first lease, it helps to know what you're getting into before you commit. This lesson covers the key differences between on-campus and off-campus housing, walks you through the search process for both, and helps you build a realistic budget so there are no surprises once you move in."
           }
         ]
       },
@@ -1846,41 +2182,130 @@ const lessons = [
         "pageNumber": 2,
         "blocks": [
           {
-            "type": "video",
-            "videoId": "u6qP5Aq5r5A"
+            "type": "image",
+            "src": "/assets/images/infographics/mod5-lesson1.png",
+            "alt": "Housing infographic"
+          },
+          {
+            "type": "heading",
+            "body": "Things to Remember"
           },
           {
             "type": "list",
             "items": [
-              "Wipe surfaces daily",
-              "Vacuum weekly",
-              "Clean spills right away"
+              "Start your search early. The best rooms and rental deals go fast — begin looking at least three to six months before your move-in date.",
+              "Compare total costs, not just rent. On-campus pricing often bundles utilities, internet, and furniture. Off-campus rent may look cheaper until you factor in those extras separately.",
+              "Read every lease before you sign. Understand the lease term, early termination penalties, security deposit details, and who handles maintenance.",
+              "Think about your daily routine. If you have early classes or depend on campus resources, proximity matters. If you prefer more independence and quiet, off-campus might be a better fit.",
+              "Choose roommates with intention. Have an honest conversation about noise, guests, chores, and shared expenses before committing to a living arrangement."
             ],
             "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Finding Housing On Campus"
           },
           {
-            "type": "link",
-            "href": "https://www.goodhousekeeping.com/home/cleaning/",
-            "linkText": "Home Cleaning Tips"
+            "type": "text",
+            "body": "Your university's website is the best place to start. Most schools have a dedicated housing portal where you can browse residence halls, submit applications, select meal plans, and even request a specific roommate."
+          },
+          {
+            "type": "text",
+            "body": "Start by searching for \"Housing\" or \"Residence Life\" on your school's site — it's usually under Student Life or Campus Living. Once you're in, compare your options: look at room types (single, double, suite), included amenities (laundry, AC, kitchenettes), and proximity to your classes. Many portals also offer virtual tours and floor plans."
+          },
+          {
+            "type": "text",
+            "body": "Housing is often assigned first-come, first-served or through a lottery, so mark the application open date and submit early. You'll typically pay a deposit to hold your spot, which is usually refundable if you cancel before the deadline. For roommates, most schools offer matching questionnaires based on sleep habits, study preferences, and social style — or you can request someone you already know."
+          },
+          {
+            "type": "text",
+            "body": "Once you're assigned, review your residence hall policies, set up your meal plan, and complete any required forms like immunization records and emergency contacts."
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Finding Housing Off Campus"
+          },
+          {
+            "type": "text",
+            "body": "Searching for off-campus housing can feel like a lot, but the right tools make it much more manageable."
+          },
+          {
+            "type": "text",
+            "body": "Zillow is one of the largest rental listing sites — you can filter by price, bedrooms, pet policy, and distance from campus, and it's especially useful for comparing prices across neighborhoods."
+          },
+          {
+            "type": "text",
+            "body": "Apartments.com specializes in apartment complexes and lets you view floor plans, amenity lists, and resident reviews, with the option to apply directly through the site."
+          },
+          {
+            "type": "text",
+            "body": "Your school may also have its own off-campus housing board or partner with platforms like College Pads that focus specifically on student-friendly rentals."
+          },
+          {
+            "type": "text",
+            "body": "Whichever platform you use, always visit the place in person before signing anything. Map your commute to campus, check the neighborhood during different times of day, and read the full lease carefully — paying close attention to the lease term, penalties for breaking it, who handles repairs, and what's included in the rent."
+          },
+          {
+            "type": "text",
+            "body": "Starting your search three to four months before your move-in date gives you the best selection and avoids the last-minute scramble."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Budgeting for Housing"
+          },
+          {
+            "type": "text",
+            "body": "Rent is the biggest line item, but it's far from the only cost. A realistic housing budget accounts for everything that comes with having a place to live. Rent typically runs $500 to $1,400 per month depending on your city, proximity to campus, and whether you have roommates. Utilities (electricity, water, gas, trash) usually add $80 to $200 — some rentals include these, so always ask before signing."
+          },
+          {
+            "type": "text",
+            "body": "If you're off-campus without a meal plan, groceries will run $200 to $400 a month; meal prepping can help keep that number down. Transportation costs vary from $0 to $150 depending on whether you drive, take the bus, or use ride-shares — check if your school offers free transit passes."
+          },
+          {
+            "type": "text",
+            "body": "Internet is another $40 to $80, though splitting it with roommates or finding a building that includes it helps. A good framework to follow is the 50/30/20 rule: 50% of your income goes to needs (rent, food, transport), 30% to wants (entertainment, dining out), and 20% to savings or debt repayment."
+          },
+          {
+            "type": "text",
+            "body": "Even if your budget is tight, tracking where every dollar goes is the first step toward feeling in control of your finances."
+          },
+          {
+            "type": "callout",
+            "body": "Finding the right place to live is one of the most practical decisions you'll make in college. By using your school's housing portal, exploring trusted rental platforms, and building an honest budget that goes beyond just rent, you set yourself up for a living situation that supports your goals rather than adding stress to them."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is the best approach to keeping a home clean?",
+      "question": "When budgeting for off-campus housing, which approach gives you the most accurate picture of your total monthly cost?",
       "options": [
-        "Only clean when guests are coming",
-        "Develop regular cleaning routines and tackle spills immediately",
-        "Clean once a year",
-        "Wait until it's extremely dirty"
+        "Only calculate your monthly rent — the landlord typically covers everything else",
+        "Add up rent, utilities, internet, groceries, transportation, and renter's insurance for a complete picture",
+        "Double your rent amount — that's usually enough to cover all other expenses",
+        "Ask your roommate to handle the budget since only one person needs to track it"
       ],
       "correctIndex": 1,
-      "explanation": "Regular cleaning routines and addressing spills immediately help maintain a clean home and prevent deep cleaning emergencies."
+      "explanation": "A realistic housing budget includes every cost of living, not just rent — utilities, internet, groceries, transportation, and insurance all add up."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Use your university's resources first — your school's housing portal centralizes applications, roommate matching, meal plans, and move-in details. Start there before exploring other options.",
+      "Research off-campus options on trusted platforms — sites like Zillow and Apartments.com make apartment hunting easier. Always tour in person, check your commute, and read the full lease before signing.",
+      "Budget for the full cost of living — rent is only part of the equation. Factor in utilities, internet, groceries, transportation, and renter's insurance, and use the 50/30/20 rule to stay on track."
     ],
     "pointsAwarded": 10
   },
@@ -2097,28 +2522,20 @@ const lessons = [
   {
     "lessonId": "mod6-lesson1",
     "moduleId": "mod6",
-    "title": "Transportation Options",
+    "title": "Cars",
     "order": 1,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Choosing Transportation"
+            "type": "image",
+            "src": "/assets/images/banners/transportation-cars.png",
+            "alt": "Cars lesson banner"
           },
           {
             "type": "text",
-            "body": "The best transportation option depends on your budget, schedule, and safety needs."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/transportation-icon.png",
-            "alt": "Transportation options icon"
-          },
-          {
-            "type": "callout",
-            "body": "Compare options before deciding."
+            "body": "Welcome to the Cars lesson! In this lesson you will learn about car maintenance like checking your oil levels, tire pressure, and even changing your tires. This lesson will also go into car insurance and how to sign up for it."
           }
         ]
       },
@@ -2127,40 +2544,183 @@ const lessons = [
         "blocks": [
           {
             "type": "video",
-            "videoId": "b3R8n4K1LmQ"
+            "videoId": "grxX9B9KzcM"
           },
           {
             "type": "list",
             "items": [
-              "Check travel time",
-              "Estimate total cost",
-              "Review reliability"
+              "The car engine is under the hood of the car and makes the car run.",
+              "The radiator is towards the front of the car. This allows the engine to cool down and not overheat.",
+              "The battery is easy to find, look for anything that looks like a battery and see if it has cables running near it. The battery also has a red piece that indicates a positive charge.",
+              "There is a wiper fluid access point that allows for you to fill the wiper fluid. Check the symbol on the cap to make sure you are filling the reservoir with the proper fluid."
+            ],
+            "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "How to Change a Tire"
+          },
+          {
+            "type": "text",
+            "body": "An important skill that one needs to know about is how to change a car tire. You may not ever need to change a tire, but having that ability will save you time."
+          },
+          {
+            "type": "heading",
+            "body": "What you need:"
+          },
+          {
+            "type": "text",
+            "body": "Depending on the make and model of your car, these items should be in the trunk of your car."
+          },
+          {
+            "type": "list",
+            "items": [
+              "Car jack",
+              "Lug Wrench",
+              "Spare tire"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "heading",
+            "body": "Steps"
+          },
+          {
+            "type": "list",
+            "items": [
+              "First, you will place the car jack on the metal frame of the car next to the flat tire.",
+              "Then, you grab the lug wrench and loosen — just loosen — the lug nuts from the tire. There are usually four to five lug nuts depending on the make and model of your car.",
+              "Thirdly, you start to raise the jack, aligning it with the metal frame to lift it off the ground. Make sure that there is space between the flat tire and the ground.",
+              "Once the tire is suspended from the ground, you begin to remove the lug nuts, removing the lug nut opposite of the first one you removed. If there are five lug nuts, do it in a star pattern.",
+              "After you remove the lug nuts, you can slide the old tire off and replace it with a spare (or the new tire). Careful removing the tire, it can be heavy, request for help if you need it.",
+              "Do the same thing, but backwards. Place the lug nuts on the tire, then screw them on, repeat the same pattern.",
+              "Lower the jack carefully.",
+              "Finish tightening the lug nuts and you are done."
+            ],
+            "ordered": true
+          },
+          {
+            "type": "text",
+            "body": "Congratulations, you have learned to change a tire!"
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Checking fluid levels"
+          },
+          {
+            "type": "text",
+            "body": "Did you know that your car runs on multiple fluids? Did you also know that you have to maintain the levels of these fluids for your car to run properly? Well we're here to teach you! To check the fluid levels, you have to pop open the hood and take a look at what is under there."
+          },
+          {
+            "type": "list",
+            "items": [
+              "To open the car hood, check for a switch to your left, either on the floor near the door or next to your steering wheel. Pull the switch and that should prop the hood up.",
+              "Step to the front of your vehicle and put your hand under the hood and grab the latch. Pull that handle while lifting the hood.",
+              "Once fully open, there is a stick that you pull on and place it into a small hole under the hood. You can now check the fluid levels."
+            ],
+            "ordered": true
+          },
+          {
+            "type": "text",
+            "body": "To check the oil levels:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "You pull out the dip stick (usually a yellow cap).",
+              "Clean the stick with a napkin or rag, reinsert it and pull it out.",
+              "Check the minimum and maximum levels with the designated lines, if there is less than the maximum amount of oil, add more oil."
+            ],
+            "ordered": true
+          },
+          {
+            "type": "text",
+            "body": "The other car fluids have transparent tanks that mark the maximum and minimum levels. The more important fluid levels that you need to be aware of are (there are fluid brands for different makes and models of your vehicle):"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Coolant: Coolant (also known as antifreeze) helps to keep things cool by absorbing engine heat and distributing it through the radiator. Maintaining the right coolant level minimizes overheating.",
+              "Power Steering Fluid: Many power steering systems are hydraulic, using pressurized fluid to make turning the wheel effortless.",
+              "Brake Fluid: Modern automobile brakes are hydraulic, which means that fluid connects the pedal to the brakes itself.",
+              "Transmission Fluid: Transmission fluid, like engine oil, lubricates and cools the components of your transmission."
             ],
             "ordered": false
           },
           {
             "type": "link",
-            "href": "https://www.transportation.gov/",
-            "linkText": "Transportation Resources"
+            "href": "https://www.popularmechanics.com/cars/a64322023/how-to-check-car-fluids/",
+            "linkText": "How to Check Car Fluids (Popular Mechanics)"
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Dashboard Warning Lights"
+          },
+          {
+            "type": "text",
+            "body": "When the fluid levels in your vehicle are low, there are lights that will appear. They look like emojis, which tell you what the car needs."
+          },
+          {
+            "type": "image",
+            "src": "/assets/images/infographics/mod6-lesson1.png",
+            "alt": "Dashboard warning lights infographic"
+          },
+          {
+            "type": "text",
+            "body": "Different types of lights and what they mean:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Check Engine: A loose wire, an ill-fitting gas cap, or a damaged solenoid could all be causes for concern. Alternatively, it could indicate that something serious is going on with the engine's heart.",
+              "Battery: The battery of your car could be out of battery and your car will not start. If your car starts and the light is still on, it could be another issue and you should consult a mechanic.",
+              "Coolant Temperature: If this light appears, your vehicle could be overheating. Another reason why the light turns on is because the radiator is damaged or the coolant hose is damaged, get it replaced or fixed as soon as you can.",
+              "Transmission Temperature: This implies that the internal components of your gearbox are reaching a critical point. This could be caused by heavy towing, low transmission fluid levels, or, more importantly, excessive wear on the transmission's internal workings.",
+              "Tire Pressure Monitoring System: This usually means that the tire pressure, or air in your tire, is low or that you may have a flat tire. Either fill the tire air, patch the hole, or replace the tire entirely depending on the severity.",
+              "Traction Control: This light turns on when your vehicle is driving in rainy or snowy conditions, this means that it is working correctly. If the light turns on on a sunny day, there could be an issue with the system.",
+              "Airbag Warning: It's totally normal for this light to illuminate when your car first starts. If it remains illuminated while driving, there may be an issue with one of the vehicle's airbags. This will not get you trapped on the side of the road, but it may be harmful in the event of a collision.",
+              "High Beam Indicator: This light should only be on when you are driving through very dark areas.",
+              "Freezing Temperatures: This light shows that the temperatures are close to or below freezing, this does not mean that anything is broken but that you should be cautious with the icy conditions."
+            ],
+            "ordered": false
+          },
+          {
+            "type": "callout",
+            "body": "Now you know how to change a tire, check fluid levels, and what the lights mean when they appear on your dashboard. Stay prepared and drive safe."
           }
         ]
       }
     ],
     "quiz": {
-      "question": "Which factor should you consider when choosing a transportation method?",
+      "question": "Where should you place the car jack when changing a tire?",
       "options": [
-        "Only the cost",
-        "Cost, time, reliability, environmental impact, and accessibility",
-        "What your friends use",
-        "Speed only"
+        "On the roof of the car",
+        "In the passenger seat",
+        "The metal frame under the car",
+        "In the trunk"
       ],
-      "correctIndex": 1,
-      "explanation": "Choosing the right transportation method involves considering multiple factors: cost, travel time, reliability, environmental impact, and accessibility."
+      "correctIndex": 2,
+      "explanation": "The car jack must be placed on the metal frame under the car so it can safely lift the vehicle without damaging it."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Use a car jack to lift the car and be able to change the tire.",
+      "Pull out the yellow cap to check the oil level.",
+      "Each dashboard warning light is important and you should know what each of them means."
     ],
     "pointsAwarded": 10
   },
