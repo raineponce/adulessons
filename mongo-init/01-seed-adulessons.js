@@ -160,9 +160,7 @@ const modules = [
     },
     "lessonIds": [
       "mod4-lesson1",
-      "mod4-lesson2",
-      "mod4-lesson3",
-      "mod4-lesson4"
+      "mod4-lesson2"
     ]
   },
   {
@@ -242,7 +240,8 @@ const modules = [
     },
     "lessonIds": [
       "mod6-lesson1",
-      "mod6-lesson2"
+      "mod6-lesson2",
+      "mod6-lesson3"
     ]
   }
 ];
@@ -432,28 +431,20 @@ const lessons = [
   {
     "lessonId": "mod1-lesson2",
     "moduleId": "mod1",
-    "title": "Saving Strategies",
+    "title": "Rent",
     "order": 2,
     "pages": [
       {
         "pageNumber": 1,
         "blocks": [
           {
-            "type": "heading",
-            "body": "Why Save Money?"
+            "type": "image",
+            "src": "/assets/images/banners/finance-rent.png",
+            "alt": "Rent lesson banner"
           },
           {
             "type": "text",
-            "body": "Saving money helps you prepare for emergencies and reach goals like travel, school, or a new laptop."
-          },
-          {
-            "type": "image",
-            "src": "/assets/images/coin-icon.png",
-            "alt": "Savings icon"
-          },
-          {
-            "type": "callout",
-            "body": "Start by saving a small amount each week."
+            "body": "Moving out and renting your first place is a major milestone, and honestly, one of the most \"wait, I'm really an adult\" moments out there. But between hunting for the right place, decoding a lease, and figuring out who pays for what, it can get overwhelming fast. The good news? A little know-how goes a long way in making the whole process way less stressful."
           }
         ]
       },
@@ -462,40 +453,192 @@ const lessons = [
         "blocks": [
           {
             "type": "video",
-            "videoId": "fTTGALaRZoc"
+            "videoId": "4KheDqLROdA"
           },
           {
             "type": "list",
             "items": [
-              "Set a savings goal",
-              "Use automatic transfers",
-              "Keep savings in a separate account"
+              "Do your research before committing! Red flags like cash-only payments, no written lease, or a landlord who won't show the unit are signs to walk away fast.",
+              "Your lease is a legal contract, so read every single word before signing. Understanding your rights and responsibilities upfront saves you a ton of headaches later.",
+              "Good communication and documentation are your best friends as a renter. Snap photos when you move in and out, report issues early, and keep records of everything."
+            ],
+            "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Rent Rundown"
+          },
+          {
+            "type": "text",
+            "body": "Ah yes, moving out and renting a place. This is the part of adulthood where you think \"Wow, I'm really an adult.\" Let's make the renting process as painless as possible."
+          },
+          {
+            "type": "heading",
+            "body": "Researching Places to Live"
+          },
+          {
+            "type": "text",
+            "body": "Before anything, let's just make sure you're not wasting money on a red flag rental."
+          },
+          {
+            "type": "heading",
+            "body": "Reading Reviews"
+          },
+          {
+            "type": "text",
+            "body": "Check out Google reviews, Reddit, and local Facebook groups."
+          },
+          {
+            "type": "text",
+            "body": "If multiple people complain about pests, leaks, or management ignoring them… assume they're telling the truth."
+          },
+          {
+            "type": "heading",
+            "body": "Red Flags"
+          },
+          {
+            "type": "text",
+            "body": "You might need to run if:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "The landlord won't show the unit",
+              "They ask for cash only",
+              "There's no written lease",
+              "The place smells musty or looks damaged",
+              "They pressure you to sign quickly"
+            ],
+            "ordered": false
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "The Rental Process"
+          },
+          {
+            "type": "text",
+            "body": "Breaking this down can help you avoid a breakdown."
+          },
+          {
+            "type": "heading",
+            "body": "Applying"
+          },
+          {
+            "type": "text",
+            "body": "Most places require:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Your ID",
+              "Proof of income",
+              "A credit check",
+              "An application fee",
+              "A co-signer (if you've got low credit)"
             ],
             "ordered": false
           },
           {
-            "type": "link",
-            "href": "https://www.fdic.gov/resources/consumers/money-smart/index.html",
-            "linkText": "FDIC Money Smart"
+            "type": "heading",
+            "body": "Understanding the Lease"
+          },
+          {
+            "type": "text",
+            "body": "The lease is the contract for how you live there. It covers:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Rent amount & due date",
+              "Lease length",
+              "Rules (pets, guests, parking, etc.)",
+              "Utilities",
+              "Fees"
+            ],
+            "ordered": false
+          },
+          {
+            "type": "text",
+            "body": "Read. It. All. And don't be afraid to ask questions before signing. It's way better than fixing problems later."
+          },
+          {
+            "type": "heading",
+            "body": "Utilities"
+          },
+          {
+            "type": "text",
+            "body": "Some rentals include water or trash, but many don't."
+          },
+          {
+            "type": "text",
+            "body": "You might have to set up electricity, gas, and internet yourself."
+          },
+          {
+            "type": "text",
+            "body": "Ask which utilities you pay so you can budget accurately."
+          }
+        ]
+      },
+      {
+        "pageNumber": 5,
+        "blocks": [
+          {
+            "type": "heading",
+            "body": "Renting Etiquette"
+          },
+          {
+            "type": "heading",
+            "body": "Renewing or Breaking a Lease"
+          },
+          {
+            "type": "text",
+            "body": "Renewing usually means signing a new lease (and possibly paying a little more). Breaking a lease early can cost money, so talk to your landlord as soon as you know you might need to move."
+          },
+          {
+            "type": "heading",
+            "body": "Other things to consider:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Keep Things (Reasonably) Clean: You don't need to keep everything spotless, but just don't leave trash and food laying around (bugs go crazy for that).",
+              "Take Pics Of Your Place: Always take photos when you move in AND move out. Solid evidence protects your deposit and can save you trouble.",
+              "Communicate!!: Especially with your landlord! Report problems early and keep a solid record of your messages. Give neighbors a heads-up if you're planning any get-togethers at your place."
+            ],
+            "ordered": false
+          },
+          {
+            "type": "callout",
+            "body": "Renting is a huge step in adulting, and it can be messy and confusing. But once you understand the basics, you can save your sanity (and your savings!)"
           }
         ]
       }
     ],
     "quiz": {
-      "question": "What is a simple way to save money consistently?",
+      "question": "Imagine you're searching for a new place to rent. Which of these raises a red flag?",
       "options": [
-        "Spend first, save what is left",
-        "Set up automatic transfers to savings",
-        "Keep all your money in cash",
-        "Only save once a year"
+        "The landlord offers virtual and in-person tours.",
+        "The walls have no obvious stains.",
+        "The facilities have good reviews online.",
+        "The landlord asks for cash only."
       ],
-      "correctIndex": 1,
-      "explanation": "Automatic transfers make saving easy and consistent."
+      "correctIndex": 3,
+      "explanation": "Cash-only payments are a major red flag — legitimate landlords use traceable payment methods and provide receipts."
     },
     "keyTakeaways": [
-      "Placeholder takeaway 1 for this lesson.",
-      "Placeholder takeaway 2 for this lesson.",
-      "Placeholder takeaway 3 for this lesson."
+      "Do your research before committing! Red flags like cash-only payments, no written lease, or a landlord who won't show the unit are signs to walk away fast.",
+      "Your lease is a legal contract, so read every single word before signing. Understanding your rights and responsibilities upfront saves you a ton of headaches later.",
+      "Good communication and documentation are your best friends as a renter. Snap photos when you move in and out, report issues early, and keep records of everything."
     ],
     "pointsAwarded": 10
   },
