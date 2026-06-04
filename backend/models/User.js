@@ -60,7 +60,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  usedCodes: [{ type: String }]
+  usedCodes: [{ type: String }],
+  preferences: {
+    fontSize: { type: Number, default: 100 },
+    darkMode: { type: Boolean, default: false }
+  }
 }, { timestamps: true });
 
 // Hash password before saving if it has been modified

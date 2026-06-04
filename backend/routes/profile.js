@@ -118,6 +118,46 @@ router.put('/address', requireAuth, async (req, res) => {
   }
 });
 
+// GET /profile/preferences — Return user preferences
+router.get('/preferences', requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId)
+      .select('preferences')
+      .lean();
+
+    res.json(user.preferences || { fontSize: 100 });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /profile/preferences — Update user preferences
+router.put('/preferences', requireAuth, async (req, res) => {
+  try {
+    const { fontSize, darkMode } = req.body;
+    const update = {};
+
+    if (fontSize !== undefined) {
+      if (typeof fontSize !== 'number' || fontSize < 75 || fontSize > 150) {
+        return res.status(400).json({ error: 'fontSize must be a number between 75 and 150' });
+      }
+      update['preferences.fontSize'] = fontSize;
+    }
+
+    if (darkMode !== undefined) {
+      if (typeof darkMode !== 'boolean') {
+        return res.status(400).json({ error: 'darkMode must be a boolean' });
+      }
+      update['preferences.darkMode'] = darkMode;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.session.userId,
+      update,
+      { new: true }
+    ).select('preferences');
+
+    res.json(user.preferences);
 // PUT /profile/password — Update the user's password
 router.put('/password', requireAuth, async (req, res) => {
   try {

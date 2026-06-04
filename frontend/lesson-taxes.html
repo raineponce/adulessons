@@ -519,6 +519,7 @@
             }
         }
     </style>
+    <script src="../js/components.js"></script>
 </head>
 
 <body>
@@ -553,6 +554,55 @@
     <footer id="footer"></footer>
 
     <!-- Load components -->
+    <script src="../js/hamburger-menu.js"></script>
+
+    <!-- Page Navigation Script -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 3;
+
+        function changePage(direction) {
+            const newPage = currentPage + direction;
+            
+            if (newPage < 1 || newPage > totalPages) return;
+            
+            // Hide current page
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            
+            // Show new page
+            currentPage = newPage;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Update button states
+            updateNavButtons();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateNavButtons() {
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Hide next button on last page
+            if (currentPage === totalPages) {
+                nextBtn.style.visibility = 'hidden';
+            } else {
+                nextBtn.style.visibility = 'visible';
+            }
+        }
+
+        function goBack() {
+            if (currentPage === 1) {
+                // Go back to lessons list
+                window.location.href = 'lesson-list.html';
+            } else {
+                changePage(-1);
+            }
+        }
+
+        // Initialize button states
+        updateNavButtons();
+    </script>
     <script src="./js/components.js"></script>
     <script src="./js/hamburger-menu.js"></script>
     <script src="./js/api.js"></script>
